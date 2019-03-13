@@ -1,0 +1,82 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+.login-page{
+width:100%;
+height:100vh;
+display:flex;
+background-color:blue;
+}
+.login-page-background{
+    flex:1;
+    background-color:gray;
+border-right:2px solid white;
+}
+.login-page-login-form{
+    flex:1;
+    display:flex;
+}
+.login-form{
+    width:300px;
+    height:500px;
+    margin:auto;
+    overflow: hidden;
+}
+.login-form-container{
+    width:200%;
+    height:100%;
+    display:flex;
+}
+/* login */
+.login{
+width:100%;
+height:100%;
+display:flex;
+flex-direction: column;
+transition:1s;
+background-color:greenyellow;
+}
+.login h1, h2{
+    text-align: center;
+    padding:20px;
+}
+.login-form_glob{
+    display:flex;
+    flex-direction: column;
+}
+.login-form_glob input[type=text], input[type=password]{
+    width:80%;
+    height:30px;
+    margin:0 auto;
+}
+.login-form_glob input[type=submit]{
+    width:80px;
+    height:30px;
+    margin:15px auto 0 15px;
+}
+.login-form_glob label{
+    padding:15px;
+}
+.login-form_glob p{
+    padding:10px;
+}
+.login-form_glob a{
+    cursor: pointer;
+    color:blue;
+    border-bottom:1px solid white;
+}
+.register{
+width:100%;
+height:100%;
+transition:1s;
+background-color:greenyellow;
+}
+/*messenger page */
+.messanger-page{
+    width:100%;
+    height:100vh;
+    display:none;
+    
+}
