@@ -6,7 +6,7 @@ firebase.auth().onAuthStateChanged(function(user) {
       window.alert("udalo sie zalogowac");
       let user =  firebase.auth().currentUser;
       let name, email, photoUrl;
-
+// dodac do uzytkownika : jego nazwa itd itd
 if (user != null) {
   name = user.displayName;
   email = user.email;

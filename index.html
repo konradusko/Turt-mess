@@ -22,9 +22,6 @@
 </head>
 <body>
 <section id="log-page" class="login-page">
-<div class="login-page-background">
-
-</div>
 <div class="login-page-login-form">
     <div class="login-form">
         <div class="login-form-container">
@@ -45,17 +42,33 @@
                     </div>
                     <div id="register_form_id" class="register">
                         <h2>Rejestracja</h2>
-                            <div class="login-form_glob">
-                                    <label for="email"><b>E-mail</b></label>
-                                    <input id="register_email" type="text" placeholder="Adres E-mail" name="email" required>
-                                    <label for="psw"><b>Hasło</b></label>
-                                    <input id="register_password_one" type="password" placeholder="Podaj hasło" name="psw" required>
-                                    <label for="psw-repeat"><b>Powtórz Hasło</b></label>
-                                    <input id="register_password_two" type="password" placeholder="Powtórz Hasło" name="psw-repeat" required>
-                                    <input id="input_register" type="submit">
-                                    <span><b id="span_register" class="error"></b></span>
-                                    <p>Posiadasz już konto ? <a id="login_form">Zaloguj się</a>.</p>
-                            </div>
+                        <div class="account-register">  
+                              <div class="register_second_data">
+                                <label for="email"><b>E-mail</b></label>
+                                <input id="register_email" type="text" placeholder="Adres E-mail" name="email" required>
+                                <label for="psw"><b>Hasło</b></label>
+                                <input id="register_password_one" type="password" placeholder="Podaj hasło" name="psw" required>
+                                <label for="psw-repeat"><b>Powtórz Hasło</b></label>
+                                <input id="register_password_two" type="password" placeholder="Powtórz Hasło" name="psw-repeat" required>
+                    
+                        </div> 
+                        <div class="register_second_data">
+                           <label for="Nick"><b>Twója Nazwa</b></label>
+                           <input  type="text" placeholder="Twoja Nazwa" name="Nick" required>
+                           <label for="Country"><b>Kraj</b></label>
+                           <input  type="text" placeholder="Podaj swój kraj" name="Country" required>
+                           <input type="file" name="pic" accept="image/*">
+                        </div> 
+                      
+                     </div>
+                     <div class="register_buttons">
+                            <input id="input_register" type="submit">
+                            <span><b id="span_register" class="error"></b></span>
+                            <p>Posiadasz już konto ? <a id="login_form">Zaloguj się</a>.</p>
+                    </div>
+                    
+                    
+                    
                     </div>
 
         </div>
@@ -67,10 +80,18 @@
 </section>
 <section id="mess-page" class="messanger-page">
     <div class="messenger">
+        <div class="messenger-mess">
 
+        </div>
+        <div class="messenger-text">
+            <input class="text-area-mess" type="text">
+            <div class="messenger-text-functions">
+
+            </div>
+        </div>
     </div>
     <div class="user-profile">
-            <p onclick="logOut()">xd</p>
+            <p onclick="logOut()">Wyloguj</p>
     </div>
 
 
