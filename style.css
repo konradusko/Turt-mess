@@ -31,7 +31,6 @@ justify-content: center;
     color:white;
     text-align: center;
     top:200px;
-
 }
 .login{
     flex:1;
@@ -194,4 +193,54 @@ justify-content: center;
   .login-container-register-form{
       flex:1;
       transition:1s;
+  }
+
+
+
+  @media only screen and (max-width:880px){
+    .login-background h1{
+        font-size:40px;
+    }
+  }
+  @media only screen and (max-width:750px){
+    .header{
+        flex-direction: column;
+    }
+    .login{
+        min-width: initial;
+    }
+    .login-background{
+        width:100%;
+        min-height: 250px;
+    }
+    .login-background h1{
+        position: absolute;
+        text-shadow: 4px 5px 9px rgba(28,110,164,0.86);
+        color:white;
+        text-align: center;
+      margin:auto;
+      top:50px;
+    }
+    .login-container-login-form{
+        height:100%;
+        
+    }
+    .header-register{
+        min-height: 100%;
+    }
+    .header-login{
+        height:100vh;
+    }
+  }
+  @media only screen and (max-width:360px){
+    .error {
+        margin: 60px auto;
+    }
+    .terms{
+        flex-direction: column;
+ 
+    }
+    .terms b {
+        margin-left:0px;
+    }
   }
