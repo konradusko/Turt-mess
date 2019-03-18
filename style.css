@@ -3,153 +3,195 @@
     padding:0;
     box-sizing:border-box;
 }
-.login-page{
-width:100%;
-height:100vh;
-display:flex;
-background-color:blue;
-}
-.login-page-login-form{
-    flex:1;
+.header{
+    width:100%;
     display:flex;
 }
-.login-form{
-    width:500px;
-    height:500px;
-    margin:auto;
+.header-register{
+    min-height: 100vh;
+}
+.header-login{
+    height:100vh;
+}
+.login-background{
+flex:2;
+background-image: url(img/background.png);
+background-repeat: no-repeat;
+background-position: center;
+background-size: cover;
+display:flex;
+border-right:2px solid  #333333;
+position:relative;
+justify-content: center;
+}
+.login-background h1{
+    font-size:70px;
+    position: fixed;
+    text-shadow: 4px 5px 9px rgba(28,110,164,0.86);
+    color:white;
+    text-align: center;
+    top:200px;
+
+}
+.login{
+    flex:1;
+    min-height:100vh;
+    min-width: 500px;
     overflow: hidden;
 }
-.login-form-container{
+.login-container{
     width:200%;
-    height:100%;
+    min-height:100%;
     display:flex;
 }
-/* login */
-.login{
-width:100%;
-height:100%;
-display:flex;
-flex-direction: column;
-transition:1s;
-background-color:greenyellow;
-}
-.login h1, h2{
-    text-align: center;
-    padding:20px;
-}
-
-.login-form_glob{
-    display:flex;
-    flex-direction: column;
-    width:80%;
-    margin:0 auto;
-}
-.login-form_glob input[type=text], input[type=password],
-.register_second_data input[type=text], input[type=password]{
-    width:90%;
-    height:30px;
-    margin:0 auto;
-    background:none;
-    border:none;
-    border-bottom:2px solid white;
-    outline:none;
-}
-.login-form_glob input:focus[type=text],
-.register_second_data input:focus[type=text]{
-    outline:none;
-}
-.login-form_glob input[type=submit],
-.register_buttons input[type=submit]{
-    width:80px;
-    height:30px;
-    background:none;
-    border:none;
-    border:2px solid white;
-    margin:15px auto 0 15px;
-
-}
-.login-form_glob label,
-.register_second_data label{
-    padding:15px;
-}
-.login-form_glob p,
-.register_second_data p{
-    padding:10px;
-}
-.login-form_glob a,
-.register_buttons a{
-    cursor: pointer;
-    color:blue;
-}
-.register_second_data input[type=file]{
-    width:100%;
-    height:30px;
-    margin:auto auto auto 10px;
-    outline:none;
-    cursor: pointer;
-}
-
-.register{
-width:100%;
-height:100%;
-transition:1s;
-background-color:greenyellow;
-display:flex;
-flex-direction: column;
-}
-.account-register{
-    flex:3;
-    display:flex;
+.login-container-login-form{
+    flex:1;
+    background-color:white;
+    transition:1s;
     
 }
-.account-register .login-form_glob{
-    flex:1;
+.login-container-login-form .login-form-title,
+.login-container-register-form .login-form-title{
+    display: block;
+    width: 100%;
+    font-size: 25px;
+    color: #333333;
+    line-height: 1.2;
+    text-align: left;
 }
-.register_buttons{
-    margin: 0 20px 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-
+.login-container-login-form .login-form-title h2,
+.login-container-register-form .login-form-title h3{
+    padding:30px;
 }
-.register_second_data{
-    display:flex;
-    flex:1;
-    flex-direction: column;
+.wrap-input{
+    width: 90%;
+    position: relative;
+    border-bottom: 2px solid #dbdbdb;
+    margin: 20px auto 45px auto;
+}
+.input{
+        display: block;
+        width: 100%;
+        height: 50px;
+        background: transparent;
+        font-size: 22px;
+        color: #555555;
+        line-height: 1.2;
+        border:none;
+        padding: 0 2px;
+        outline:none;
+        
+}
+.input-file{
+    margin-top:10px;
+    font-size:15px;
+    height:30px;
+}
+.input-file-wrap{
+    margin:20px auto 15px auto;
+}
+.error-Input-file{
+    display:block;
+    width:90%;
+    height:20px;
+    margin:0 auto;
+    color:crimson;
 }
 .error{
-    font-size:10px;
-    color:red;
-    padding:20px;
+    margin:35px auto;
 }
-/*messenger page */
-.messanger-page{
-    width:100%;
-    height:100vh;
-    display:none;
+.focus-input {
+    position: absolute;
+    display: block;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+  }
+  .focus-input::before {
+    content: "";
+    display: block;
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    transition: all 0.4s;
+    background: #d5007d;
+    background: linear-gradient(45deg, #d5007d, #e53935);
+  }
+  .input:focus ~ .focus-input::before {
+    width: 100%;
+  }
+  .input:valid ~.focus-input::before{
+      width:100%;
+  }
 
-}
-.messenger{
-    flex:1;
-    background-color:gray;
-}
-.messenger-mess{
-    width:90%;
-    margin:0 auto;
-    height:80%;
-    background-color:blue;
-}
-.messenger-text{
-    width:100%;
-    height:20%;
-    background-color:red;
-}
-.text-area-mess{
-   width:70%;
-   display:flex;
-   margin:0 auto;
-    height:50px;
-}
-.user-profile{
-    flex:1;
-}
+  .label-input{
+    font-size: 18px;
+    color: #999999;
+    line-height: 1.2;
+    padding-left: 2px;
+  }
+  .wrap-buttons{
+      width:90%;
+      height:100px;
+      margin:auto;
+      display:flex;
+      justify-content: space-between;
+  }
+  button{
+      outline:none;
+      background:transparent;
+      border:none;
+  }
+  .button_Sign-In{
+      display:flex;
+      width:150px;
+      height:50px;
+      background: #6e435c;
+      background: linear-gradient(45deg, #644f5b, #c9706f);
+      justify-content: center;
+      align-items: center;
+      font-size:16px;
+      padding:0 20px;
+      border-radius:20px;
+      cursor: pointer;
+      color:white;
+  }
+  .button_Sign-Up{
+      display:flex;
+      width:100px;
+      height:50px;
+      justify-content: center;
+      align-items: center;
+      cursor:pointer;
+      color:#666666;
+      margin-right: 20px;
+  }
+  .button_Sign-Up i {
+      margin: 0 5px;
+  }
+  .terms{
+      display:flex;
+      justify-content: center;
+  }
+  .terms b{
+      margin-left:5px;
+  }
+  .terms:hover{
+      cursor:pointer;
+  }
+  .terms b:hover{
+      color:blue;
+  }
+
+
+
+
+
+  .login-container-register-form{
+      flex:1;
+      transition:1s;
+  }

@@ -1,7 +1,7 @@
 firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
       // User is signed in.
-      document.getElementById("log-page").style.display = "none";
+      document.getElementById("header").style.display = "none";
       document.getElementById("mess-page").style.display = "flex";
       window.alert("udalo sie zalogowac");
       let user =  firebase.auth().currentUser;
@@ -15,7 +15,7 @@ if (user != null) {
 
     } else {
       // No user is signed in.
-      document.getElementById("log-page").style.display = "flex";
+      document.getElementById("header").style.display = "flex";
       document.getElementById("mess-page").style.display = "none";
   
     }
@@ -32,7 +32,7 @@ document.getElementById("input_login").addEventListener("click", login)
         var errorMessage = error.message;
         // ...
 
-     document.getElementById("span_login").innerHTML = errorMessage;
+     document.getElementById("login-error").innerHTML = errorMessage;
       });
   }
   function logOut(){
@@ -49,10 +49,10 @@ document.getElementById("input_login").addEventListener("click", login)
         var errorCode = error.code;
         var errorMessage = error.message;
         // ...
-           document.getElementById("span_register").innerHTML = errorMessage;
+           document.getElementById("register-error").innerHTML = errorMessage;
       });
  }else{
-    document.getElementById("span_register").innerHTML = "Hasła nie są takie same."
+    document.getElementById("register-error").innerHTML = "Passwords are not the same."
  }
     
   }
