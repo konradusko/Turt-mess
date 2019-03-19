@@ -5,16 +5,13 @@
 }
 .header{
     width:100%;
+    height:100%;
     display:flex;
 }
-.header-register{
-    min-height: 100vh;
-}
-.header-login{
-    height:100vh;
-}
+
 .login-background{
-flex:2;
+width:60%;
+min-height:100vh;
 background-image: url(img/background.png);
 background-repeat: no-repeat;
 background-position: center;
@@ -23,6 +20,13 @@ display:flex;
 border-right:2px solid  #333333;
 position:relative;
 justify-content: center;
+}
+.login-background-register{
+    width:60%;
+    height:100vh;
+    position:sticky;
+    top:0;
+    left:0;
 }
 .login-background h1{
     font-size:70px;
@@ -33,14 +37,13 @@ justify-content: center;
     top:200px;
 }
 .login{
-    flex:1;
-    min-height:100vh;
+   width:40%;
     min-width: 500px;
     overflow: hidden;
 }
 .login-container{
-    width:200%;
-    min-height:100%;
+    width:100%;
+    height:100%;
     display:flex;
 }
 .login-container-login-form{
@@ -185,33 +188,34 @@ justify-content: center;
   .terms b:hover{
       color:blue;
   }
-
-
-
-
-
   .login-container-register-form{
       flex:1;
       transition:1s;
+      opacity:0;
+      display:none;
   }
 
 
 
-  @media only screen and (max-width:880px){
-    .login-background h1{
-        font-size:40px;
-    }
-  }
-  @media only screen and (max-width:750px){
+
+  @media only screen and (max-width:1000px){
     .header{
         flex-direction: column;
     }
     .login{
+        width:100%;
+        height:100%;
         min-width: initial;
     }
     .login-background{
-        width:100%;
-        min-height: 250px;
+     width:100%;
+     min-height:200px;
+    }
+    .login-background-register{
+        position:initial;
+        height:initial;
+        top:initial;
+        left:initial;
     }
     .login-background h1{
         position: absolute;
@@ -220,17 +224,9 @@ justify-content: center;
         text-align: center;
       margin:auto;
       top:50px;
+      font-size:30px;
     }
-    .login-container-login-form{
-        height:100%;
-        
-    }
-    .header-register{
-        min-height: 100%;
-    }
-    .header-login{
-        height:100vh;
-    }
+
   }
   @media only screen and (max-width:360px){
     .error {
