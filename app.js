@@ -17,7 +17,6 @@ register_form.addEventListener("click", () =>{
 login_form.addEventListener("click", () =>{
   register_container.style.transform = ("translate", "translate3d(+" + 0 + "%,0,0)");
   login_container.style.transform = ("translate", "translate3d(+" + 0 + "%,0,0)");
-
   register_container.style.opacity = 0;
   number_of_container = 0;
   headerTime();
@@ -40,13 +39,18 @@ function headerTime(){
 }
 // valid image
 function validateFileType(){
-  var fileName = document.getElementById("input-file").value;
-  var idxDot = fileName.lastIndexOf(".") + 1;
-  var extFile = fileName.substr(idxDot, fileName.length).toLowerCase();
+  let error_message = document.getElementById("error-file");
+  let fileName = document.getElementById("input-file").value;
+  let idxDot = fileName.lastIndexOf(".") + 1;
+  let extFile = fileName.substr(idxDot, fileName.length).toLowerCase();
   if (extFile=="jpg" || extFile=="jpeg" || extFile=="png"){
       //TO DO
+     error_message.innerHTML = "The picture has a good format.";
+    error_message.style.color = "green";
+    console.log("xd");
   }else{
-      document.getElementById("error-file").innerHTML = "The picture has a bad format."
+      error_message.innerHTML = "The picture has a bad format.";
+      error_message.style.color = "crimson";
   }   
 }
 
