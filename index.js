@@ -1,21 +1,118 @@
 
+let containerMessPage = document.getElementById("container-mess-page_id");
+ 
+let channel_container = document.getElementById("channel-container_id");
+let user_profile_container = document.getElementById("user-profile-container_id");
+let messenger = document.getElementById("messenger_id");
+let imageUrl = document.getElementById("input-file").value;
+
+let register_number = "undefined";
+let photoVal;
+
+
+
+// logowanie
 firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
       // User is signed in.
       document.getElementById("header").style.display = "none";
-      document.getElementById("mess-page").style.display = "flex";
+      document.getElementById("mess-page").style.display = "block";
       window.alert("udalo sie zalogowac");
+// testy nadal 
+// dodawania uzytkownika do bazy danych oraz uzupelnianie jego profilu zaraz po rejestracji
+let userId = firebase.auth().currentUser.uid;
+let user =  firebase.auth().currentUser;
+if(register_number === "czx9DJSAD5jncya9D8da934N2"){
+console.log("lul");
 
 
-      let user =  firebase.auth().currentUser;
-      let name, email, photoUrl;
-// dodac do uzytkownika : jego nazwa itd itd
-if (user != null) {
-  name = user.displayName;
-  email = user.email;
-  photoUrl = user.photoURL;
+user.updateProfile({
+  displayName: document.getElementById("nickname_id").value,
+ // photoURL: document.getElementById("input-file").value,
+  uid: userId
+}).then(function() {
+ console.log("udalo sie zmienic a raczej dodac")
+}).catch(function(error) {
+  // An error happened.
+});
+
+ firebase.database().ref('users/' + userId).set({
+   username: document.getElementById("nickname_id").value,
+   email: document.getElementById("register_email").value,
+  photoURL : "undefined"
+ });
+ //dodawanie obrazka
+ if(photoVal === 1){
+  console.log("zaczyna sie dziac");
+  var file = document.getElementById("input-file").files[0];
+  var reader = new FileReader();
+  reader.onloadend = function (evt) {
+    var blob = new Blob([evt.target.result], { type: "image/jpeg" });
+  
+   
+    var storageRef = firebase.storage().ref("Usuarios/" + user.uid + "/avatar.jpg");
+    console.warn(file); // Watch Screenshot
+   // var uploadTask = storageRef.put(blob);
+    storageRef.put(blob).then(function(snapshot){
+      snapshot.ref.getDownloadURL().then(function(url){  // Now I can use url
+          user.updateProfile({
+              photoURL: url       // <- URL from uploaded photo.
+          }).then(function(){
+              firebase.database().ref("users/" + userId).update({
+                photoURL: url   // <- URL from uploaded photo.
+              });
+          });
+      });
+  });
+  
+  }
+  
+  reader.onerror = function (e) {
+      console.log("Failed file read: " + e.toString());
+  };
+  reader.readAsArrayBuffer(file);
+  
+  console.log("zadzialo sie");
+  }else{
+   
+    console.log("jednak nie dzialasz ?");
+  }
+
+ let strIng = register_number = "undefined";
+ test();
+return strIng;
+}else{
+  //nothing
+  
+  console.log("nothing");
 }
-//
+  
+function test(){
+//testyyy to jest pobieranie wartosci
+var starCountRef = firebase.database().ref('users/' + userId);
+starCountRef.on('value', function(snapshot) {
+  let test = snapshot.val();
+  console.log(test);
+// 
+
+});
+}
+
+
+
+if (user != null) {
+  user.providerData.forEach(function (profile) {
+  //  document.getElementById("usPhoto").innerHTML = profile.photoURL;
+    document.querySelector('img').src = profile.photoURL;
+    document.getElementById("usNick").innerHTML = profile.displayName;
+    console.log("Sign-in provider: " + profile.providerId);
+    console.log("  Provider-specific UID: " + profile.uid);
+    console.log("  Name: " + profile.displayName);
+    console.log("  Email: " + profile.email);
+    console.log("  Photo URL: " + profile.photoURL);
+  });
+}
+
     } else {
       // No user is signed in.
       document.getElementById("header").style.display = "flex";
@@ -40,9 +137,19 @@ document.getElementById("input_login").addEventListener("click", login)
       });
   }
   function logOut(){
-    firebase.auth().signOut()
+    logOutThinks();
+    firebase.auth().signOut();
   }
-  
+  function logOutThinks(){
+    containerMessPage.style.width = 100 + "%";
+    messenger.style.width = 0 + "%";
+    messenger.style.display = "none";
+    messenger.style.opacity = 0;
+    messenger.classList.remove("blur");
+    channel_container.style.transform = "initial";
+    messenger.style.transform = "initial";
+    user_profile_container.style.transform = "initial";
+  }
   //register listenerevent
   document.getElementById("input_register").addEventListener("click", register);
   function register(){
@@ -59,8 +166,13 @@ document.getElementById("input_login").addEventListener("click", login)
            document.getElementById("register-error").innerHTML = errorMessage;
         
       });
-      writeUserData();
-      console.log("to dziala");
+      //wielki test
+
+
+     let strIng = register_number = "czx9DJSAD5jncya9D8da934N2";
+    
+      console.log("rejestracja");
+      return strIng;
     
  }else if(userRegisterEmail.length === 0){
   document.getElementById("register-error").innerHTML = "Please write your email.";
@@ -72,79 +184,97 @@ document.getElementById("input_login").addEventListener("click", login)
     document.getElementById("register-error").innerHTML = "Your Nickname must contain at least 4 characters.";
    }
  }
-// adding new chanel
-let buttonNewChannel = document.getElementById("new-channel");
-buttonNewChannel.addEventListener("click", () =>{
-  document.getElementById("adding-channel-form").style.display = "flex";
-  document.getElementById("channel-container_id").classList.add("blur");
-  document.getElementById("user-profile-container_id").classList.add("blur");
+
+
+
+
+
+// public channel
+let publicChannel = document.getElementById("public_id");
+publicChannel.addEventListener("click", () =>{
+  containerMessPage.style.width = 200 + "%";
+  channel_container.style.transform = ("translate", "translate3d(-" + 100 + "%,0,0)");
+  messenger.style.transform = ("translate", "translate3d(-" + 50 + "%,0,0)");
+  user_profile_container.style.transform = ("translate", "translate3d(-" + 100 + "%,0,0)");
+  messenger.style.width = 100 + "%";
+  messenger.style.display = "flex";
+ 
   setTimeout(() => {
-    document.getElementById("adding-channel-form").style.opacity = 1;
+  messenger.style.opacity = 1;
   }, 1000);
+
+})
+//wyswietlenie profilu uzytkownika
+let user_button = document.getElementById("user_id");
+user_button.addEventListener("click", () =>{
+user_profile_container.style.transform = ("translate", "translate3d(-" + 200 + "%,0,0)");
+messenger.classList.add("blur");
+console.log("xd");
+})
+//wyswietlenie kanalow
+let channel_button = document.getElementById("channel_id");
+channel_button.addEventListener("click", () =>{
+  channel_container.style.transform = "initial";
+  messenger.classList.add("blur");
+  console.log("xd");
+  })
+// zamykanie profilu i kanalow
+let user_close_button = document.getElementById("test-profil");
+user_close_button.addEventListener("click", () =>{
+  user_profile_container.style.transform = ("translate", "translate3d(-" + 100 + "%,0,0)");
+  messenger.classList.remove("blur");
+})
+let channel_close_button = document.getElementById("test-channel");
+channel_close_button.addEventListener("click", () =>{
+  channel_container.style.transform = ("translate", "translate3d(-" + 100 + "%,0,0)");
+  messenger.classList.remove("blur");
 })
 
-let createChannel = document.getElementById("button-New-channel");
-//create channel
-createChannel.addEventListener("click", () =>{
-  let channelName = document.getElementById("channel_name_id").value;
-  let channelPassword = document.getElementById("channel_password_id").value;
-  if(channelName.length >= 6 && channelPassword.length >= 6){
-    console.log("xd")
-    writeNewPost();
-  }else{
-    document.getElementById("newChannel-error").innerHTML = "The password and name must contain 6 characters."
-console.log(channelName.length + channelPassword.length)
-  }
-})
-let buttonCancelNewChannel = document.getElementById("button-cancel_id");
-buttonCancelNewChannel.addEventListener("click", cancleChannel)
-function cancleChannel(){
-  document.getElementById("adding-channel-form").style.opacity = 0;
-  document.getElementById("channel-container_id").classList.remove("blur");
-  document.getElementById("user-profile-container_id").classList.remove("blur");
-  setTimeout(() => {
-    document.getElementById("adding-channel-form").style.display = "none";
-  }, 1000);
- // pamietac o czyszczeniu inputów po anulacji
-  
-}
+
 
 //testuje dodawanie kanalu do bazy danych
-function writeNewPost(uid, username, picture, title, body) {
-  // A post entry.
+ //testuje dodawanie uzytkownika
+ //create reference
+
  
-  var postData = {
-    author: username,
-    uid: uid,
-    body: body,
-    title: title,
-    starCount: 0,
-    authorPic: picture,
-    chanelName: document.getElementById("channel_name_id").value,
-    chanelpassword : document.getElementById("channel_password_id").value
-  };
 
-  // Get a key for a new Post.
-  var newPostKey = firebase.database().ref().child('Kanały').push().key;
 
-  // Write the new post's data simultaneously in the posts list and the user's post list.
-  var updates = {};
-  updates['/Kanały/' + newPostKey] = postData;
-  updates['/user-posts/' + uid + '/' + newPostKey] = postData;
-
-  return firebase.database().ref().update(updates);
+ /*
+  //updates['/posts/' + writeUserDataKey] = postData;
+  adduserData();
+ 
+  
+  // dodac do uzytkownika : jego nazwa itd itd
+ 
+if (user != null) {
+  user.providerData.forEach(function (user) {
+    console.log("  Name: " + user.username);
+    console.log("  Email: " + user.email);
+    console.log("  Photo URL: " + user.photoURL);
+  });
 }
 
-///// tworzenie uzytkownika
-function writeUserData(userIdNumber, userRegisterNickName, userRegisterEmail, imageUrl) {
-  
-  userIdNumber = "user" + " "  + test;
 
-  firebase.database().ref('users/' + userIdNumber).set({
-    username:document.getElementById("nickname_id").value,
-    email: document.getElementById("register_email").value,
-    id:test
-    //profile_picture : imageUrl
-  });
 
+function adduserData(){
+userRef.on('child_added', snap => console.log(snap.val()));
+}
+*/
+// valid image
+function validateFileType(){
+  let error_message = document.getElementById("error-file");
+  let fileName = document.getElementById("input-file").value;
+  let idxDot = fileName.lastIndexOf(".") + 1;
+  let extFile = fileName.substr(idxDot, fileName.length).toLowerCase();
+  if (extFile=="jpg" || extFile=="jpeg" || extFile=="png"){
+      //TO DO
+     error_message.innerHTML = "The picture has a good format.";
+    error_message.style.color = "green";
+    console.log("xd");
+    let test = photoVal = 1;
+    return test;
+  }else{
+      error_message.innerHTML = "The picture has a bad format.";
+      error_message.style.color = "crimson";
+  }   
 }

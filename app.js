@@ -37,22 +37,7 @@ function headerTime(){
   }
 
 }
-// valid image
-function validateFileType(){
-  let error_message = document.getElementById("error-file");
-  let fileName = document.getElementById("input-file").value;
-  let idxDot = fileName.lastIndexOf(".") + 1;
-  let extFile = fileName.substr(idxDot, fileName.length).toLowerCase();
-  if (extFile=="jpg" || extFile=="jpeg" || extFile=="png"){
-      //TO DO
-     error_message.innerHTML = "The picture has a good format.";
-    error_message.style.color = "green";
-    console.log("xd");
-  }else{
-      error_message.innerHTML = "The picture has a bad format.";
-      error_message.style.color = "crimson";
-  }   
-}
+
 
 
 

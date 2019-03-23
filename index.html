@@ -98,58 +98,46 @@
 </div>
 </header>
 <main id="mess-page" class="mess-page">
-    <div id="channel-container_id" class="channel-container">
-        <div class="container-add-new-channel">
-                <span class="new-channel-logo"><h4>Create a new channel.</h4></span>
-            <div id="new-channel" class="add-new-channel">
-                    <i class="fa fa-plus" aria-hidden="true"></i>
-            </div>
-            <span class="new-channel-logo"><h5>Channels:</h5></span>
-        </div>
-        <div class="container">
-                <ul>
-                        <li>
-                            <div class="channel-photo">
+    <div id="container-mess-page_id" class="container-mess-page">
 
-                            </div>
-                            <span class="channel-name">Kupa1</span>
-                        </li>
-                        <li>
-                                <div class="channel-photo">
-    
-                                </div>
-                                <span class="channel-name">Kupa1</span>
-                            </li>
-                    </ul>
-        </div>
-     
-    </div>
-    <div class="messenger">
-
-    </div>
- 
-    <div id="user-profile-container_id" class="user-profile-container">
-            <p onclick="logOut()">Wyloguj</p>
-    </div>
-    <div id="adding-channel-form" class="add-new-channel-form">
-        <span class="adding-chan-logo">Create a New Channel!</span>
-        <div class="wrap-input input-adding">
-                <label class="label-input">Channel Name</label>
-                <input id="channel_name_id"  class="input"  type="text" name="Channel Name" autocomplete="off" maxlength="10" placeholder="Channel Name" required>
-                <span class="focus-input"></span>
-            </div>
-            <div class="wrap-input input-adding">
-                    <label class="label-input">Your Channel Password</label>
-                    <input id="channel_password_id"  class="input"  type="password" name="Channel Password" autocomplete="off" maxlength="25" placeholder="Channel Password" required>
-                    <span class="focus-input"></span>
+        <!--   Channels-->
+            <div id="channel-container_id" class="channel-container">
+                    <span class="public-chan-name">Public Channel</span>
+                <div id="public_id" class="channel-public">
                 </div>
-                
-                <div class="wrap-buttons buttons-New_channel">
-                        <button id="button-New-channel"  class="button_Sign-In button-adding" > Create</button>
-                        <button id="button-cancel_id" class="button_Sign-Up button-cancel"> Cancel </button>
-                 </div>
-                 <span id="newChannel-error" class="info-span"><span></span>
+                <span class="public-one">Public</span>
+            
+                <p id="test-channel">zamknij</p>
+                </div>
+                <!--Channels-->
+                <div id="messenger_id" class="messenger">
+            <div class="messenger-top">
+                <div class="mess-top-container">
+                        <span id="channel_id">Channels</span>
+                        <span id="user_id">User</span>
+                </div>
+           
+            
+            <span class="mess-top-title">Turt-Mess</span>
+            </div>
+            <div class="messenger-text">
+            
+            </div>
+            <div class="messenger-text-area">
+            
+            </div>
+                </div>
+             <!--user-->
+                <div id="user-profile-container_id" class="user-profile-container">
+                        <p onclick="logOut()">Wyloguj</p>
+                        <p id="test-profil">zamknij</p>
+                        
+                        <img id="usPhoto" height="125" width="50"/>
+                        <div id="usNick"></div>
+                </div>
+               
     </div>
+   
 </main>
 
     <script src="app.js"></script>

@@ -203,48 +203,90 @@ justify-content: center;
   }
  
 /* meess page */
+
 .mess-page{
     width:100%;
     height:100vh;
-    display:flex;
-    position: relative;
+    overflow: hidden;
 }
-
-/* adding new channel form */
-.add-new-channel-form{
-    display:none;
-    position: absolute;
-    width:90%;
-    height:80%;
-    margin:15% 5%;
-    background-color:white;
-    box-shadow: 10px 10px 45px -10px rgba(0,0,0,0.75);
-    transition:1s;
-    opacity: 0;
-    flex-direction: column;
-}
-.input-adding{
-width:80%;
-}
-.input-adding:nth-child(3){
-   margin:20px auto 20px auto;
-}
-.adding-chan-logo{
+.container-mess-page{
     width:100%;
-    display:block;
-    height:30px;
-    text-align: center;
-    margin:0 auto;
-    padding-top: 10px;
+    height:100%;
+    display:flex;
+}
+/* channel */
+.channel-container{
+    height:100%;
+    width:50%;
+    transition:1s;
+    background-color:gray;
+    z-index: 2;
+    }
 
+
+    .channel-public{
+        width:70px;
+        height:70px;
+        border-radius:50%;
+        background-color:blue;
+        margin:20px auto 0 auto;
+    }
+    .public-chan-name{
+        font-size:20px;
+        padding:5px;
+        text-align: center;
+    }
+    .public-one{
+        text-align: center;
+        width:100%;
+        height:20px;
+        display:block;
+    }
+   
+    /* messenger */
+  
+    .messenger{
+    background-color:blue;
+    transition:1s;
+    height:100%;
+display:none;
+    width:0%;
+    opacity:0;
+    }
+    .messenger-top{
+        width:100%;
+        display:flex;
+        height:50px;
+        flex-direction: column;
+        background-color:red;
+    }
+    .mess-top-container{
+        width:100%;
+        height:25px;
+        display:flex;
+        justify-content: space-between;
+    }
+    .mess-top-title{
+        width:100%;
+        height:25px;
+        display:block;
+        text-align: center;
+    }
+    /* user profile */
+    .user-profile-container{
+        width:50%;
+        height:100%;
+        transition:1s;
+        background-color:gray;
+        z-index: 2;
+    }
+/* test  */
+.tete{
+    width:60px;
+    height:60px;
 }
-.button-adding{
-    width:100px;
-}
-.button-cancel{
-    font-size:16px;
-    margin-right:0;
-}
+/* adding new channel form */
+
 .blur{
     filter: blur(8px);
     -webkit-filter: blur(8px);
@@ -284,95 +326,8 @@ width:80%;
   }
   @media only screen and (max-width:700px){
 
-/* channel */
-.channel-container{
-    flex:1;
-    transition:1s;
-    }
-    .container-add-new-channel{
-        height:40vh;
-        width:100%;
-        display:flex;
-        flex-direction: column;
-    }
-    .new-channel-logo{
-        display:flex;
-        width:100%;
-        height:50px;
-     
-    }
-    .new-channel-logo h4{
-        margin:auto;
-        padding:5px;
-        text-align: center;
-    }
-    .new-channel-logo h5{
-        font-size:20px;
-        padding:5px;
-    }
-    
-    .add-new-channel{
-        width:90px;
-        height:90px;
-        background-color:gray;
-        margin:auto;
-        border-radius: 50%;
-        display:flex;
-    }
-    .add-new-channel i{
-        margin:auto;
-        color:white;
-        font-size:25px;
-    }
-    .container{
-        width:100%;
-        height:60vh;
-        overflow-y: scroll;
-    }
-    .channel-container ul{
-    width:100%;
-    display:flex;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    
-    }
-    .channel-container ul li{
-    height:100px;
-    width:100px;
-    margin:20px auto;
-    display:flex;
-    flex-direction: column;
-    list-style: none;
-    }
-    .channel-photo{
-        width:70px;
-        height:70px;
-        border-radius:50%;
-        background-color:fuchsia;
-        margin:auto;
-    }
-    .channel-name{
-        display:block;
-        height:20px;
-        width:100%;
-        text-align: center;
-    }
-    .buttons-New_channel{
-        padding:initial;
-        margin:20px auto;
-        height:50px;
-    }
-    /* messenger */
-    .messenger{
-    
-    }
-    /* user profile */
-    .user-profile-container{
-        flex:1;
-        transition:1s;
-        background-color:green;
-    }
-  
+
+}
   @media only screen and (max-width:360px){
     .error {
         margin: 60px auto;
