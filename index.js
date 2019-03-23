@@ -17,7 +17,7 @@ firebase.auth().onAuthStateChanged(function(user) {
       // User is signed in.
       document.getElementById("header").style.display = "none";
       document.getElementById("mess-page").style.display = "block";
-      window.alert("udalo sie zalogowac");
+    
 // testy nadal 
 // dodawania uzytkownika do bazy danych oraz uzupelnianie jego profilu zaraz po rejestracji
 let userId = firebase.auth().currentUser.uid;
