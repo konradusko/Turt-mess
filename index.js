@@ -17,11 +17,7 @@ firebase.auth().onAuthStateChanged(function(user) {
       // User is signed in.
       document.getElementById("header").style.display = "none";
       document.getElementById("mess-page").style.display = "block";
-<<<<<<< HEAD
   
-=======
-    
->>>>>>> f06aa4befa6e9a377ca5f56c771ab869d4d7f6cb
 // testy nadal 
 // dodawania uzytkownika do bazy danych oraz uzupelnianie jego profilu zaraz po rejestracji
 let userId = firebase.auth().currentUser.uid;
@@ -57,7 +53,8 @@ user.updateProfile({
   
    
     var storageRef = firebase.storage().ref("Usuarios/" + user.uid + "/avatar.jpg");
-    console.warn(file); // Watch Screenshot
+    console.warn(file); 
+    // Watch Screenshot
    // var uploadTask = storageRef.put(blob);
     storageRef.put(blob).then(function(snapshot){
       snapshot.ref.getDownloadURL().then(function(url){  // Now I can use url
