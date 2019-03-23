@@ -17,7 +17,7 @@ firebase.auth().onAuthStateChanged(function(user) {
       // User is signed in.
       document.getElementById("header").style.display = "none";
       document.getElementById("mess-page").style.display = "block";
-      window.alert("udalo sie zalogowac");
+  
 // testy nadal 
 // dodawania uzytkownika do bazy danych oraz uzupelnianie jego profilu zaraz po rejestracji
 let userId = firebase.auth().currentUser.uid;
@@ -32,10 +32,12 @@ user.updateProfile({
   uid: userId
 }).then(function() {
  console.log("udalo sie zmienic a raczej dodac")
+ //aby odrazu po rejestracji pokazywal sie obrazek
+ document.getElementById("usNick").innerHTML = user.displayName;
 }).catch(function(error) {
   // An error happened.
 });
-
+// dodawanie uzytkownika do bazy danych
  firebase.database().ref('users/' + userId).set({
    username: document.getElementById("nickname_id").value,
    email: document.getElementById("register_email").value,
@@ -58,6 +60,8 @@ user.updateProfile({
           user.updateProfile({
               photoURL: url       // <- URL from uploaded photo.
           }).then(function(){
+            //aby odrazu po rejestracji pokazywal sie obrazek
+            document.querySelector('img').src = user.photoURL;
               firebase.database().ref("users/" + userId).update({
                 photoURL: url   // <- URL from uploaded photo.
               });
@@ -99,18 +103,18 @@ starCountRef.on('value', function(snapshot) {
 }
 
 
-
+// wyswietlanie uzytkownika po zalogowaniu
 if (user != null) {
-  user.providerData.forEach(function (profile) {
+ // user.providerData.forEach(function (profile) {
   //  document.getElementById("usPhoto").innerHTML = profile.photoURL;
-    document.querySelector('img').src = profile.photoURL;
-    document.getElementById("usNick").innerHTML = profile.displayName;
-    console.log("Sign-in provider: " + profile.providerId);
-    console.log("  Provider-specific UID: " + profile.uid);
-    console.log("  Name: " + profile.displayName);
-    console.log("  Email: " + profile.email);
-    console.log("  Photo URL: " + profile.photoURL);
-  });
+    document.querySelector('img').src = user.photoURL;
+    document.getElementById("usNick").innerHTML = user.displayName;
+  //  console.log("Sign-in provider: " + profile.providerId);
+   // console.log("  Provider-specific UID: " + profile.uid);
+   // console.log("  Name: " + profile.displayName);
+   // console.log("  Email: " + profile.email);
+   // console.log("  Photo URL: " + profile.photoURL);
+ // });
 }
 
     } else {
@@ -145,7 +149,7 @@ document.getElementById("input_login").addEventListener("click", login)
     messenger.style.width = 0 + "%";
     messenger.style.display = "none";
     messenger.style.opacity = 0;
-    messenger.classList.remove("blur");
+    //messenger.classList.remove("blur");
     channel_container.style.transform = "initial";
     messenger.style.transform = "initial";
     user_profile_container.style.transform = "initial";
@@ -208,26 +212,26 @@ publicChannel.addEventListener("click", () =>{
 let user_button = document.getElementById("user_id");
 user_button.addEventListener("click", () =>{
 user_profile_container.style.transform = ("translate", "translate3d(-" + 200 + "%,0,0)");
-messenger.classList.add("blur");
+//messenger.classList.add("blur");
 console.log("xd");
 })
 //wyswietlenie kanalow
 let channel_button = document.getElementById("channel_id");
 channel_button.addEventListener("click", () =>{
   channel_container.style.transform = "initial";
-  messenger.classList.add("blur");
+//  messenger.classList.add("blur");
   console.log("xd");
   })
 // zamykanie profilu i kanalow
 let user_close_button = document.getElementById("test-profil");
 user_close_button.addEventListener("click", () =>{
   user_profile_container.style.transform = ("translate", "translate3d(-" + 100 + "%,0,0)");
-  messenger.classList.remove("blur");
+ // messenger.classList.remove("blur");
 })
 let channel_close_button = document.getElementById("test-channel");
 channel_close_button.addEventListener("click", () =>{
   channel_container.style.transform = ("translate", "translate3d(-" + 100 + "%,0,0)");
-  messenger.classList.remove("blur");
+ // messenger.classList.remove("blur");
 })
 
 
