@@ -276,6 +276,7 @@ display:none;
     .messenger-text{
         width:100%;
         height: calc(100% - 160px);
+        overflow-y: scroll;
     }
     .messenger-top-ul{
     
