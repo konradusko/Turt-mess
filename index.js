@@ -57,12 +57,15 @@ user.updateProfile({
     // Watch Screenshot
    // var uploadTask = storageRef.put(blob);
     storageRef.put(blob).then(function(snapshot){
-      snapshot.ref.getDownloadURL().then(function(url){  // Now I can use url
+      snapshot.ref.getDownloadURL().then(function(url){
+          // Now I can use url
+          let test = url;
+          document.getElementById("usPhoto").src = test;
           user.updateProfile({
               photoURL: url       // <- URL from uploaded photo.
           }).then(function(){
             //aby odrazu po rejestracji pokazywal sie obrazek
-            document.querySelector('img').src = user.photoURL;
+        
               firebase.database().ref("users/" + userId).update({
                 photoURL: url   // <- URL from uploaded photo.
               });
@@ -108,7 +111,7 @@ starCountRef.on('value', function(snapshot) {
 if (user != null) {
  // user.providerData.forEach(function (profile) {
   //  document.getElementById("usPhoto").innerHTML = profile.photoURL;
-    document.querySelector('img').src = user.photoURL;
+  document.getElementById("usPhoto").src = user.photoURL;
     document.getElementById("usNick").innerHTML = user.displayName;
   //  console.log("Sign-in provider: " + profile.providerId);
    // console.log("  Provider-specific UID: " + profile.uid);
@@ -117,6 +120,44 @@ if (user != null) {
    // console.log("  Photo URL: " + profile.photoURL);
  // });
 }
+
+
+// testy na wysylanie wiadomosci
+
+let send_message = document.getElementById("send-message");
+send_message.addEventListener("click", () =>{
+  let text_area = document.getElementById("messenger_text_area").value;
+  var database = firebase.database().ref().child("PublicChannel").push({
+    Message : text_area,
+    Nickname : user.displayName,
+    Photo : user.photoURL,
+    email : user.email
+  });
+
+  
+})
+
+  var messageRef = firebase.database().ref('PublicChannel/');
+  messageRef.on('child_added', function(snapshot) {
+    let message_value = snapshot.child("Message").val();
+    let nickName_value = snapshot.child("Nickname").val();
+    let photo_value = snapshot.child("Photo").val();
+    console.log(message_value);
+  // 
+  let createLi = document.createElement("li");
+  let createSpan = document.createElement("span");
+  let createDiv = document.createElement("div");
+  let createImg = document.createElement("img");
+  let createP = document.createElement("p");
+  createP.append(message_value);
+  createDiv.className = "li_div";
+  createDiv.append(createImg, createP);
+  createSpan.append(nickName_value);
+  createImg.src = photo_value;
+  createLi.append(createSpan,createDiv);
+  document.getElementById("list").append(createLi);
+  });
+
 
     } else {
       // No user is signed in.

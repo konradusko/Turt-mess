@@ -53,14 +53,7 @@ test2Button.addEventListener("click", () =>{
 
  let messText = test1.value;
 
-  var database = firebase.database().ref().child("Messenger").push();
-  database.child("Messenger").set(messText);
-  database.on('child_added', snap =>{
-    
-  
-  let name = snap.child("Messenger").val();
-  document.getElementById("list").append(name + " " +"<br>");
-  });
+ 
 
   
   

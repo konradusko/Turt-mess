@@ -248,15 +248,16 @@ justify-content: center;
     .messenger{
     background-color:blue;
     transition:1s;
-    height:100%;
+    height:100vh;
 display:none;
     width:0%;
     opacity:0;
+    flex-direction: column;
     }
     .messenger-top{
         width:100%;
         display:flex;
-        height:50px;
+        height:80px;
         flex-direction: column;
         background-color:red;
     }
@@ -272,6 +273,50 @@ display:none;
         display:block;
         text-align: center;
     }
+    .messenger-text{
+        width:100%;
+        height: calc(100% - 160px);
+    }
+    .messenger-top-ul{
+    
+        display:flex;
+        flex-direction: column;
+    }
+    .messenger-top-ul li{
+        background-color:green;
+        height:100%;
+        width:80%;
+        margin:20px auto;
+        list-style-type: none;
+        display:flex;
+        flex-direction: column;
+    }
+    .messenger-top-ul li span{
+        display:block;
+        height:30px;
+        text-align: center;
+        width:100%;
+        background-color:crimson;
+    }
+    .messenger-top-ul li .li_div{
+        width:100%;
+        height:100%;
+        display:flex;
+        flex-direction: row;
+    }
+    .messenger-top-ul li .li_div img{
+        height:80px;
+        width:80px;
+     margin:10px;
+        border-radius: 50%;
+    }
+
+.messenger-text-area{
+    width:100%;
+    height:80px;
+    background-color:yellow;
+}
+
     /* user profile */
     .user-profile-container{
         width:50%;
