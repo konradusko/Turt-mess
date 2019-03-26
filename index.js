@@ -8,7 +8,7 @@ let imageUrl = document.getElementById("input-file").value;
 
 let register_number = "undefined";
 let photoVal;
-
+let publicChannelNumber = 1;
 
 
 // logowanie
@@ -33,7 +33,9 @@ user.updateProfile({
 }).then(function() {
  console.log("udalo sie zmienic a raczej dodac")
  //aby odrazu po rejestracji pokazywal sie obrazek
- document.getElementById("usNick").innerHTML = user.displayName;
+ 
+ document.getElementById("userNick").innerHTML = user.displayName;
+ document.getElementById("user-email").innerHTML = user.email;
 }).catch(function(error) {
   // An error happened.
 });
@@ -191,13 +193,15 @@ document.getElementById("input_login").addEventListener("click", login)
   }
   function logOutThinks(){
     containerMessPage.style.width = 200 + "%";
+    messenger.style.transform = "initial";
+    user_profile_container.style.transform = "initial";
     messenger.style.width = 0 + "%";
     messenger.style.display = "none";
     messenger.style.opacity = 0;
     //messenger.classList.remove("blur");
     channel_container.style.transform = "initial";
-    messenger.style.transform = "initial";
-    user_profile_container.style.transform = "initial";
+    publicChannelNumber = 1;
+    return publicChannelNumber;
   }
   //register listenerevent
   document.getElementById("input_register").addEventListener("click", register);
@@ -240,7 +244,7 @@ document.getElementById("input_login").addEventListener("click", login)
 
 // public channel
 let publicChannel = document.getElementById("public_id");
-let publicChannelNumber = 1;
+
 publicChannel.addEventListener("click", () =>{
   containerMessPage.style.width = 300 + "%";
   channel_container.style.transform = ("translate", "translate3d(-" + 100 + "%,0,0)");
@@ -264,7 +268,8 @@ console.log("xd");
 //wyswietlenie kanalow
 let channel_button = document.getElementById("channel_id");
 channel_button.addEventListener("click", () =>{
-  channel_container.style.transform = "initial";
+
+  logOutThinks();
 //  messenger.classList.add("blur");
   console.log("xd");
   })
