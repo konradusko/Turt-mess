@@ -102,12 +102,59 @@
 
         <!--   Channels-->
             <div id="channel-container_id" class="channel-container">
-                    <span class="public-chan-name">Public Channel</span>
-                <div id="public_id" class="channel-public">
+                <div class="user-and-name">
+                    <div id="user-menu" class="user-profile">
+                    <img id="channel-user-profile" src="" alt="user-avatar">
+                    <span class="user-and-name-span"><b>Chats</b></span>
+                    </div>
                 </div>
-                <span class="public-one">Public</span>
-            
-                <p id="test-channel">zamknij</p>
+                <div class="search">
+
+                </div>
+                <div class="channels">
+                    <div class="channels-container-scroll">
+                            <div class="container-channel">
+                                    <div class="wheel-channel">
+                                            <i class="fa fa-plus" aria-hidden="true"></i>
+                                    </div>
+                                    <span class="create-chanel-span">Create Channel</span>
+                                </div>
+                                <div class="container-channel">
+                                        <div id="public_id" class="wheel-channel public-channel">
+                                       
+                                        </div>
+                                        <span class="create-chanel-span public"><b>Public</b></span>
+                                    </div>
+                    </div>
+
+                  
+                    
+                </div>
+                 <div class="users-online">
+                     <span><b>Users Online</b></span>
+               <ul class="users-online-ul">
+<li>dsa</li>
+<li>dsa</li>
+<li>dsa</li>
+<li>dsa</li>
+<li>dsa</li>
+
+<li>dsa</li>
+<li>dsa</li>
+<li>dsa</li>
+<li>dsa</li>
+
+<li>dsa</li>
+<li>dsa</li>
+<li>dsa</li>
+<li>dsa</li>
+<li>dsa</li>
+<li>dsa</li>
+<li>dsa</li>
+<li>dsa</li>
+<li>dsa</li>
+               </ul>
+                 </div>
                 </div>
                 <!--Channels-->
                 <div id="messenger_id" class="messenger">
@@ -136,11 +183,18 @@
                 </div>
              <!--user-->
                 <div id="user-profile-container_id" class="user-profile-container">
-                        <p onclick="logOut()">Wyloguj</p>
-                        <p id="test-profil">zamknij</p>
-                        
-                        <img id="usPhoto" src="" height="125" width="50"/>
-                        <div id="usNick"></div>
+                    <div class="user-back-and-log-out">
+                            <i id="arrow-back-to-channel" class="fa fa-long-arrow-left" aria-hidden="true"></i> <span onclick="logOut()"><b>LogOut</b></span>
+                    </div>
+                     <div class="user-image-profile">
+                         <img id="user-photo" src="" alt="user-avatar">
+                     </div>
+                     <div class="user-info">
+                         <span>Your Nickname: <p id="userNick"></p></span>
+                         <span>Your E-mail: <p id="user-email"></p></span>
+                         <span>Number of messages sent: <p></p></span>
+                         <span>Your Country: <p></p></span>
+                     </div>
                 </div>
                
     </div>

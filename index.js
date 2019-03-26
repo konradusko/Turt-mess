@@ -41,7 +41,8 @@ user.updateProfile({
  firebase.database().ref('users/' + userId).set({
    username: document.getElementById("nickname_id").value,
    email: document.getElementById("register_email").value,
-  photoURL : "undefined"
+  photoURL : "undefined",
+  Number_of_messages_sent:0
  });
  //dodawanie obrazka
  if(photoVal === 1){
@@ -60,12 +61,12 @@ user.updateProfile({
       snapshot.ref.getDownloadURL().then(function(url){
           // Now I can use url
           let test = url;
-          document.getElementById("usPhoto").src = test;
+          document.getElementById("user-photo").src = test;
           user.updateProfile({
               photoURL: url       // <- URL from uploaded photo.
           }).then(function(){
             //aby odrazu po rejestracji pokazywal sie obrazek
-        
+              document.getElementById("channel-user-profile").src = url;
               firebase.database().ref("users/" + userId).update({
                 photoURL: url   // <- URL from uploaded photo.
               });
@@ -111,8 +112,10 @@ starCountRef.on('value', function(snapshot) {
 if (user != null) {
  // user.providerData.forEach(function (profile) {
   //  document.getElementById("usPhoto").innerHTML = profile.photoURL;
-  document.getElementById("usPhoto").src = user.photoURL;
-    document.getElementById("usNick").innerHTML = user.displayName;
+  document.getElementById("channel-user-profile").src = user.photoURL;
+  document.getElementById("user-photo").src = user.photoURL;
+    document.getElementById("userNick").innerHTML = user.displayName;
+    document.getElementById("user-email").innerHTML = user.email;
   //  console.log("Sign-in provider: " + profile.providerId);
    // console.log("  Provider-specific UID: " + profile.uid);
    // console.log("  Name: " + profile.displayName);
@@ -187,7 +190,7 @@ document.getElementById("input_login").addEventListener("click", login)
     firebase.auth().signOut();
   }
   function logOutThinks(){
-    containerMessPage.style.width = 100 + "%";
+    containerMessPage.style.width = 200 + "%";
     messenger.style.width = 0 + "%";
     messenger.style.display = "none";
     messenger.style.opacity = 0;
@@ -237,18 +240,19 @@ document.getElementById("input_login").addEventListener("click", login)
 
 // public channel
 let publicChannel = document.getElementById("public_id");
+let publicChannelNumber = 1;
 publicChannel.addEventListener("click", () =>{
-  containerMessPage.style.width = 200 + "%";
+  containerMessPage.style.width = 300 + "%";
   channel_container.style.transform = ("translate", "translate3d(-" + 100 + "%,0,0)");
-  messenger.style.transform = ("translate", "translate3d(-" + 50 + "%,0,0)");
-  user_profile_container.style.transform = ("translate", "translate3d(-" + 100 + "%,0,0)");
+  messenger.style.transform = ("translate", "translate3d(-" + 100 + "%,0,0)");
+  user_profile_container.style.transform = ("translate", "translate3d(+" + 100 + "%,0,0)");
   messenger.style.width = 100 + "%";
   messenger.style.display = "flex";
- 
+ publicChannelNumber = 2;
   setTimeout(() => {
   messenger.style.opacity = 1;
   }, 1000);
-
+ return publicChannelNumber;
 })
 //wyswietlenie profilu uzytkownika
 let user_button = document.getElementById("user_id");
@@ -264,19 +268,20 @@ channel_button.addEventListener("click", () =>{
 //  messenger.classList.add("blur");
   console.log("xd");
   })
-// zamykanie profilu i kanalow
-let user_close_button = document.getElementById("test-profil");
-user_close_button.addEventListener("click", () =>{
-  user_profile_container.style.transform = ("translate", "translate3d(-" + 100 + "%,0,0)");
- // messenger.classList.remove("blur");
-})
-let channel_close_button = document.getElementById("test-channel");
-channel_close_button.addEventListener("click", () =>{
+
+// nowe
+let userProfile = document.getElementById("user-menu");
+userProfile.addEventListener('click', () =>{
   channel_container.style.transform = ("translate", "translate3d(-" + 100 + "%,0,0)");
- // messenger.classList.remove("blur");
+  user_profile_container.style.transform = ("translate", "translate3d(-" + 100 + "%,0,0)");
 })
-
-
+let arrowBackToChannels = document.getElementById("arrow-back-to-channel");
+arrowBackToChannels.addEventListener("click", () =>{{
+  if(publicChannelNumber === 1){
+    channel_container.style.transform =  "initial";
+  }
+  user_profile_container.style.transform = "initial";
+}})
 
 //testuje dodawanie kanalu do bazy danych
  //testuje dodawanie uzytkownika
