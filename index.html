@@ -114,7 +114,7 @@
                 <div class="channels">
                     <div class="channels-container-scroll">
                             <div class="container-channel">
-                                    <div class="wheel-channel">
+                                    <div id="create-channel_id" class="wheel-channel">
                                             <i class="fa fa-plus" aria-hidden="true"></i>
                                     </div>
                                     <span class="create-chanel-span">Create Channel</span>
@@ -125,6 +125,20 @@
                                         </div>
                                         <span class="create-chanel-span public"><b>Public</b></span>
                                     </div>
+                                    <ul class="channel-ul">
+                                        <li class="container-channel">
+                                            <div id="public_id" class="wheel-channel public-channel">
+                                           
+                                            </div>
+                                            <span class="create-chanel-span public"><b>Public</b></span>
+                                        </li>
+                                        <li class="container-channel">
+                                            <div id="public_id" class="wheel-channel public-channel">
+                                           
+                                            </div>
+                                            <span class="create-chanel-span public"><b>Public</b></span>
+                                        </li>
+                                    </ul>
                     </div>
 
                   
@@ -197,8 +211,34 @@
                      </div>
                 </div>
                
-    </div>
-   
+    
+  
+    
+            </div>
+            <div id="create-channel-form" class="create-channel">
+                <span class="create-new-channel-span">Create a new channel!</span>
+                <div class="wrap-input input-adding">
+                    <label class="label-input">Channel Name</label>
+                    <input id="channel_name_id" class="input channel-create" type="text" name="Channel Name" autocomplete="off" maxlength="10" placeholder="Channel Name" required="">
+                    <span class="focus-input"></span>
+                </div>
+                <div class="wrap-input input-adding">
+                    <label class="label-input">Your Channel Password</label>
+                    <input id="channel_password_id" class="input channel-create" type="password" name="Channel Password" autocomplete="off" maxlength="25" placeholder="Channel Password" required="">
+                    <span class="focus-input"></span>
+                </div>
+                <div class="wrap-input input-file-wrap">
+                        <label class="label-input">Channel photo</label>
+                        <input id="channel-photo" class="input input-file" type="file" name="pic" accept=".jpg,.jpeg,.png" onchange="channelP()">
+                        <span class="focus-input"></span>
+                    </div>
+                <div class="wrap-buttons buttons-New_channel">
+                    <button id="button-New-channel" class="button_Sign-In button-adding"> Create</button>
+                    <button id="button-cancel_id" class="button_Sign-Up button-cancel"> Cancel </button>
+             </div>
+             <span id="newChannel-error" class="info-span"></span>
+             
+            </div>
 </main>
 
     <script src="app.js"></script>

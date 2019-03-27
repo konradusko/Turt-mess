@@ -234,7 +234,7 @@ justify-content: center;
     width:100%;
     height:100%;
 }
-.user-and-name img{
+.user-and-name  img{
     height:40px;
     width:40px;
     margin:auto 10px;
@@ -311,6 +311,13 @@ justify-content: center;
     display:block;
     color:white;
 }
+.channel-ul{
+    width:100%;
+    height:100%;
+    list-style-type: none;
+    display:flex;
+    flex-direction: row;
+} 
 .users-online{
     width:90%;
     margin:0 auto;
@@ -337,7 +344,35 @@ justify-content: center;
     margin:10px auto 10px auto;
     
 }
-   
+   /* create a new channel */
+   .create-channel{
+       width:100%;
+       height:100%;
+       display:none;
+       position: absolute;
+       top:0;
+       left:0;
+       opacity:0;
+        background:#333333;
+       z-index: 3;
+       transition:1s;
+   }
+   .buttons-New_channel{
+       margin:30px auto 10px auto;
+   }
+   .create-new-channel-span{
+       display:block;
+       width:90%;
+       margin:10px auto;
+       font-size:20px;
+       color:white;
+   }
+   .channel-create, .button-cancel{
+       color:white;
+   }
+   .buttons-New_channel{
+       height:60px;
+   }
    
     /* messenger */
   
