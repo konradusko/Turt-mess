@@ -9,7 +9,7 @@ let imageUrl = document.getElementById("input-file").value;
 let register_number = "undefined";
 let photoVal;
 let publicChannelNumber = 1;
-
+let channelphotoVal = 0;
 
 // logowanie
 firebase.auth().onAuthStateChanged(function(user) {
@@ -25,7 +25,7 @@ let user =  firebase.auth().currentUser;
 if(register_number === "czx9DJSAD5jncya9D8da934N2"){
 console.log("lul");
 
-
+//update user profilu o jego nick i id(email juz posiada)
 user.updateProfile({
   displayName: document.getElementById("nickname_id").value,
  // photoURL: document.getElementById("input-file").value,
@@ -57,11 +57,10 @@ user.updateProfile({
    
     var storageRef = firebase.storage().ref("Usuarios/" + user.uid + "/avatar.jpg");
     console.warn(file); 
-    // Watch Screenshot
-   // var uploadTask = storageRef.put(blob);
+  
     storageRef.put(blob).then(function(snapshot){
       snapshot.ref.getDownloadURL().then(function(url){
-          // Now I can use url
+       
           let test = url;
           document.getElementById("user-photo").src = test;
           user.updateProfile({
@@ -95,7 +94,7 @@ user.updateProfile({
       firebase.database().ref("users/" + userId).update({
         photoURL: userNophoto   // <- URL from uploaded photo.
       });
-    console.log("jednak nie dzialasz ?");
+  
 });
   }
 
@@ -107,7 +106,7 @@ return strIng;
   
   console.log("nothing");
 }
-test();
+//test();
 function test(){
 //testyyy to jest pobieranie wartosci
 var starCountRef = firebase.database().ref('users');
@@ -174,24 +173,39 @@ send_message.addEventListener("click", () =>{
   });
   
 // tworzenie kanalu
-let channelphotoVal;
+
 let create_channel = document.getElementById("button-New-channel");
 create_channel.addEventListener("click", () =>{
   let channel_name = document.getElementById("channel_name_id").value;
   let channel_password = document.getElementById("channel_password_id").value;
   let error_message = document.getElementById("newChannel-error");
-  let randomString = Math.random().toString(36).substring(5);
+  let randomValue = Math.random().toString(36).substring(5);
+  function randomString(len, charSet) {
+    charSet = charSet || 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var randomString = '';
+    for (var i = 0; i < len; i++) {
+        var randomPoz = Math.floor(Math.random() * charSet.length);
+        randomString += charSet.substring(randomPoz,randomPoz+1);
+    }
+    return randomString;
+}
+var randomString = randomString(35);
   //valid photo
  
   if(channel_name.length > 1 && channel_password.length > 1){
   // dodawanie kanalu do bazy danych
-  firebase.database().ref("Channels/" + randomString).set({
+let tescik = firebase.database().ref("Channels/" + randomString).set({
     ChannelName: channel_name,
    ChannelPassword: channel_password,
-   Channel_Id : randomString
+   unique_id : randomString,
+   Channel_Id : randomValue,
+   ChannelPhoto: "https://firebasestorage.googleapis.com/v0/b/messenger-6923c.appspot.com/o/No-Photo-Available.jpg?alt=media&token=e7d6e25d-eb5b-4262-8287-c6b976791840" 
+
      
   });
 
+
+console.log(channelphotoVal);
    if(channelphotoVal === 1){
     let file = document.getElementById("channel-photo").files[0];
     var reader = new FileReader();
@@ -200,20 +214,26 @@ create_channel.addEventListener("click", () =>{
       var storageRef = firebase.storage().ref("Channels/" + randomString + "/Channel_photo.jpg");
       storageRef.put(blob).then(function(snapshot){
         snapshot.ref.getDownloadURL().then(function(url){
+          let ur = url;
           firebase.database().ref("Channels/" + randomString).update({
-            ChannelPhoto: url   // <- URL from uploaded photo.
+            ChannelPhoto: ur   // <- URL from uploaded photo.
+          
+          }).then(function(){
+      
           });
+          console.log("update");
         });
     });
     }
     reader.onerror = function (e) {
         console.log("Failed file read: " + e.toString());
+  
     };
     reader.readAsArrayBuffer(file);
+  
+ 
    }else{
-    firebase.database().ref("Channels/" + randomString).update({
-      ChannelPhoto: "https://firebasestorage.googleapis.com/v0/b/messenger-6923c.appspot.com/o/No-Photo-Available.jpg?alt=media&token=e7d6e25d-eb5b-4262-8287-c6b976791840"  // <- URL from uploaded photo.
-    });
+
    }
     
 
@@ -232,9 +252,51 @@ create_channel.addEventListener("click", () =>{
   }
  
    
-  //end valid photo
+
 
 })
+CreateChannelsOnLoad();
+function CreateChannelsOnLoad(){
+  let channelsRef = firebase.database().ref('Channels/');
+  channelsRef.on('child_added', function(snapshot) {
+    console.log(snapshot.val());
+    let channelsname = snapshot.child("ChannelName").val();
+    let channelsPassword = snapshot.child("ChannelPassword").val();
+    let channels_id = snapshot.child("Channel_Id").val();
+    let channels_img = snapshot.child("ChannelPhoto").val();
+    let channel_li = document.createElement("li");
+  let create_div = document.createElement("div");
+  let create_span = document.createElement("span");
+  let create_img = document.createElement("img");
+  channel_li.id = channels_id;
+  channel_li.className = "container-channel";
+  create_div.className = "wheel-channel";
+  create_span.classList = "create-chanel-span";
+  create_div.append(create_img);
+  create_img.src = channels_img;
+  create_span.append(channelsname);
+  channel_li.append(create_div, create_span);
+  document.getElementById("channel-ul-container").append(channel_li);
+  });
+  channelsRef.on("child_changed", function(snapshot){
+    console.log(snapshot.val());
+   let channel_img = snapshot.child("ChannelPhoto").val();
+   let channels_id = snapshot.child("Channel_Id").val();
+ let img_container = document.getElementById(channels_id).firstElementChild;
+ console.log(img_container);
+ console.log(channels_id);
+ console.log(channel_img);
+ let img_container2 = img_container.firstElementChild;
+ img_container2.src = channel_img;
+
+  })
+}
+
+
+
+//wyswietlanie listy kanałow ^ wyzej
+
+
 
 
     } else {
@@ -444,7 +506,10 @@ function channelP(){
     let numb = channelphotoVal = 1;
     return numb;
 }else {
+
   error_message.innerHTML = "The picture has a bad format.";
   error_message.style.color = "crimson";
+  let numb = channelphotoVal = 0;
+  return numb;
 }
 }
