@@ -380,7 +380,63 @@ justify-content: center;
    .buttons-New_channel{
        height:60px;
    }
-   
+   /* login to channel */
+   .login-to-channel-form{
+       width:80%;
+flex-direction: column;
+       display:none;
+       left: 50%;
+       top: 50%;
+       transform: translate(-50%,-50%);
+       height:270px;
+       background-color:darkslategray;
+       position: absolute;
+       z-index:10;
+       justify-content: space-between;
+       opacity:0;
+       transition:1s;
+       border-radius:5px;
+   }
+   .login-to-channel-form img{
+       width:70px;
+       height:70px;
+       border-radius:50%;
+       margin:10px auto;
+   }
+   .login-to-channel-form .login-to-channel-span{
+       display:block;
+       width:100%;
+       height:20px;
+       text-align: center;
+       color:white;
+   }
+   .login-to-channel-form .wrap-input{
+       margin:10px auto;
+   }
+   .login-to-channel-form .channel-login{
+       height:20px;
+   }
+   .login-to-channel-form .label-input{
+font-size:15px;
+   }
+   .login-to-channel-form .buttons-login-to-channel{
+       margin:0 auto;
+       height:60px;
+
+   }
+   .login-to-channel-form .buttons-login-to-channel .button-login{
+       width:70px;
+       height:40px;
+   }
+   .login-to-channel-form .buttons-login-to-channel .button-cancel{
+       width:70px;
+       height:40px;
+   }
+   .login-to-channel-form .error-join{
+       color:red;
+       font-size:15px;
+       margin:5px auto;
+   }
     /* messenger */
   
     .messenger{
