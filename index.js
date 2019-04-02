@@ -245,6 +245,7 @@ console.log(channelphotoVal);
 
 
 })
+
 CreateChannelsOnLoad();
 function CreateChannelsOnLoad(){
   let channelsRef = firebase.database().ref('Channels/');
@@ -258,7 +259,7 @@ function CreateChannelsOnLoad(){
   let create_span = document.createElement("span");
   let create_img = document.createElement("img");
   channel_li.id = channels_id;
-  channel_li.className = "container-channel";
+  channel_li.className = "container-channel test";
   create_div.className = "wheel-channel created";
   create_span.classList = "create-chanel-span";
   create_div.append(create_img);
@@ -266,20 +267,31 @@ function CreateChannelsOnLoad(){
   create_span.append(channelsname);
   channel_li.append(create_div, create_span);
   document.getElementById("channel-ul-container").append(channel_li);
+ 
+
+ let indexOne = 0;
+ let indexTwo = 0;
+ let login_photo = document.getElementById("channel-login-photo");
+let login_name = document.getElementById("channel-login-name");
+let form = document.getElementById("login-to-channel_id");
+let btnCancel = document.getElementById("login-to-channel-cancel");
+let btnJoin = document.getElementById("login-to-channel-join");
+let joinError = document.getElementById("login-to-channel-span-error");
+
   let joinChannel = document.getElementById(channels_id);
   joinChannel.addEventListener("click", function(){
-   let login_photo = document.getElementById("channel-login-photo");
-   let login_name = document.getElementById("channel-login-name");
-   let form = document.getElementById("login-to-channel_id");
-   let btnCancel = document.getElementById("login-to-channel-cancel");
-   let btnJoin = document.getElementById("login-to-channel-join");
-   let joinError = document.getElementById("login-to-channel-span-error");
-  // let passwordChannel = snapshot.child("ChannelPassword").val();
-   //console.log(passwordChannel);
-   //let pass = passwordChannel;
+   
 
 
-btnJoin.addEventListener("click", joinConfirmPassword);
+
+ //console.log(click_test);
+ //console.log(test22);
+ //console.log(xsa);
+
+
+   
+
+
 
 form.style.display = "flex";
 login_photo.src = channels_img;
@@ -288,52 +300,167 @@ setTimeout(() => {
  form.style.opacity = 1;
  }, 1000);
 
- //anulacja
-   btnCancel.addEventListener("click", () =>{
-    form.style.opacity = 0;
-    setTimeout(() => {
-      form.style.display = "none";
-      login_photo.src = "";
-      login_name.innerHTML = "";
-      }, 1000);
-      document.getElementById("login-to-channel-password").value = "";
-   })
  
-/* nie dziala */
-   function joinConfirmPassword(){
-    var ref = firebase.database().ref('Channels/' + uniquieID);
-    ref.orderByChild(uniquieID).on("child_added", function(snapshot) {
-console.log(snapshot.val())
-let ku = snapshot.child("ChannelPassword").val();
-    })
-    /*let channelsRef2 = firebase.database().ref('Channels/' + uniquieID);
-    channelsRef2.limitToLast(1).once('value', function(snapshot) {
-console.log(snapshot.val())
-    })
-    */
-    
-      
-   
-      let login_channelPassword = document.getElementById("login-to-channel-password").value;
-      if(snapshot.child("ChannelPassword").val() === login_channelPassword){
 
-        joinError.innerHTML = "The password provided is good."
-        joinError.style.color = "white";
-        textx22();
-      }else{
-        joinError.innerHTML = "The password provided is wrong."
-        joinError.style.color = "red";
-      }
-    
+
   
-    
-  }
-  function textx22(){
-  console.log(uniquieID);
-  }
+  //console.log(testhktory);
+  /*
+    if(test3Click){
+     // console.log("w srodku");
+   
+    }else{
+  //    console.log("nie w srodku");
+      if(clickInSide){
+        console.log("form w sordku");
+      }else{
+        console.log("form-nie-w-sridku")
+      }
+      
+     //  cancelForm();
+    }
+*/
+
+
+
+
+
+
+ 
+// sprawdzanie hasla podanego przez uzytkowniak (if pass === pass){pobierz wiadomosci z bazy danych}
+btnJoin.addEventListener("click", snapAndCheckPasswords())
+
+function snapAndCheckPasswords(){
+
+    var ref = firebase.database().ref('Channels/' + uniquieID);
+ref.orderByChild("Channel_Id").once("value", function(snapshot) {
+    let passwordFromDatabase = snapshot.child("ChannelPassword").val();
+    console.log(passwordFromDatabase);
+  
+    let login_channelPassword = document.getElementById("login-to-channel-password").value;
+    console.log(login_channelPassword);
+    console.log(passwordFromDatabase + ""+ "haslo z bazy danych");
+    if(passwordFromDatabase === login_channelPassword){
+  
+      joinError.innerHTML = "The password provided is good."
+      joinError.style.color = "white";
+      console.log(login_channelPassword+" "+ "true");
+      textx22();
+
+    }else{
+      joinError.innerHTML = "The password provided is wrong."
+      joinError.style.color = "red";
+      console.log(login_channelPassword +" "+ "false");
+      console.log(login_channelPassword.length)
+    }
+ 
 
   })
-  });
+    
+    
+    
+  }
+      
+
+
+
+
+  btnCancel.addEventListener("click", cancelForm)
+ //anulacja
+ function cancelForm(){
+  form.style.opacity = 0;
+  setTimeout(() => {
+    form.style.display = "none";
+    login_photo.src = "";
+    login_name.innerHTML = "";
+    }, 1000);
+    document.getElementById("login-to-channel-password").value = "";
+    let rtnIndOne1 = indexOne = 3;
+    let rtnIndTw2 = indexTwo =0;
+    
+  //  window.removeEventListener("click", clickEventList, false);
+  clickEvent();
+    return rtnIndOne1, rtnIndTw2;
+ }
+  
+ 
+/* nie dziala */
+ 
+  function textx22(){
+  console.log(uniquieID);
+  console.log("xddddd");
+  window.alert("no i dziala jak powinno");
+  }
+
+
+  let rtnIndOne = indexOne=0;
+let rtnIndTwo = indexTwo = 1;
+console.log(indexTwo);
+clickEvent();
+ return rtnIndOne,rtnIndTwo;
+
+ 
+ 
+  })
+  // klikniecie poza form do logowania = zamkniecie go, i wylaczenie eventu
+  function clickEvent(){
+
+  
+  console.log(indexTwo + "indx two");
+  console.log(indexOne + "to jest indexOne 222samo powinien miec 0");
+if(indexTwo === 1){
+  window.addEventListener("click", function clickEventList(event){
+    let clickInSide = document.getElementById("login-to-channel_id").contains(event.target);
+    console.log(indexOne + "to jest indexOne samo ");
+ console.log(indexTwo);
+    if(indexOne === 1){
+   //  console.log("xd equal indexOne")
+    if(clickInSide){
+    //  console.log("click in side")
+  
+    }else{
+     // console.log("not in side")
+      form.style.opacity = 0;
+      setTimeout(() => {
+        form.style.display = "none";
+        login_photo.src = "";
+        login_name.innerHTML = "";
+        }, 1000);
+        document.getElementById("login-to-channel-password").value = "";
+
+      let rtnInOne = indexOne =0;
+      window.removeEventListener("click", clickEventList, false);
+     
+      return rtnInOne;
+   
+  
+    }
+  
+  
+  }else if(indexOne === 0){
+  console.log("indexOne equal zero")
+  
+   let returnIndOne = indexOne = 1;
+   
+  
+  
+   return returnIndOne;
+  }else if(indexOne === 3){
+    window.removeEventListener("click", clickEventList, false);
+  }
+  
+  })
+}else{
+console.log("00");
+
+
+}
+
+  }
+
+});
+
+// po dodaniu kanalu automatycznie zmienia obrazek na obrazek dodany przez uzytkownika
   channelsRef.on("child_changed", function(snapshot){
     console.log(snapshot.val());
    let channel_img = snapshot.child("ChannelPhoto").val();
@@ -349,54 +476,9 @@ console.log(snapshot.val())
 }
 
 
-//joinTochannel();
-
-
-function joinTochannel(){
-  let channelRef=firebase.database().ref('Channels/');
-  channelRef.on("child_added", function(snap){
-//console.log(snap.val());
-let snapArray = snap.val();
-console.log(snapArray);
-console.log(snapArray.length);
-
-/*
-for(let i = 0; i < snapArray.length; i++){
-  console.log("działa ?");
-  snapArray[i].addEventListener("click", function(){
-    console.log("you click on this " + i);
-  })
-}
-  */
-
- 
-})
 
 
 
-
-}
-//testxxxxx();
-function testxxxxx(){
-  var query = firebase.database().ref('Channels/').orderByKey();
-query.once("value")
-  .then(function(snapshot) {
-    snapshot.forEach(function(childSnapshot) {
-      // key will be "ada" the first time and "alan" the second time
-      var key = childSnapshot.key;
-      // childData will be the actual contents of the child
-      var childData = childSnapshot.val();
-      let imageArray = [];
-
-// shape is something
-imageArray.push(childData);
-
-
-   
-      console.log(imageArray);
-  });
-});
-}
 //wyswietlanie listy kanałow ^ wyzej
 
 
@@ -548,36 +630,8 @@ cancelCreate_form.addEventListener("click", () =>{
   }, 1500);
 })
 
-
-//testuje dodawanie kanalu do bazy danych
- //testuje dodawanie uzytkownika
- //create reference
-
- 
-
-
- /*
-  //updates['/posts/' + writeUserDataKey] = postData;
-  adduserData();
- 
-  
-  // dodac do uzytkownika : jego nazwa itd itd
- 
-if (user != null) {
-  user.providerData.forEach(function (user) {
-    console.log("  Name: " + user.username);
-    console.log("  Email: " + user.email);
-    console.log("  Photo URL: " + user.photoURL);
-  });
-}
-
-
-
-function adduserData(){
-userRef.on('child_added', snap => console.log(snap.val()));
-}
-*/
-// valid image
+// sprawdzenie czy zdj uzytkownika jest ok
+// w przyszlosci dodac maksymalny rozmiar zdj
 function validateFileType(){
   let error_message = document.getElementById("error-file");
   let fileName = document.getElementById("input-file").value;
@@ -595,7 +649,8 @@ function validateFileType(){
       error_message.style.color = "crimson";
   }   
 }
-
+// sprawdzenie czy zdj kanału jest ok
+// w przyszlosci dodac maksymalny rozmiar zdj
 function channelP(){
   let channel_photo = document.getElementById("channel-photo").value;
   let error_message = document.getElementById("newChannel-error");
