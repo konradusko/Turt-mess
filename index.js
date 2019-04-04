@@ -259,7 +259,7 @@ function CreateChannelsOnLoad(){
   let create_span = document.createElement("span");
   let create_img = document.createElement("img");
   channel_li.id = channels_id;
-  channel_li.className = "container-channel test";
+  channel_li.className = "container-channel";
   create_div.className = "wheel-channel created";
   create_span.classList = "create-chanel-span";
   create_div.append(create_img);
@@ -278,19 +278,19 @@ let btnCancel = document.getElementById("login-to-channel-cancel");
 let btnJoin = document.getElementById("login-to-channel-join");
 let joinError = document.getElementById("login-to-channel-span-error");
 
+
+
+
+
   let joinChannel = document.getElementById(channels_id);
-  joinChannel.addEventListener("click", function(){
-   
+  joinChannel.addEventListener("click", () =>{
+ 
+    document.getElementById("channel-ul-container").classList.add("block-click");
 
-
-
- //console.log(click_test);
- //console.log(test22);
- //console.log(xsa);
-
+  
+    
 
    
-
 
 
 form.style.display = "flex";
@@ -298,50 +298,35 @@ login_photo.src = channels_img;
 login_name.innerHTML = channelsname;
 setTimeout(() => {
  form.style.opacity = 1;
- }, 1000);
+ }, 500);
 
  
-
-
-  
-  //console.log(testhktory);
-  /*
-    if(test3Click){
-     // console.log("w srodku");
-   
-    }else{
-  //    console.log("nie w srodku");
-      if(clickInSide){
-        console.log("form w sordku");
-      }else{
-        console.log("form-nie-w-sridku")
-      }
-      
-     //  cancelForm();
-    }
-*/
-
-
-
-
-
 
  
 // sprawdzanie hasla podanego przez uzytkowniak (if pass === pass){pobierz wiadomosci z bazy danych}
-btnJoin.addEventListener("click", snapAndCheckPasswords())
 
-function snapAndCheckPasswords(){
+//snapAndCheckPasswords();
+//function snapAndCheckPasswords(){
+ // 
+
+ btnJoin.addEventListener("click", () =>{
+ // snapAndCheckPasswords();
+  //function snapAndCheckPasswords(){
 
     var ref = firebase.database().ref('Channels/' + uniquieID);
 ref.orderByChild("Channel_Id").once("value", function(snapshot) {
     let passwordFromDatabase = snapshot.child("ChannelPassword").val();
-    console.log(passwordFromDatabase);
-  
+    console.log(uniquieID);
+    console.log(snapshot.val());
+
+   
+
+
     let login_channelPassword = document.getElementById("login-to-channel-password").value;
-    console.log(login_channelPassword);
-    console.log(passwordFromDatabase + ""+ "haslo z bazy danych");
+    console.log(passwordFromDatabase + "  "+ "baza danych");
+    console.log(login_channelPassword)
     if(passwordFromDatabase === login_channelPassword){
-  
+ 
       joinError.innerHTML = "The password provided is good."
       joinError.style.color = "white";
       console.log(login_channelPassword+" "+ "true");
@@ -353,13 +338,21 @@ ref.orderByChild("Channel_Id").once("value", function(snapshot) {
       console.log(login_channelPassword +" "+ "false");
       console.log(login_channelPassword.length)
     }
- 
+    //console.log(passwordFromDatabase + ""+ "haslo z bazy danych");
 
-  })
+  });  
+   //console.log(passwordFromDatabase);
+  
+  
+   // console.log(login_channelPassword);
+  
     
-    
-    
-  }
+  
+
+
+  
+ //}
+})
       
 
 
@@ -373,12 +366,15 @@ ref.orderByChild("Channel_Id").once("value", function(snapshot) {
     form.style.display = "none";
     login_photo.src = "";
     login_name.innerHTML = "";
+    document.getElementById("channel-ul-container").classList.remove("block-click");
     }, 1000);
-    document.getElementById("login-to-channel-password").value = "";
+  //  document.getElementById("login-to-channel-password").value = "";
     let rtnIndOne1 = indexOne = 3;
     let rtnIndTw2 = indexTwo =0;
+
+    console.log("czy to sie dziejej x1");
+ 
     
-  //  window.removeEventListener("click", clickEventList, false);
   clickEvent();
     return rtnIndOne1, rtnIndTw2;
  }
@@ -396,7 +392,10 @@ ref.orderByChild("Channel_Id").once("value", function(snapshot) {
   let rtnIndOne = indexOne=0;
 let rtnIndTwo = indexTwo = 1;
 console.log(indexTwo);
+
 clickEvent();
+
+
  return rtnIndOne,rtnIndTwo;
 
  
@@ -405,40 +404,50 @@ clickEvent();
   // klikniecie poza form do logowania = zamkniecie go, i wylaczenie eventu
   function clickEvent(){
 
-  
-  console.log(indexTwo + "indx two");
-  console.log(indexOne + "to jest indexOne 222samo powinien miec 0");
+     //console.log(indexTwo + "indx two");
+  //console.log(indexOne + "to jest indexOne 222samo powinien miec 0");
 if(indexTwo === 1){
   window.addEventListener("click", function clickEventList(event){
     let clickInSide = document.getElementById("login-to-channel_id").contains(event.target);
-    console.log(indexOne + "to jest indexOne samo ");
- console.log(indexTwo);
+   // console.log(indexOne + "to jest indexOne samo ");
+// console.log(indexTwo);
     if(indexOne === 1){
    //  console.log("xd equal indexOne")
     if(clickInSide){
     //  console.log("click in side")
   
     }else{
-     // console.log("not in side")
-      form.style.opacity = 0;
-      setTimeout(() => {
-        form.style.display = "none";
-        login_photo.src = "";
-        login_name.innerHTML = "";
-        }, 1000);
-        document.getElementById("login-to-channel-password").value = "";
-
-      let rtnInOne = indexOne =0;
       window.removeEventListener("click", clickEventList, false);
+       // console.log("not in side")
+        form.style.opacity = 0;
+        setTimeout(() => {
+          form.style.display = "none";
+          login_photo.src = "";
+          login_name.innerHTML = "";
+        //  console.log("czy to sie dziejej x2");
+        document.getElementById("channel-ul-container").classList.remove("block-click");
+          }, 1000);
+        //  document.getElementById("login-to-channel-password").value = "";
+  
+       
      
-      return rtnInOne;
+   
+        let rtnInOne = indexOne =0;
+       // let indx3 = indexThree =1;
+       console.log("wylacza sie ");
+  
+    return rtnInOne;
+  
+      
+     
+     
    
   
     }
   
   
   }else if(indexOne === 0){
-  console.log("indexOne equal zero")
+  //console.log("indexOne equal zero")
   
    let returnIndOne = indexOne = 1;
    
@@ -447,14 +456,20 @@ if(indexTwo === 1){
    return returnIndOne;
   }else if(indexOne === 3){
     window.removeEventListener("click", clickEventList, false);
+   
   }
   
   })
 }else{
-console.log("00");
+//console.log("00");
 
 
 }
+
+  
+
+ 
+ 
 
   }
 
