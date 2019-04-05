@@ -303,7 +303,7 @@ console.log("is true" + uniquieID)
 
 let yy;
 let xx;
-return xdku = yy = uniquieID;
+//return xdku = yy = uniquieID, xdku2 = xx =passwordTest;
 
     }else if(xd2 === false){
 
@@ -326,7 +326,7 @@ joinChannel.addEventListener("click", () =>{
    }, 500);
 
   ///
-  var ref = firebase.database().ref('Channels/' + xdku2);
+  var ref = firebase.database().ref('Channels/' + uniquieID);
   ref.once("value", function(snapshot) {
   //  console.log("its work?")
  // let passwordTest = snapshot.child("ChannelPassword").val();
@@ -336,7 +336,7 @@ joinChannel.addEventListener("click", () =>{
    
     console.log("xasa");
     btnJoin.addEventListener("click", () =>{
-      let passwordTest = snapshot.child("ChannelPassword").val();
+       let passwordTest = snapshot.child("ChannelPassword").val();
       // snapAndCheckPasswords();
        //function snapAndCheckPasswords(){
    
