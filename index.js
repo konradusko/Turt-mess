@@ -355,7 +355,7 @@ joinChannel.addEventListener("click", () =>{
 
 let xda = passwordTest;
 console.log(xda+"baza danych");
-function lel(){
+
   if(xda === login_channelPassword){
       
     joinError.innerHTML = "The password provided is good."
@@ -369,9 +369,8 @@ function lel(){
     console.log(login_channelPassword +" "+ "false");
     console.log(login_channelPassword.length)
   }
-}
-        
-return xda = "undefined";
+
+    
      })
 
 
