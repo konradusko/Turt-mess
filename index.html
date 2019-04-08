@@ -1,84 +1,276 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link href="style.css" rel=" stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+        integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <script src="https://www.gstatic.com/firebasejs/5.8.6/firebase.js"></script>
-<script>
-  // Initialize Firebase
-  var config = {
-    apiKey: "AIzaSyBwF4-y1KP0NzANmguzONurzTdMvZpML28",
-    authDomain: "messenger-6923c.firebaseapp.com",
-    databaseURL: "https://messenger-6923c.firebaseio.com",
-    projectId: "messenger-6923c",
-    storageBucket: "messenger-6923c.appspot.com",
-    messagingSenderId: "333257033582"
-  };
-  firebase.initializeApp(config);
-</script>
+    <script>
+        // Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyBwF4-y1KP0NzANmguzONurzTdMvZpML28",
+            authDomain: "messenger-6923c.firebaseapp.com",
+            databaseURL: "https://messenger-6923c.firebaseio.com",
+            projectId: "messenger-6923c",
+            storageBucket: "messenger-6923c.appspot.com",
+            messagingSenderId: "333257033582"
+        };
+        firebase.initializeApp(config);
+    </script>
     <title>Turt-mess</title>
 </head>
-<body>
-<section id="log-page" class="login-page">
-<div class="login-page-background">
 
-</div>
-<div class="login-page-login-form">
-    <div class="login-form">
-        <div class="login-form-container">
-                <div id="login_form_id" class="login">
-                        <h1>Zaloguj się</h1>
-                            <div class="login-form_glob" >
-                                    <label for="userMail"><b>E-mail</b></label>
-                                    <input  id="login-mail" type="text" placeholder="Adres E-mail" name="userMail" required>
-                                    <label for="psw"><b>Hasło</b></label>
-                  <input id="login_password" type="password" placeholder="Podaj hasło" name="psw" required>
-                                    <input id="input_login" type="submit"> 
-                                    <span ><b id="span_login" class="error"></b></span>
-                                    <label>
-                                     <input type="checkbox" checked="checked" name="remember"> Remember me
-                                  </label>
-                                  <p>Nie posiadasz konta ? <a id="register_form">Zarejestruj się</a>.</p>
-                                </div>
+<body>
+
+    <header id="header" class="header header-login">
+        <div id="login_background" class="login-background">
+            <h1>Turt-Mess</h1>
+        </div>
+        <div class="login">
+            <div id="login-container" class="login-container">
+                <div id="login_form_id" class="login-container-login-form">
+                    <span class="login-form-title">
+                        <h2>Sign in</h2>
+                    </span>
+
+                    <div class="wrap-input">
+                        <label class="label-input">Email</label>
+                        <input class="input" id="login-mail" type="text" name="email" autocomplete="off"
+                            placeholder="Email..." required>
+                        <span class="focus-input"></span>
                     </div>
-                    <div id="register_form_id" class="register">
-                        <h2>Rejestracja</h2>
-                            <div class="login-form_glob">
-                                    <label for="email"><b>E-mail</b></label>
-                                    <input id="register_email" type="text" placeholder="Adres E-mail" name="email" required>
-                                    <label for="psw"><b>Hasło</b></label>
-                                    <input id="register_password_one" type="password" placeholder="Podaj hasło" name="psw" required>
-                                    <label for="psw-repeat"><b>Powtórz Hasło</b></label>
-                                    <input id="register_password_two" type="password" placeholder="Powtórz Hasło" name="psw-repeat" required>
-                                    <input id="input_register" type="submit">
-                                    <span><b id="span_register" class="error"></b></span>
-                                    <p>Posiadasz już konto ? <a id="login_form">Zaloguj się</a>.</p>
+                    <div class="wrap-input">
+                        <label class="label-input">Password</label>
+                        <input class="input" id="login_password" type="password" name="password"
+                            placeholder="***********" required>
+                        <span class="focus-input"></span>
+                    </div>
+                    <span id="login-error" class="error-Input-file error"></span>
+                    <div class="wrap-buttons">
+                        <button class="button_Sign-In" id="input_login"> Sign In</button>
+                        <button id="register_form" class="button_Sign-Up"> Sign Up <i class="fa fa-long-arrow-right"
+                                aria-hidden="true"></i></button>
+                    </div>
+
+                </div>
+                <div id="register_form_id" class="login-container-register-form">
+                    <span class="login-form-title">
+                        <h3>Sign Up</h3>
+                    </span>
+
+                    <div class="wrap-input">
+                        <label class="label-input">Email</label>
+                        <input id="register_email" class="input" type="text" name="email" autocomplete="off"
+                            placeholder="Email..." required>
+                        <span class="focus-input"></span>
+                    </div>
+                    <div class="wrap-input">
+                        <label class="label-input">Password</label>
+                        <input id="register_password_one" class="input" type="password" name="password"
+                            placeholder="***********" required>
+                        <span class="focus-input"></span>
+                    </div>
+                    <div class="wrap-input">
+                        <label class="label-input">Repeat Password</label>
+                        <input id="register_password_two" class="input" type="password" name="password"
+                            placeholder="***********" required>
+                        <span class="focus-input"></span>
+                    </div>
+                    <div class="wrap-input">
+                        <label class="label-input">Your Nickname</label>
+                        <input id="nickname_id" class="input" type="text" name="Nickname" autocomplete="off"
+                            maxlength="25" placeholder="Nickname" required>
+                        <span class="focus-input"></span>
+                    </div>
+                    <div class="wrap-input input-file-wrap">
+                        <label class="label-input">Your Picture*</label>
+                        <input id="input-file" class="input input-file" type="file" name="pic" accept=".jpg,.jpeg,.png"
+                            onchange="validateFileType()">
+                        <span class="focus-input"></span>
+                    </div>
+                    <span id="error-file" class="error-Input-file"></span>
+                    <div class="wrap-input">
+                        <label class="label-input">Your Country*</label>
+                        <input class="input" type="text" name="Country" autocomplete="off" maxlength="20"
+                            placeholder="Country" required>
+                        <span class="focus-input"></span>
+                    </div>
+                    <div class="wrap-input">
+                        <span class="terms">By registering I agree to the <b>Terms of Use</b></span>
+                    </div>
+                    <span id="register-error" class="error-Input-file error"></span>
+                    <div class="wrap-buttons">
+                        <button id="input_register" class="button_Sign-In"> Sign Up</button>
+                        <button id="login_form" class="button_Sign-Up"> Sign In <i class="fa fa-long-arrow-left"
+                                aria-hidden="true"></i></button>
+                    </div>
+                    <span class="info-span">*Fields are not required.</span>
+
+                </div>
+            </div>
+        </div>
+    </header>
+    <main id="mess-page" class="mess-page">
+        <div id="container-mess-page_id" class="container-mess-page">
+
+            <!--   Channels-->
+            <div id="channel-container_id" class="channel-container">
+                <div class="user-and-name">
+                    <div class="user-profile">
+                        <div id="user-menu" class="us-photo-container"><img id="channel-user-profile" src=""
+                                alt="user-avatar"></div>
+                        <span class="user-and-name-span"><b>Chats</b></span>
+                    </div>
+                </div>
+                <div class="search">
+
+                </div>
+                <div class="channels">
+                    <div class="channels-container-scroll">
+                        <div class="container-channel">
+                            <div id="create-channel_id" class="wheel-channel">
+                                <i class="fa fa-plus" aria-hidden="true"></i>
                             </div>
+                            <span class="create-chanel-span">Create Channel</span>
+                        </div>
+                        <div class="container-channel">
+                            <div id="public_id" class="wheel-channel public-channel">
+
+                            </div>
+                            <span class="create-chanel-span public"><b>Public</b></span>
+                        </div>
+                        <ul id="channel-ul-container" class="channel-ul">
+
+                        </ul>
                     </div>
+
+
+
+                </div>
+                <div class="users-online">
+                    <span><b>Users Online</b></span>
+                    <ul class="users-online-ul">
+                        <li>dsa</li>
+                        <li>dsa</li>
+                        <li>dsa</li>
+                        <li>dsa</li>
+                        <li>dsa</li>
+
+                        <li>dsa</li>
+                        <li>dsa</li>
+                        <li>dsa</li>
+                        <li>dsa</li>
+
+                        <li>dsa</li>
+                        <li>dsa</li>
+                        <li>dsa</li>
+                        <li>dsa</li>
+                        <li>dsa</li>
+                        <li>dsa</li>
+                        <li>dsa</li>
+                        <li>dsa</li>
+                        <li>dsa</li>
+                    </ul>
+                </div>
+            </div>
+            <!--Channels-->
+            <div id="messenger_id" class="messenger">
+                <div class="messenger-top">
+                    <div class="mess-top-container">
+                        <span id="channel_id">Channels</span>
+                        <span id="user_id">User</span>
+                    </div>
+
+
+                    <span class="mess-top-title">Turt-Mess</span>
+                </div>
+
+                <div class="messenger-text">
+                    <ul id="list" class="messenger-top-ul">
+                        <!--  <li> <span>USERNAME</span>
+                <div class="li_div"><img src="img/background.png" alt="User_Avatar"> <p>text</p> </div></li>  -->
+
+                    </ul>
+
+                </div>
+                <div class="messenger-text-area">
+                    <input id="messenger_text_area" type="text">
+                    <button id="send-message">Wyslij</button>
+                </div>
+            </div>
+            <!--user-->
+            <div id="user-profile-container_id" class="user-profile-container">
+                <div class="user-back-and-log-out">
+                    <i id="arrow-back-to-channel" class="fa fa-long-arrow-left" aria-hidden="true"></i> <span
+                        onclick="logOut()"><b>LogOut</b></span>
+                </div>
+                <div class="user-image-profile">
+                    <img id="user-photo" src="" alt="user-avatar">
+                </div>
+                <div class="user-info">
+                    <span>Your Nickname: <p id="userNick"></p></span>
+                    <span>Your E-mail: <p id="user-email"></p></span>
+                    <span>Number of messages sent: <p></p></span>
+                    <span>Your Country: <p></p></span>
+                </div>
+            </div>
+
+
+
 
         </div>
-    
-    </div>
-  
+        <div id="create-channel-form" class="create-channel">
+            <span class="create-new-channel-span">Create a new channel!</span>
+            <div class="wrap-input input-adding">
+                <label class="label-input">Channel Name</label>
+                <input id="channel_name_id" class="input channel-create" type="text" name="Channel Name"
+                    autocomplete="off" maxlength="10" placeholder="Channel Name" required="">
+                <span class="focus-input"></span>
+            </div>
+            <div class="wrap-input input-adding">
+                <label class="label-input">Your Channel Password</label>
+                <input id="channel_password_id" class="input channel-create" type="password" name="Channel Password"
+                    autocomplete="off" maxlength="25" placeholder="Channel Password" required="">
+                <span class="focus-input"></span>
+            </div>
+            <div class="wrap-input input-file-wrap">
+                <label class="label-input">Channel photo</label>
+                <input id="channel-photo" class="input input-file" type="file" name="pic" accept=".jpg,.jpeg,.png"
+                    onchange="channelP()">
+                <span class="focus-input"></span>
+            </div>
+            <div class="wrap-buttons buttons-New_channel">
+                <button id="button-New-channel" class="button_Sign-In button-adding"> Create</button>
+                <button id="button-cancel_id" class="button_Sign-Up button-cancel"> Cancel </button>
+            </div>
+            <span id="newChannel-error" class="info-span"></span>
 
-</div>
-</section>
-<section id="mess-page" class="messanger-page">
-    <div class="messenger">
+        </div>
+        <div id="login-to-channel_id" class="login-to-channel-form">
 
-    </div>
-    <div class="user-profile">
-            <p onclick="logOut()">xd</p>
-    </div>
+            <img id="channel-login-photo" src="" alt="channel-photo">
+            <span id="channel-login-name" class="login-to-channel-span">x</span>
 
-
-</section>
-
-
+            <div class="wrap-input input-adding">
+                <label class="label-input">Your Channel Password</label>
+                <input id="login-to-channel-password" class="input channel-login" type="password"
+                    name="Channel Password" autocomplete="off" maxlength="25" required="">
+                <span class="focus-input"></span>
+            </div>
+            <div class="wrap-buttons buttons-login-to-channel">
+                <button id="login-to-channel-join" class="button_Sign-In button-login">Join</button>
+                <button id="login-to-channel-cancel" class="button_Sign-Up button-cancel"> Cancel </button>
+            </div>
+            <span id="login-to-channel-span-error" class="login-to-channel-span error-join"></span>
+        </div>
+    </main>
 
     <script src="app.js"></script>
     <script src="index.js"></script>
 </body>
+
 </html>
