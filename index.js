@@ -246,18 +246,21 @@ console.log(channelphotoVal);
 
 })
 
-//CreateChannelsOnLoad();
-//function CreateChannelsOnLoad(){
+let passAndUniqId = new Array;
+let btnJoin = document.getElementById("login-to-channel-join");
+let btnCancel = document.getElementById("login-to-channel-cancel");
+let form = document.getElementById("login-to-channel_id");
+let joinError = document.getElementById("login-to-channel-span-error");
 
-
-//let chanId;
+let login_photo = document.getElementById("channel-login-photo");
+let login_name = document.getElementById("channel-login-name");
+let indexOne = 0;
+let indexTwo = 0;
   let channelsRef = firebase.database().ref('Channels/');
   channelsRef.on('child_added', function(snapshot) {
     let channelsname = snapshot.child("ChannelName").val();
     let channels_id = snapshot.child("Channel_Id").val();
-    // test
 
-    // po tescie gimnazjalnym e
     let channels_img = snapshot.child("ChannelPhoto").val();
     let uniquieID = snapshot.child("unique_id").val();
     let channel_li = document.createElement("li");
@@ -273,232 +276,56 @@ console.log(channelphotoVal);
   create_span.append(channelsname);
   channel_li.append(create_div, create_span);
   document.getElementById("channel-ul-container").append(channel_li);
- // let xxxxxa;
-//return chanId = xxxxxa = snapshot.child("ChannelPassword").val();
 
- let indexOne = 0;
- let indexTwo = 0;
- let login_photo = document.getElementById("channel-login-photo");
-let login_name = document.getElementById("channel-login-name");
-let form = document.getElementById("login-to-channel_id");
-let btnCancel = document.getElementById("login-to-channel-cancel");
-let btnJoin = document.getElementById("login-to-channel-join");
-let joinError = document.getElementById("login-to-channel-span-error");
-
-//console.log(chanId);
 
   let joinChannel = document.getElementById(channels_id);
- // console.log(joinChannel);
-  //let lol = new Array;
- // lol.push(joinChannel);
-  //console.log(lol);
-let xdku;
-let xdku2;
-  window.addEventListener("click", (e) =>{
+  joinChannel.addEventListener("click", (e) =>{
+    document.getElementById("channel-ul-container").classList.add("block-click");
+    let targetClick = joinChannel.contains(e.target);
+ 
+
+   
+ 
+    let testchannels_id = snapshot.child("Channel_Id").val();
+    console.log(targetClick);
   
-    let xd2 = joinChannel.contains(e.target);
-    console.log(xd2);
-    if(xd2 === true){
-console.log("is true" + uniquieID)
+    if(targetClick === true){
+          let password_datbase = snapshot.child("ChannelPassword").val();
 
-let yy;
-let xx;
-//return xdku = yy = uniquieID, xdku2 = xx =passwordTest;
-
-    }else if(xd2 === false){
-
-    //  console.log("is false" + uniquieID)
-//console.log(passwordTest + "false");
-    }
-  })
-
-joinChannel.addEventListener("click", () =>{
- console.log(uniquieID);
-  document.getElementById("channel-ul-container").classList.add("block-click");
+console.log(targetClick);
 
 
 
-  form.style.display = "flex";
-  login_photo.src = channels_img;
-  login_name.innerHTML = channelsname;
-  setTimeout(() => {
-   form.style.opacity = 1;
-   }, 500);
+form.style.display = "flex";
+login_photo.src = channels_img;
+login_name.innerHTML = channelsname;
+setTimeout(() => {
+ form.style.opacity = 1;
+ }, 500);
 
-  ///
-  var ref = firebase.database().ref('Channels/' + uniquieID);
-  ref.once("value", function(snapshot) {
-  //  console.log("its work?")
- // let passwordTest = snapshot.child("ChannelPassword").val();
-    console.log(snapshot.val());
-  //  console.log(passwordTest);
-  }).then(function(snapshot){
-   
-    console.log("xasa");
-    btnJoin.addEventListener("click", () =>{
-       let passwordTest = snapshot.child("ChannelPassword").val();
-      // snapAndCheckPasswords();
-       //function snapAndCheckPasswords(){
-   
-      
-        // let passwordFromDatabase = snapshot.child("ChannelPassword").val();
-        // let testUniquieId = snapshot.child("unique_id").val();
-        // console.log(uniquieID);
-        // console.log(snapshot.val());
-     
+ let rtnIndOne = indexOne=0;
+ let rtnIndTwo = indexTwo = 1;
         
-     
-     
-         let login_channelPassword = document.getElementById("login-to-channel-password").value;
-        // console.log(passwordTest + "  "+ "baza danych");
-         console.log(login_channelPassword)
-
-let xda = passwordTest;
-console.log(xda+"baza danych");
-
-  if(xda === login_channelPassword){
+  clickEvent();
+  console.log("zadzialo sie clickevent?")
+   
       
-    joinError.innerHTML = "The password provided is good."
-    joinError.style.color = "white";
-    console.log(login_channelPassword+" "+ "true");
-    textx22();
 
-  }else{
-    joinError.innerHTML = "The password provided is wrong."
-    joinError.style.color = "red";
-    console.log(login_channelPassword +" "+ "false");
-    console.log(login_channelPassword.length)
-  }
+return passAndUniqId.push(password_datbase),rtnIndOne,rtnIndTwo;
 
-    
-     })
+
+    }else{
+
+    }
 
 
   })
-  
-         
-   
-   
-   
-   
-     btnCancel.addEventListener("click", cancelForm)
-    //anulacja
-    function cancelForm(){
-     form.style.opacity = 0;
-     setTimeout(() => {
-       form.style.display = "none";
-       login_photo.src = "";
-       login_name.innerHTML = "";
-       document.getElementById("channel-ul-container").classList.remove("block-click");
-       }, 1000);
-     //  document.getElementById("login-to-channel-password").value = "";
-       let rtnIndOne1 = indexOne = 3;
-       let rtnIndTw2 = indexTwo =0;
-   
-       console.log("czy to sie dziejej x1");
-    
-       
-     clickEvent();
-       return rtnIndOne1, rtnIndTw2;
-    }
-     
-    
-   /* nie dziala */
-    
-     function textx22(){
-     console.log(uniquieID);
-     console.log("xddddd");
-     window.alert("no i dziala jak powinno");
-     }
-   
-   
-     let rtnIndOne = indexOne=0;
-   let rtnIndTwo = indexTwo = 1;
-   console.log(indexTwo);
-   
-   clickEvent();
-   
-   
-    return rtnIndOne,rtnIndTwo;
-   
-    
-    
-     })
-     // klikniecie poza form do logowania = zamkniecie go, i wylaczenie eventu
-     function clickEvent(){
-   
-        //console.log(indexTwo + "indx two");
-     //console.log(indexOne + "to jest indexOne 222samo powinien miec 0");
-   if(indexTwo === 1){
-     window.addEventListener("click", function clickEventList(event){
-       let clickInSide = document.getElementById("login-to-channel_id").contains(event.target);
-      // console.log(indexOne + "to jest indexOne samo ");
-   // console.log(indexTwo);
-       if(indexOne === 1){
-      //  console.log("xd equal indexOne")
-       if(clickInSide){
-       //  console.log("click in side")
-     
-       }else{
-         window.removeEventListener("click", clickEventList, false);
-          // console.log("not in side")
-           form.style.opacity = 0;
-           setTimeout(() => {
-             form.style.display = "none";
-             login_photo.src = "";
-             login_name.innerHTML = "";
-           //  console.log("czy to sie dziejej x2");
-           document.getElementById("channel-ul-container").classList.remove("block-click");
-             }, 1000);
-           //  document.getElementById("login-to-channel-password").value = "";
-     
-          
-        
-      
-           let rtnInOne = indexOne =0;
-          // let indx3 = indexThree =1;
-          console.log("wylacza sie ");
-     
-       return rtnInOne;
-     
-         
-        
-        
-      
-     
-       }
-     
-     
-     }else if(indexOne === 0){
-     //console.log("indexOne equal zero")
-     
-      let returnIndOne = indexOne = 1;
-      
-     
-     
-      return returnIndOne;
-     }else if(indexOne === 3){
-       window.removeEventListener("click", clickEventList, false);
-      
-     }
-     
-     })
-   }else{
-   //console.log("00");
-   
-   
-   }
-   
-     
-   
-    
-    
-   
-     }
+  })
+
    
     
 
-    })
+ 
 // po dodaniu kanalu automatycznie zmienia obrazek na obrazek dodany przez uzytkownika
   channelsRef.on("child_changed", function(snapshot){
     console.log(snapshot.val());
@@ -512,8 +339,145 @@ console.log(xda+"baza danych");
  img_container2.src = channel_img;
 
   })
-//}
 
+
+//logowanie do channelu
+btnJoin.addEventListener("click", () =>{
+
+  
+   
+
+   let login_channelPassword = document.getElementById("login-to-channel-password").value;
+   console.log(login_channelPassword + "to jest password wpisane przezemnie ");
+   if(login_channelPassword ===  passAndUniqId[0]){
+     console.log("zadziallo")
+  //  console.log(password_datbase + "haslo z bazy danych");
+     joinError.innerHTML = "The password provided is good."
+     joinError.style.color = "white";
+     console.log(login_channelPassword+" "+ "true");
+     textx22();
+  
+   }else{
+     joinError.innerHTML = "The password provided is wrong."
+     joinError.style.color = "red";
+     console.log(login_channelPassword +" "+ "false");
+     console.log(login_channelPassword.length)
+    // console.log(password_datbase);
+   }
+          
+   
+          });
+
+
+
+
+
+        btnCancel.addEventListener("click", cancelForm)
+        //anulacja
+        function cancelForm(){
+         form.style.opacity = 0;
+         setTimeout(() => {
+           form.style.display = "none";
+           login_photo.src = "";
+           login_name.innerHTML = "";
+           document.getElementById("channel-ul-container").classList.remove("block-click");
+           }, 1000);
+         //  document.getElementById("login-to-channel-password").value = "";
+           let rtnIndOne1 = indexOne = 3;
+           let rtnIndTw2 = indexTwo =0;
+       
+           console.log("czy to sie dziejej x1");
+       
+  
+ 
+         clickEvent();
+           return rtnIndOne1, rtnIndTw2, passAndUniqId = [];
+        }
+         
+        
+      
+        
+         function textx22(){
+         //console.log(uniquieID);
+         console.log("xddddd");
+         window.alert("no i dziala jak powinno");
+         }
+       
+   
+    
+          // klikniecie poza form do logowania = zamkniecie go, i wylaczenie eventu
+     function clickEvent(){
+
+ if(indexTwo === 1){
+   window.addEventListener("click", function clickEventList(event){
+     let clickInSide = document.getElementById("login-to-channel_id").contains(event.target);
+  
+     if(indexOne === 1){
+    //  console.log("xd equal indexOne")
+     if(clickInSide){
+     //  console.log("click in side")
+   
+     }else{
+       window.removeEventListener("click", clickEventList, false);
+        // console.log("not in side")
+         form.style.opacity = 0;
+         setTimeout(() => {
+           form.style.display = "none";
+           login_photo.src = "";
+           login_name.innerHTML = "";
+         //  console.log("czy to sie dziejej x2");
+         document.getElementById("channel-ul-container").classList.remove("block-click");
+           }, 1000);
+         //  document.getElementById("login-to-channel-password").value = "";
+   
+        
+      
+    
+         let rtnInOne = indexOne =0;
+        // let indx3 = indexThree =1;
+        console.log("wylacza sie ");
+        
+   console.log(indexOne);
+     return rtnInOne,   passAndUniqId = [];
+   
+       
+      
+      
+    
+   
+     }
+   
+   
+   }else if(indexOne === 0){
+   //console.log("indexOne equal zero")
+   
+    let returnIndOne = indexOne = 1;
+    
+   
+   
+    return returnIndOne;
+   }else if(indexOne === 3){
+     window.removeEventListener("click", clickEventList, false);
+    
+   }
+   
+   })
+ }else{
+
+ 
+ }
+ 
+   
+ 
+  
+  
+ 
+   }
+ 
+        
+         
+           
+//test
 
 
 
