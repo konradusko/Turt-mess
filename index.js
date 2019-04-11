@@ -1,7 +1,7 @@
-let containerMessPage = document.getElementById("container-mess-page_id");
-
-let channel_container = document.getElementById("channel-container_id");
-let user_profile_container = document.getElementById("user-profile-container_id");
+const containerMessPage = document.getElementById("container-mess-page_id");
+const logOutButton = document.getElementById("logOut_id");
+const channel_container = document.getElementById("channel-container_id");
+const user_profile_container = document.getElementById("user-profile-container_id");
 let messenger = document.getElementById("messenger_id");
 let imageUrl = document.getElementById("input-file").value;
 
@@ -25,7 +25,7 @@ firebase.auth().onAuthStateChanged(function (user) {
     let user = firebase.auth().currentUser;
     if (register_number === "czx9DJSAD5jncya9D8da934N2") {
       console.log("lul");
-
+      let randomValue = Math.random().toString(36).substring(5);
       //update user profilu o jego nick i id(email juz posiada)
       user.updateProfile({
         displayName: document.getElementById("nickname_id").value,
@@ -38,14 +38,16 @@ firebase.auth().onAuthStateChanged(function (user) {
         document.getElementById("userNick").innerHTML = user.displayName;
         document.getElementById("user-email").innerHTML = user.email;
       }).catch(function (error) {
-        // An error happened.
+        // An error happened.c
       });
       // dodawanie uzytkownika do bazy danych
       firebase.database().ref('users/' + userId).set({
         username: document.getElementById("nickname_id").value,
         email: document.getElementById("register_email").value,
         photoURL: "undefined",
-        Number_of_messages_sent: 0
+        Number_of_messages_sent: 0,
+        status: "Online",
+        id : randomValue
       });
       //dodawanie obrazka
       if (photoVal === 1) {
@@ -91,6 +93,7 @@ firebase.auth().onAuthStateChanged(function (user) {
         user.updateProfile({
           photoURL: userNophoto // <- URL from uploaded photo.
         }).then(function () {
+          console.log("dodało");
           //aby odrazu po rejestracji pokazywal sie obrazek
           document.getElementById("user-photo").src = userNophoto;
           document.getElementById("channel-user-profile").src = userNophoto;
@@ -99,11 +102,16 @@ firebase.auth().onAuthStateChanged(function (user) {
           });
 
         });
+        rtn();
+        function rtn(){
+          let strIng = register_number = "undefined";
+
+          return strIng;
+        }
+        
       }
 
-      let strIng = register_number = "undefined";
 
-      return strIng;
     } else {
       //nothing
 
@@ -121,7 +129,7 @@ firebase.auth().onAuthStateChanged(function (user) {
       document.getElementById("userNick").innerHTML = user.displayName;
       document.getElementById("user-email").innerHTML = user.email;
       //  console.log("Sign-in provider: " + profile.providerId);
-      // console.log("  Provider-specific UID: " + profile.uid);
+       //console.log("  Provider-specific UID: " + user.uid);
       // console.log("  Name: " + profile.displayName);
       // console.log("  Email: " + profile.email);
       // console.log("  Photo URL: " + profile.photoURL);
@@ -246,8 +254,6 @@ firebase.auth().onAuthStateChanged(function (user) {
       create_span.append(channelsname);
       channel_li.append(create_div, create_span);
       document.getElementById("channel-ul-container").append(channel_li);
-
-
       const joinChannel = document.getElementById(channels_id);
       joinChannel.addEventListener("click", (e) => {
         document.getElementById("channel-ul-container").classList.add("block-click");
@@ -370,6 +376,45 @@ return pathChannel = xd,snapMessages(),  joinPrivateAndPubChan();
 
       }
     }
+// wyswietlanie uzytkownikow
+const usersRef = firebase.database().ref('users/');
+usersRef.on('child_added', function (snapshot) {
+  let useruid = user.uid;
+  let userUniqueId = snapshot.child
+if (useruid =! null){
+//  console.log(snapshot.val());
+  let userImg = snapshot.child("photoURL").val();
+  let userNickName = snapshot.child("username").val();
+  let userStatus = snapshot.child("status").val();
+  let userId = snapshot.child("id").val();
+  let createLi = document.createElement("li");
+  createLi.id = userId;
+  let createImg = document.createElement("img");
+  createImg.src = userImg;
+  let createDiv = document.createElement("div");
+  createDiv.className = "user-name-status";
+  let createSpanOne = document.createElement("span");
+  let createB = document.createElement("b");
+  createB.append(userNickName);
+  createSpanOne.append(createB);
+  let createDivTwo = document.createElement("div");
+  createDivTwo.className = "user-status";
+  let createSpanTwo = document.createElement("span");
+  createSpanTwo.innerHTML = "Status:";
+  let createSpanThree = document.createElement("span");
+  createSpanThree.className ="span-status";
+  createSpanThree.append(userStatus);
+  createDivTwo.append(createSpanTwo,createSpanThree)
+  createDiv.append(createSpanOne,createDivTwo);
+  let createDivThree = document.createElement("div");
+  createDivThree.className = "button-container";
+  let createButton = document.createElement("button");
+  createButton.innerHTML = '<i class="fa fa-plus"></i>' + "Add friend";
+  createDivThree.append(createButton);
+createLi.append(createImg,createDiv,createDivThree);
+document.getElementById("usersOnlineId").append(createLi);
+}
+})
 
 
 
@@ -382,10 +427,11 @@ return pathChannel = xd,snapMessages(),  joinPrivateAndPubChan();
     //mechanika
     //wylogowanie
 
-    function logOut() {
-      logOutThinks();
-      firebase.auth().signOut();
-    }
+logOutButton.addEventListener("click", () =>{
+  logOutThinks();
+  firebase.auth().signOut();
+})
+
 
     function logOutThinks() {
 
@@ -510,10 +556,7 @@ send_message.addEventListener("click", () => {
 
 
 })
-
-
-
-
+// testowanie uzytkownikow online
 
   } else {
     // No user is signed in.

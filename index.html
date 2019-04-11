@@ -82,7 +82,7 @@
                     </div>
                     <div class="wrap-input">
                         <label class="label-input">Your Nickname</label>
-                        <input id="nickname_id" class="input" type="text" name="Nickname" autocomplete="off"
+                        <input id="nickname_id" class="input" type="text" name="Nickname" maxlength="10" autocomplete="off"
                             maxlength="25" placeholder="Nickname" required>
                         <span class="focus-input"></span>
                     </div>
@@ -152,28 +152,21 @@
 
                 </div>
                 <div class="users-online">
-                    <span><b>Users Online</b></span>
-                    <ul class="users-online-ul">
-                        <li>dsa</li>
-                        <li>dsa</li>
-                        <li>dsa</li>
-                        <li>dsa</li>
-                        <li>dsa</li>
+                    <span class="us-on-span"><b>Users Online</b></span>
+                    <ul id="usersOnlineId" class="users-online-ul">
+                        <li>
+                                <img src="img/public-background.jpg" alt="">
+                                <div class="user-name-status">
+                                    <span>userName</span>
+                                 <div class="user-status">
+                                     <span>Status:</span> <span class="span-status">Online</span>
+                                 </div>
+                                </div>
+                        <div class="button-container">
+                            <button>   <i class="fa fa-plus" ></i>Add friend</button>
+                        </div>
+                        </li>
 
-                        <li>dsa</li>
-                        <li>dsa</li>
-                        <li>dsa</li>
-                        <li>dsa</li>
-
-                        <li>dsa</li>
-                        <li>dsa</li>
-                        <li>dsa</li>
-                        <li>dsa</li>
-                        <li>dsa</li>
-                        <li>dsa</li>
-                        <li>dsa</li>
-                        <li>dsa</li>
-                        <li>dsa</li>
                     </ul>
                 </div>
             </div>
@@ -205,8 +198,8 @@
             <!--user-->
             <div id="user-profile-container_id" class="user-profile-container">
                 <div class="user-back-and-log-out">
-                    <i id="arrow-back-to-channel" class="fa fa-long-arrow-left" aria-hidden="true"></i> <span
-                        onclick="logOut()"><b>LogOut</b></span>
+                    <i id="arrow-back-to-channel" class="fa fa-long-arrow-left" aria-hidden="true"></i>
+                    <span id="logOut_id"><b>LogOut</b></span>
                 </div>
                 <div class="user-image-profile">
                     <img id="user-photo" src="" alt="user-avatar">

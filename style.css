@@ -340,8 +340,9 @@ justify-content: center;
     width:90%;
     margin:0 auto;
     height:calc(90% - 180px);
+    overflow: hidden;
 }
-.users-online span{
+.users-online .us-on-span{
     width:100%;
     height:30px;
     display:block;
@@ -350,19 +351,59 @@ justify-content: center;
 }
 .users-online-ul{
     width:100%;
-    height:100%;
     margin-top:10px;
-    overflow-x:auto;
+    overflow-x:scroll;
     list-style-type: none;
 }
 .users-online-ul li{
     width:90%;
-    height:30px;
-    background-color:gray;
+    height:60px;
     margin:10px auto 10px auto;
+    display:flex;
     
 }
 
+.users-online-ul li  img{
+    height:50px;
+    width:50px;
+    border-radius:50%;
+    margin:auto 0;
+}
+.users-online-ul li .user-name-status{
+    flex:2;
+    margin:auto;
+    display:flex;
+    flex-direction: column;
+}
+.users-online-ul li .user-name-status span{
+    padding-left:20px;
+    display:block;
+    color:white;
+}
+.users-online-ul li .user-status .span-status{
+    padding-left:10px;
+    color:green;
+}
+.users-online-ul li .user-status{
+    display:flex;
+    flex:1;
+}
+.users-online-ul li .button-container{
+    flex:1;
+    display:flex;
+    flex-direction: column;
+
+}
+.users-online-ul li .button-container button{
+    margin:auto;
+    display:flex;
+    flex-direction: column;
+    color:white;
+
+}
+.users-online-ul li .button-container button i{
+    margin:0 auto;
+}
    /* create a new channel */
    .create-channel{
        width:100%;
