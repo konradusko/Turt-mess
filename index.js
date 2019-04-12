@@ -20,6 +20,7 @@ firebase.auth().onAuthStateChanged(function (user) {
     document.getElementById("mess-page").style.display = "block";
 
     // testy nadal 
+    let userIdFromDatabase = "undefined";
     // dodawania uzytkownika do bazy danych oraz uzupelnianie jego profilu zaraz po rejestracji
     let userId = firebase.auth().currentUser.uid;
     let user = firebase.auth().currentUser;
@@ -27,12 +28,12 @@ firebase.auth().onAuthStateChanged(function (user) {
       console.log("lul");
       let randomValue = Math.random().toString(36).substring(5);
       //update user profilu o jego nick i id(email juz posiada)
+    
       user.updateProfile({
         displayName: document.getElementById("nickname_id").value,
-        // photoURL: document.getElementById("input-file").value,
         uid: userId
       }).then(function () {
-        console.log("udalo sie zmienic a raczej dodac")
+        console.log("udalo sie zmienic a raczej dodac" + randomValue)
         //aby odrazu po rejestracji pokazywal sie obrazek
 
         document.getElementById("userNick").innerHTML = user.displayName;
@@ -48,7 +49,7 @@ firebase.auth().onAuthStateChanged(function (user) {
         Number_of_messages_sent: 0,
         status: "Online",
         id : randomValue
-      });
+      })
       //dodawanie obrazka
       if (photoVal === 1) {
         console.log("zaczyna sie dziac");
@@ -70,6 +71,7 @@ firebase.auth().onAuthStateChanged(function (user) {
               document.getElementById("user-photo").src = test;
               user.updateProfile({
                 photoURL: url // <- URL from uploaded photo.
+                
               }).then(function () {
                 //aby odrazu po rejestracji pokazywal sie obrazek
                 document.getElementById("channel-user-profile").src = url;
@@ -91,6 +93,7 @@ firebase.auth().onAuthStateChanged(function (user) {
       } else {
         let userNophoto = "https://firebasestorage.googleapis.com/v0/b/messenger-6923c.appspot.com/o/no-avatar.jpg?alt=media&token=d8878bd7-c518-48fb-9f82-52b299fa4b3a";
         user.updateProfile({
+        
           photoURL: userNophoto // <- URL from uploaded photo.
         }).then(function () {
           console.log("dodało");
@@ -128,10 +131,7 @@ firebase.auth().onAuthStateChanged(function (user) {
       document.getElementById("user-photo").src = user.photoURL;
       document.getElementById("userNick").innerHTML = user.displayName;
       document.getElementById("user-email").innerHTML = user.email;
-      //  console.log("Sign-in provider: " + profile.providerId);
-       //console.log("  Provider-specific UID: " + user.uid);
-      // console.log("  Name: " + profile.displayName);
-      // console.log("  Email: " + profile.email);
+       console.log("  Provider-specific UID: " + user.testid);
       // console.log("  Photo URL: " + profile.photoURL);
       // });
     }
@@ -376,19 +376,27 @@ return pathChannel = xd,snapMessages(),  joinPrivateAndPubChan();
 
       }
     }
-// wyswietlanie uzytkownikow
-const usersRef = firebase.database().ref('users/');
+let userloginId;
+   const loginUserRef = firebase.database().ref('users/' + userId);
+    loginUserRef.once("value", function(snap){
+    let userId  = snap.child("id").val();
+    return userloginId = userId;
+    })
+
+const usersRef = firebase.database().ref('users');
 usersRef.on('child_added', function (snapshot) {
-  let useruid = user.uid;
-  let userUniqueId = snapshot.child
-if (useruid =! null){
-//  console.log(snapshot.val());
+ //console.log(snapshot.val());
+ console.log(userloginId);
   let userImg = snapshot.child("photoURL").val();
   let userNickName = snapshot.child("username").val();
   let userStatus = snapshot.child("status").val();
-  let userId = snapshot.child("id").val();
+  let userDatabaseId = snapshot.child("id").val();
+if(userloginId === userDatabaseId ){
+  console.log("i cyk dziala i nie wyswietla")
+}else{
+
   let createLi = document.createElement("li");
-  createLi.id = userId;
+  createLi.id =userDatabaseId;
   let createImg = document.createElement("img");
   createImg.src = userImg;
   let createDiv = document.createElement("div");
