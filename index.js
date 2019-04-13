@@ -2,7 +2,7 @@ const containerMessPage = document.getElementById("container-mess-page_id");
 const logOutButton = document.getElementById("logOut_id");
 const channel_container = document.getElementById("channel-container_id");
 const user_profile_container = document.getElementById("user-profile-container_id");
-let messenger = document.getElementById("messenger_id");
+const messenger = document.getElementById("messenger_id");
 let imageUrl = document.getElementById("input-file").value;
 
 let register_number = "undefined";
@@ -19,33 +19,20 @@ firebase.auth().onAuthStateChanged(function (user) {
     document.getElementById("header").style.display = "none";
     document.getElementById("mess-page").style.display = "block";
 
-    // testy nadal 
-    let userIdFromDatabase = "undefined";
-    // dodawania uzytkownika do bazy danych oraz uzupelnianie jego profilu zaraz po rejestracji
+    
+  //  let userIdFromDatabase = "undefined";
+   
     let userId = firebase.auth().currentUser.uid;
     let user = firebase.auth().currentUser;
+    // uztkownik dopiero sie zarejestrowal, dodawanie go do bazy danych
     if (register_number === "czx9DJSAD5jncya9D8da934N2") {
-      console.log("lul");
       let randomValue = Math.random().toString(36).substring(5);
-      //update user profilu o jego nick i id(email juz posiada)
-    
-      user.updateProfile({
-        displayName: document.getElementById("nickname_id").value,
-        uid: userId
-      }).then(function () {
-        console.log("udalo sie zmienic a raczej dodac" + randomValue)
-        //aby odrazu po rejestracji pokazywal sie obrazek
 
-        document.getElementById("userNick").innerHTML = user.displayName;
-        document.getElementById("user-email").innerHTML = user.email;
-      }).catch(function (error) {
-        // An error happened.c
-      });
       // dodawanie uzytkownika do bazy danych
       firebase.database().ref('users/' + userId).set({
         username: document.getElementById("nickname_id").value,
         email: document.getElementById("register_email").value,
-        photoURL: "undefined",
+        photoURL: "https://firebasestorage.googleapis.com/v0/b/messenger-6923c.appspot.com/o/no-avatar.jpg?alt=media&token=d8878bd7-c518-48fb-9f82-52b299fa4b3a",
         Number_of_messages_sent: 0,
         status: "Online",
         id : randomValue
@@ -60,30 +47,18 @@ firebase.auth().onAuthStateChanged(function (user) {
             type: "image/jpeg"
           });
 
-
-          var storageRef = firebase.storage().ref("Usuarios/" + user.uid + "/avatar.jpg");
+          const storageRef = firebase.storage().ref("Usuarios/" + user.uid + "/avatar.jpg");
           console.warn(file);
 
           storageRef.put(blob).then(function (snapshot) {
             snapshot.ref.getDownloadURL().then(function (url) {
-
-              let test = url;
-              document.getElementById("user-photo").src = test;
-              user.updateProfile({
-                photoURL: url // <- URL from uploaded photo.
-                
-              }).then(function () {
-                //aby odrazu po rejestracji pokazywal sie obrazek
-                document.getElementById("channel-user-profile").src = url;
-                firebase.database().ref("users/" + userId).update({
-                  photoURL: url // <- URL from uploaded photo.
-                });
+              // update obrazka
+              firebase.database().ref("users/" + userId).update({
+                photoURL: url // <- URL from uploaded photo.  
               });
             });
           });
-
         }
-
         reader.onerror = function (e) {
           console.log("Failed file read: " + e.toString());
         };
@@ -91,50 +66,18 @@ firebase.auth().onAuthStateChanged(function (user) {
 
         console.log("zadzialo sie");
       } else {
-        let userNophoto = "https://firebasestorage.googleapis.com/v0/b/messenger-6923c.appspot.com/o/no-avatar.jpg?alt=media&token=d8878bd7-c518-48fb-9f82-52b299fa4b3a";
-        user.updateProfile({
-        
-          photoURL: userNophoto // <- URL from uploaded photo.
-        }).then(function () {
-          console.log("dodało");
-          //aby odrazu po rejestracji pokazywal sie obrazek
-          document.getElementById("user-photo").src = userNophoto;
-          document.getElementById("channel-user-profile").src = userNophoto;
-          firebase.database().ref("users/" + userId).update({
-            photoURL: userNophoto // <- URL from uploaded photo.
-          });
-
-        });
-        rtn();
-        function rtn(){
-          let strIng = register_number = "undefined";
-
-          return strIng;
-        }
-        
+      }
+      rtn();
+      function rtn(){
+        let strIng = register_number = "undefined";
+        return strIng;
       }
 
-
     } else {
-      //nothing
-
       console.log("nothing");
     }
 
 
-
-    // wyswietlanie uzytkownika po zalogowaniu
-    if (user != null) {
-      // user.providerData.forEach(function (profile) {
-      //  document.getElementById("usPhoto").innerHTML = profile.photoURL;
-      document.getElementById("channel-user-profile").src = user.photoURL;
-      document.getElementById("user-photo").src = user.photoURL;
-      document.getElementById("userNick").innerHTML = user.displayName;
-      document.getElementById("user-email").innerHTML = user.email;
-       console.log("  Provider-specific UID: " + user.testid);
-      // console.log("  Photo URL: " + profile.photoURL);
-      // });
-    }
 
     //
 
@@ -161,7 +104,7 @@ firebase.auth().onAuthStateChanged(function (user) {
 
       if (channel_name.length > 1 && channel_password.length > 1) {
         // dodawanie kanalu do bazy danych
-        let tescik = firebase.database().ref("Channels/" + randomString).set({
+       firebase.database().ref("Channels/" + randomString).set({
           ChannelName: channel_name,
           ChannelPassword: channel_password,
           unique_id: randomString,
@@ -376,17 +319,44 @@ return pathChannel = xd,snapMessages(),  joinPrivateAndPubChan();
 
       }
     }
+
+
+    // wysiwetlanie zalogowanego uzytkownika
 let userloginId;
    const loginUserRef = firebase.database().ref('users/' + userId);
-    loginUserRef.once("value", function(snap){
+    loginUserRef.on("value", function(snap){
     let userId  = snap.child("id").val();
+    let userImg = snap.child("photoURL").val();
+    let userNickName = snap.child("username").val();
+    let userEmail = snap.child("email").val();
+    let userStatus = snap.child("status").val();
+         document.getElementById("channel-user-profile").src = userImg;
+         document.getElementById("user-photo").src = userImg;
+         document.getElementById("userNick").innerHTML = userNickName;
+         document.getElementById("user-email").innerHTML = userEmail;
     return userloginId = userId;
     })
+    loginUserRef.on("child_changed", function (snap) {
+      console.log(snap.val());
+     // let userId  = snap.child("id").val();
+      let userImg = snap.child("photoURL").val();
+      let userNickName = snap.child("username").val();
+      let userEmail = snap.child("email").val();
+      let userStatus = snap.child("status").val();
+      document.getElementById("channel-user-profile").src = userImg;
+      document.getElementById("user-photo").src = userImg;
+      document.getElementById("userNick").innerHTML = userNickName;
+      document.getElementById("user-email").innerHTML = userEmail;
 
+    })
+
+// wyswietlanie uzytkownikow
 const usersRef = firebase.database().ref('users');
 usersRef.on('child_added', function (snapshot) {
- //console.log(snapshot.val());
- console.log(userloginId);
+// console.log(snapshot.key());
+let xd = snapshot.key;
+console.log(xd);
+// console.log(userloginId);
   let userImg = snapshot.child("photoURL").val();
   let userNickName = snapshot.child("username").val();
   let userStatus = snapshot.child("status").val();
@@ -424,7 +394,7 @@ document.getElementById("usersOnlineId").append(createLi);
 }
 })
 
-
+    
 
 
     //test
@@ -438,6 +408,7 @@ document.getElementById("usersOnlineId").append(createLi);
 logOutButton.addEventListener("click", () =>{
   logOutThinks();
   firebase.auth().signOut();
+  location.reload();
 })
 
 
@@ -452,7 +423,7 @@ logOutButton.addEventListener("click", () =>{
         user_profile_container.style.transform = "initial";
         messenger.style.width = 0 + "%";
       }, 1000);
-
+     // document.getElementById("usersOnlineId").innerHTML = "";
       //messenger.classList.remove("blur");
 
       publicChannelNumber = 1;
@@ -564,7 +535,13 @@ send_message.addEventListener("click", () => {
 
 
 })
+
+
 // testowanie uzytkownikow online
+
+
+
+
 
   } else {
     // No user is signed in.

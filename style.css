@@ -344,14 +344,20 @@ justify-content: center;
     height:calc(100% - 300px);
     overflow: auto;
 }
-.us-on-span{
-    width:100%;
+.users_and_others{
     height:50px;
-    display:block;
-    font-size:16px;
-    color:white;
-    margin-left:20px;
-    padding-bottom:10px;
+    width:100%;
+
+    display:flex;
+}
+.select_users{
+width:120px;
+height:40px;
+padding-right:10px;
+margin:auto 0px auto 10px;
+background:none;
+border:none;
+color:white;
 }
 .users-online-ul{
     width:100%;
