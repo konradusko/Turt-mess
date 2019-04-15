@@ -12,6 +12,7 @@ let channelphotoVal = 0;
 /* sciezka do kanałow--->>> */
 let pathChannel = "undefined";
 
+
 // logowanie
 firebase.auth().onAuthStateChanged(function (user) {
   if (user) {
@@ -357,21 +358,15 @@ let userloginId;
     UsStatus.addEventListener('change', () =>{
       let stat = "★ Online";
     let  val = document.getElementById("select_status_Id").value;
-    var sel = document.getElementById("select_status_Id");
-var value = sel.options[sel.selectedIndex].value;
- 
-      console.log(val);
-
       switch(val){
         case "0":
-        xd();
         stat = "★ Online";
         break;
         case "1":
          stat = "☆ Idle";
         break;
         case "2":
-        stat = "☄ Away";
+        stat = "☆ Away";
         break;
         case "3":
         stat = "☆ Offline"
@@ -381,17 +376,15 @@ var value = sel.options[sel.selectedIndex].value;
      firebase.database().ref("users/" + userId).update({
         status : stat
       });
-      console.log(stat)
     })
+   
+
 // wyswietlanie uzytkownikow
-function xd(){
-  console.log("xd")
-}
 
 
 
 const usersRef = firebase.database().ref('users');
-usersRef.on('child_added', function (snapshot) {
+usersRef.on('child_added', function (snapshot, event) {
 // console.log(snapshot.key());
 /*
 if(snapshot.val()){
@@ -415,7 +408,7 @@ if(userloginId === userDatabaseId ){
 }else{
 
   let createLi = document.createElement("li");
-  createLi.id =userDatabaseId;
+  //createLi.id =userDatabaseId;
   let createImg = document.createElement("img");
   createImg.src = userImg;
   let createDiv = document.createElement("div");
@@ -436,17 +429,39 @@ if(userloginId === userDatabaseId ){
   let createDivThree = document.createElement("div");
   createDivThree.className = "button-container";
   let createButton = document.createElement("button");
+  createButton.className = "add_firend_button";
   createButton.innerHTML = '<i class="fa fa-plus"></i>' + "Add friend";
   createDivThree.append(createButton);
 createLi.append(createImg,createDiv,createDivThree);
 document.getElementById("usersOnlineId").append(createLi);
 }
-
+//let clickInSide = document.querySelectorAll(".add_firend_button").contains(event.target);
+//console.log(clickInSide);
 
 })
+// do poprawy
+/*
+usersRef.on("child_changed", function (snapshot) {
+  let userStatus = snapshot.child("status").val();
+  let userDatabaseId = snapshot.child("id").val();
+  console.log(userDatabaseId + userStatus);
+  let test = document.getElementById(userDatabaseId);
+  console.log(userDatabaseId)
+})
+// dodawanie do znajomych
+addFriend()
+function addFriend(){
+  console.log("dzieje sie to ?")
+let testbutton = document.querySelectorAll(".add_firend_button");
 
-    
+for (i = 0; i < testbutton.length; i++) {
+  console.log("a to sie dzieje ?")
+  testbutton[i].addEventListener("click", function() {
+  alert("you clicked"); });
+}
 
+}    
+*/
 
     //test
     // wysylanie public na wysylanie wiadomosci

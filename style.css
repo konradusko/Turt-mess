@@ -209,11 +209,13 @@ justify-content: center;
 .mess-page{
     width:100%;
     height:100vh;
+    min-height: 100vh;
+    max-height: 100vh;
     overflow: hidden;
 }
 .container-mess-page{
     width:200%;
-    height:100%;
+    height:100vh;
     display:flex;
 }
 /* channel */
@@ -411,6 +413,7 @@ text-align: center;
 .users-online-ul li .user-status{
     display:flex;
     flex:1;
+    font-size:13px;
 }
 .users-online-ul li .button-container{
     flex:1;
