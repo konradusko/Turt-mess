@@ -350,10 +350,58 @@ let userloginId;
 
     })
 
+
+
+    //zmiana statusu
+    const UsStatus = document.getElementById("select_status_Id");
+    UsStatus.addEventListener('change', () =>{
+      let stat = "★ Online";
+    let  val = document.getElementById("select_status_Id").value;
+    var sel = document.getElementById("select_status_Id");
+var value = sel.options[sel.selectedIndex].value;
+ 
+      console.log(val);
+
+      switch(val){
+        case "0":
+        xd();
+        stat = "★ Online";
+        break;
+        case "1":
+         stat = "☆ Idle";
+        break;
+        case "2":
+        stat = "☄ Away";
+        break;
+        case "3":
+        stat = "☆ Offline"
+        break;
+      }
+    
+     firebase.database().ref("users/" + userId).update({
+        status : stat
+      });
+      console.log(stat)
+    })
 // wyswietlanie uzytkownikow
+function xd(){
+  console.log("xd")
+}
+
+
+
 const usersRef = firebase.database().ref('users');
 usersRef.on('child_added', function (snapshot) {
 // console.log(snapshot.key());
+/*
+if(snapshot.val()){
+  loginUserRef.on("child_added", function(snapshot){
+    usersRef.onDisconnect().set('☆ offline');
+    usersRef.set('★ online');
+  })
+
+}
+*/
 let xd = snapshot.key;
 console.log(xd);
 // console.log(userloginId);
@@ -363,6 +411,7 @@ console.log(xd);
   let userDatabaseId = snapshot.child("id").val();
 if(userloginId === userDatabaseId ){
   console.log("i cyk dziala i nie wyswietla")
+  
 }else{
 
   let createLi = document.createElement("li");
@@ -392,6 +441,8 @@ if(userloginId === userDatabaseId ){
 createLi.append(createImg,createDiv,createDivThree);
 document.getElementById("usersOnlineId").append(createLi);
 }
+
+
 })
 
     
