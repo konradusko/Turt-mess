@@ -245,6 +245,9 @@ justify-content: center;
     height:40px;
     width:40px;
     border-radius:50%;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
 }
 .user-and-name-span{
     display:flex;
@@ -394,6 +397,9 @@ text-align: center;
     width:50px;
     border-radius:50%;
     margin:auto 0;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
 }
 .users-online-ul li .user-name-status{
     flex:2;
@@ -488,6 +494,9 @@ flex-direction: column;
        height:70px;
        border-radius:50%;
        margin:10px auto;
+       background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
    }
    .login-to-channel-form .login-to-channel-span{
        display:block;
@@ -526,7 +535,7 @@ font-size:15px;
     /* messenger */
   
     .messenger{
-    background-color:blue;
+    background-color:black;
     transition:1s;
     height:100vh;
 display:none;
@@ -537,23 +546,45 @@ display:none;
     .messenger-top{
         width:100%;
         display:flex;
-        height:80px;
-        flex-direction: column;
+        height:50px;
         position: fixed;
-        background-color:red;
+        background-color:darkgrey;
+        padding:0 5%;
+        color:white;
     }
-    .mess-top-container{
-        width:100%;
-        height:25px;
-        display:flex;
-        justify-content: space-between;
-    }
-    .mess-top-title{
-        width:100%;
-        height:25px;
-        display:block;
-        text-align: center;
-    }
+   .backToChannels{
+       width:40px;
+       height:100%;
+       font-size:30px;
+       color:darkblue;
+       display:flex;
+
+   }
+   .backToChannels i{
+       margin:auto;
+   }
+  .channel-setting{
+width:100px;
+height:100%;
+display:flex;
+
+  }
+  .channel-setting img{
+      width:40px;
+      height:40px;
+      border-radius:50%;
+      margin:auto 5px;
+      background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+  .channel-setting b{
+      text-align: center;
+      margin:auto 5px;
+  }
+   .user_profile-Channel{
+       margin:auto 10px auto auto;
+   }
     .messenger-text{
         width: 100%;
     height: calc(100% - 110px);
@@ -568,33 +599,52 @@ display:none;
         flex-direction: column;
     }
     .messenger-top-ul li{
-        background-color:green;
         height:100%;
         width:80%;
         margin:20px auto;
         list-style-type: none;
         display:flex;
         flex-direction: column;
+        color:white;
+     
     }
     .messenger-top-ul li span{
         display:block;
         height:30px;
         text-align: center;
         width:100%;
-        background-color:crimson;
+    }
+    .messenger-top-ul li .date_hours{
+        display:block;
+        height:15px;
+    opacity:0;
+    text-align: center;
+    width:100%;
+    transition:1s;
+    font-size:13px;
+    margin-top:5px;
+    }
+    .messenger-top-ul li:hover  .date_hours{
+        opacity:1;
+   
     }
     .messenger-top-ul li .li_div{
         width:100%;
         height:100%;
         display:flex;
         flex-direction: row;
+        background-color:gray;
+        border-radius:5px;
     }
     .messenger-top-ul li .li_div img{
-        height:80px;
-        width:80px;
+        height:40px;
+        width:40px;
      margin:10px;
      display:block;
         border-radius: 50%;
+        background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
     }
     .li_div_message-text{
         width:calc(100% - 80px);
@@ -602,6 +652,8 @@ display:none;
         word-wrap: break-word;
         word-break: break-word;
         padding:5px;
+        margin:auto;
+    
     }
 
 .messenger-text-area{
@@ -611,6 +663,20 @@ display:none;
     position: fixed;
     bottom:0;
     
+}
+/* channel setting*/
+.channel-setting-container{
+    position: absolute;
+    width:80%;
+    height:80vh;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    background-color:red;
+    z-index: 4;
+    display:none;
+    opacity:0;
+    transition:1s;
 }
 
     /* user profile */
@@ -651,6 +717,9 @@ display:none;
         height:150px;
         margin:auto;
         border-radius: 50%;
+        background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
     }
     .user-info{
         width:90%;

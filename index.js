@@ -111,6 +111,7 @@ firebase.auth().onAuthStateChanged(function (user) {
           ChannelPassword: channel_password,
           unique_id: randomString,
           Channel_Id: randomValue,
+          founder: userId,
           ChannelPhoto: "https://firebasestorage.googleapis.com/v0/b/messenger-6923c.appspot.com/o/No-Photo-Available.jpg?alt=media&token=e7d6e25d-eb5b-4262-8287-c6b976791840"
 
 
@@ -241,6 +242,7 @@ firebase.auth().onAuthStateChanged(function (user) {
     })
     //logowanie do channelu
     btnJoin.addEventListener("click", () => {
+      console.log(passAndUniqId)
       let login_channelPassword = document.getElementById("login-to-channel-password").value;
       console.log(passAndUniqId[0]);
       if (login_channelPassword === passAndUniqId[0]) {
@@ -250,7 +252,12 @@ firebase.auth().onAuthStateChanged(function (user) {
         console.log(login_channelPassword + " " + "true");
         textx22();
         let xd = 'Channels/' + passAndUniqId[1] + '/messages';
+       // console.log(passAndUniqId);
+        document.getElementById("channel_photo").src = passAndUniqId[2];
+        document.getElementById("channel_name").innerHTML = passAndUniqId[3];
+        //onChannel();
 cancelForm();
+
 return pathChannel = xd,snapMessages(),  joinPrivateAndPubChan();
       } else {
         joinError.innerHTML = "The password provided is wrong."
@@ -554,6 +561,8 @@ logOutButton.addEventListener("click", () =>{
     // join to channel
     let publicChannel = document.getElementById("public_id");
     publicChannel.addEventListener("click", () => {
+      document.getElementById("channel_photo").src = "img/public-background.jpg";
+      document.getElementById("channel_name").innerHTML = "Public";
       return pathChannel = 'PublicChannel/',  snapMessages(),  joinPrivateAndPubChan();
     })
 
@@ -571,6 +580,19 @@ logOutButton.addEventListener("click", () =>{
       return publicChannelNumber;
 
     }
+// channel setting
+//function onChannel(){
+const channelSetting = document.getElementById("channel-setting-join");
+channelSetting.addEventListener("click", () =>{
+  console.log("working")
+ const settingMain = document.getElementById("setting-main");
+ settingMain.style.display = "flex";
+ setTimeout(() =>{
+   settingMain.style.opacity = 1;
+ })
+})
+//}
+
     //wyswietlenie profilu uzytkownika
     let user_button = document.getElementById("user_id");
     user_button.addEventListener("click", () => {
@@ -621,39 +643,56 @@ document.getElementById("list").innerHTML ="";
     })
     // wyswietlanie wiadomosci kanalu glownego
     function snapMessages() {
+    
       console.log(pathChannel);
       var messageRef = firebase.database().ref(pathChannel);
       messageRef.on('child_added', function (snapshot) {
         let message_value = snapshot.child("Message").val();
         let nickName_value = snapshot.child("Nickname").val();
         let photo_value = snapshot.child("Photo").val();
-        console.log(photo_value);
+        let time = snapshot.child("time").val();
+        let date = snapshot.child("date").val();
+                console.log(photo_value);
         let createLi = document.createElement("li");
         let createSpan = document.createElement("span");
         let createDiv = document.createElement("div");
         let createImg = document.createElement("img");
+        let createThirdDiv = document.createElement("div");
        // let createP = document.createElement("p");
      //   createP.append(message_value);
+        //let createB2 = document.createElement("b");
+        let createB3 = document.createElement("b");
+
+     
+     createThirdDiv.className = "date_hours"
+     createThirdDiv.append("Date: " + date +" " + "Time: " + time);
      let createDivSecont = document.createElement("div");
      createDivSecont.className = "li_div_message-text"
      createDivSecont.append(message_value);
         createDiv.className = "li_div";
         createDiv.append(createImg, createDivSecont);
-        createSpan.append(nickName_value);
+        createB3.append(nickName_value);
+        createSpan.append(createB3);
         createImg.src = photo_value;
-        createLi.append(createSpan, createDiv);
+        createLi.append(createSpan, createDiv,createThirdDiv);
         document.getElementById("list").append(createLi);
       });
     }
 // wysylanie wiadomosci
 let send_message = document.getElementById("send-message");
 send_message.addEventListener("click", () => {
+  let today = new Date();
+let time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
   let text_area = document.getElementById("messenger_text_area").value;
   firebase.database().ref().child(pathChannel).push({
     Message: text_area,
     Nickname: userArray[1],
     Photo: userArray[0],
-    email: userArray[2]
+    email: userArray[2],
+    time: time,
+    date: date
+
   });
 
    // 0 = userImg, 1 = userNickName, 2 = user-mail, 3 = userID
