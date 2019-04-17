@@ -12,6 +12,7 @@ let channelphotoVal = 0;
 /* sciezka do kanałow--->>> */
 let pathChannel = "undefined";
 
+//testy
 
 // logowanie
 firebase.auth().onAuthStateChanged(function (user) {
@@ -19,7 +20,7 @@ firebase.auth().onAuthStateChanged(function (user) {
     // User is signed in.
     document.getElementById("header").style.display = "none";
     document.getElementById("mess-page").style.display = "block";
-
+  
     
   //  let userIdFromDatabase = "undefined";
    
@@ -323,7 +324,8 @@ return pathChannel = xd,snapMessages(),  joinPrivateAndPubChan();
 
 
     // wysiwetlanie zalogowanego uzytkownika
-let userloginId;
+    let userArray = new Array;
+//let userloginId;
    const loginUserRef = firebase.database().ref('users/' + userId);
     loginUserRef.on("value", function(snap){
     let userId  = snap.child("id").val();
@@ -335,8 +337,11 @@ let userloginId;
          document.getElementById("user-photo").src = userImg;
          document.getElementById("userNick").innerHTML = userNickName;
          document.getElementById("user-email").innerHTML = userEmail;
-    return userloginId = userId;
+
+    return userArray.push(userImg, userNickName, userEmail, userId);
+    // 0 = userImg, 1 = userNickName, 2 = user-mail, 3 = userID
     })
+ 
     loginUserRef.on("child_changed", function (snap) {
       console.log(snap.val());
      // let userId  = snap.child("id").val();
@@ -348,7 +353,7 @@ let userloginId;
       document.getElementById("user-photo").src = userImg;
       document.getElementById("userNick").innerHTML = userNickName;
       document.getElementById("user-email").innerHTML = userEmail;
-
+  
     })
 
 
@@ -381,10 +386,8 @@ let userloginId;
 
 // wyswietlanie uzytkownikow
 
-
-
 const usersRef = firebase.database().ref('users');
-usersRef.on('child_added', function (snapshot, event) {
+usersRef.on('child_added', function (snapshot) {
 // console.log(snapshot.key());
 /*
 if(snapshot.val()){
@@ -396,13 +399,13 @@ if(snapshot.val()){
 }
 */
 let xd = snapshot.key;
-console.log(xd);
+
 // console.log(userloginId);
   let userImg = snapshot.child("photoURL").val();
   let userNickName = snapshot.child("username").val();
   let userStatus = snapshot.child("status").val();
   let userDatabaseId = snapshot.child("id").val();
-if(userloginId === userDatabaseId ){
+if(userArray[3] === userDatabaseId ){
   console.log("i cyk dziala i nie wyswietla")
   
 }else{
@@ -429,14 +432,26 @@ if(userloginId === userDatabaseId ){
   let createDivThree = document.createElement("div");
   createDivThree.className = "button-container";
   let createButton = document.createElement("button");
+  createButton.id = userDatabaseId;
   createButton.className = "add_firend_button";
   createButton.innerHTML = '<i class="fa fa-plus"></i>' + "Add friend";
   createDivThree.append(createButton);
 createLi.append(createImg,createDiv,createDivThree);
 document.getElementById("usersOnlineId").append(createLi);
+
+const addFriendTarget = document.getElementById(userDatabaseId);
+addFriendTarget.addEventListener("click", (event) =>{
+  let xdd = event.target;
+
+  console.log( xdd)
+})
 }
 //let clickInSide = document.querySelectorAll(".add_firend_button").contains(event.target);
 //console.log(clickInSide);
+//let referencjaDoEventTarget =  event.target.classList.contains("add_firend_button");
+
+
+ // console.log(xd);
 
 })
 // do poprawy
@@ -462,8 +477,47 @@ for (i = 0; i < testbutton.length; i++) {
 
 }    
 */
+let testbutton = document.querySelectorAll(".add_firend_button");
 
+function testxd(){
+console.log("we dzialaj")
+
+
+for (i = 0; i < testbutton.length; i++) {
+  console.log("a to sie dzieje ?")
+  testbutton[i].addEventListener("click", function() {
+  alert("you clicked"); });
+}
+
+}
+/////
+for(var i = 0; i < testbutton.length; i++) {
+  console.log("xxxxxx")
+  testbutton[i].addEventListener("click", bindClick(i));
+}
+
+function bindClick(i) {
+return function() {
+   console.log("you clicked region number " + i);
+};
+}
+/*
+window.addEventListener("click", function(event){
+  let referencjaDoEventTarget =  event.target.classList.contains("add_firend_button");
+  let xdd = event.target;
+ 
+  if(referencjaDoEventTarget === true){
+    console.log( xdd)
+   // console.log(xd);
+  }else{
+    console.log("to chyba nie jest button add heheheheh")
+  }
+   
+  })
+  */
     //test
+
+   
     // wysylanie public na wysylanie wiadomosci
 
   
@@ -573,15 +627,18 @@ document.getElementById("list").innerHTML ="";
         let message_value = snapshot.child("Message").val();
         let nickName_value = snapshot.child("Nickname").val();
         let photo_value = snapshot.child("Photo").val();
-        console.log(message_value);
+        console.log(photo_value);
         let createLi = document.createElement("li");
         let createSpan = document.createElement("span");
         let createDiv = document.createElement("div");
         let createImg = document.createElement("img");
-        let createP = document.createElement("p");
-        createP.append(message_value);
+       // let createP = document.createElement("p");
+     //   createP.append(message_value);
+     let createDivSecont = document.createElement("div");
+     createDivSecont.className = "li_div_message-text"
+     createDivSecont.append(message_value);
         createDiv.className = "li_div";
-        createDiv.append(createImg, createP);
+        createDiv.append(createImg, createDivSecont);
         createSpan.append(nickName_value);
         createImg.src = photo_value;
         createLi.append(createSpan, createDiv);
@@ -594,12 +651,12 @@ send_message.addEventListener("click", () => {
   let text_area = document.getElementById("messenger_text_area").value;
   firebase.database().ref().child(pathChannel).push({
     Message: text_area,
-    Nickname: user.displayName,
-    Photo: user.photoURL,
-    email: user.email
+    Nickname: userArray[1],
+    Photo: userArray[0],
+    email: userArray[2]
   });
 
-
+   // 0 = userImg, 1 = userNickName, 2 = user-mail, 3 = userID
 })
 
 
