@@ -539,7 +539,7 @@ display:none;
         display:flex;
         height:80px;
         flex-direction: column;
-        position: absolute;
+        position: fixed;
         background-color:red;
     }
     .mess-top-container{
@@ -608,7 +608,7 @@ display:none;
     width:100%;
     height:30px;
     background-color:yellow;
-    position: absolute;;
+    position: fixed;
     bottom:0;
     
 }
