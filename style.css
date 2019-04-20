@@ -3,14 +3,16 @@
     padding:0;
     box-sizing:border-box;
 }
+html, body {
+    max-height: 100% !important;
+    height: 100%;
+}
 .header{
     width:100%;
     height:100%;
   
 }
-Html{
-    height:100%;
-}
+
 .login-background{
 width:60%;
 min-height:100vh;
@@ -392,7 +394,7 @@ text-align: center;
     
 }
 
-.users-online-ul li  img{
+.users-online-ul li  img,.stting-main-top .channel-boss img{
     height:50px;
     width:50px;
     border-radius:50%;
@@ -667,16 +669,101 @@ display:flex;
 /* channel setting*/
 .channel-setting-container{
     position: absolute;
-    width:80%;
-    height:80vh;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%,-50%);
-    background-color:red;
+    width:100%;
+    height:100vh;
+  top:0;
+  left:0;
+    background-color:gray;
     z-index: 4;
     display:none;
     opacity:0;
     transition:1s;
+    flex-direction: column;
+}
+.stting-main-top{
+    height:50%;
+    width:100%;
+    display:flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+.boss-channelName{
+    width:100%;
+    height:20px;
+    text-align: center;
+}
+.stting-main-top .channel-boss{
+    width:90%;
+    height:60px;
+    background-color:darkgray;
+    border-radius:5px;
+    margin:5px auto;
+    display:flex;
+    flex-direction: row;
+    justify-content:space-between;
+}
+.channel-setting-container .stting-main-top .channel-boss img{
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    margin: auto 5px;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+.stting-main-top .channel-boss .channel-boss-status-and-nickName{
+    width:70%;
+    height:100%;
+    padding:5px;
+    display:flex;
+    flex-direction: column;
+}
+.stting-main-top .channel-boss .channel-boss-status-and-nickName .nice-box{
+    width:100%;
+    height:50%;
+    margin:auto;
+}
+.stting-main-top .channel-boss .channel-boss-status-and-nickName .box{
+    display:flex;
+    flex-direction: row;
+}
+
+.channel-setting-container .stting-main-top .edit-button{
+    width:60px;
+    height:30px;
+    font-size:15px;
+    background-color:blue;
+    display:none;
+    position: absolute;
+    top:5px;
+    left:5px;
+}
+.channel-setting-container .stting-main-top .exit_button_setting{
+    width:40px;
+    height:30px;
+    background-color:red;
+    font-size:20px;
+    position: absolute;
+    top:5px;
+    right:5px;
+
+}
+.channel-setting-container .stting-main-top img{
+    width:120px;
+    height:120px;
+    border-radius:50%;
+    background-color:blue;
+    margin:0 auto;
+}
+.channel-setting-container .stting-main-top .boss-Pw-button{
+    width:20%;
+    height:100%;
+    background-color:red;
+}
+.setting-main-bottom{
+    width:100%;
+    height:50%;
+    background-color:green;
 }
 
     /* user profile */

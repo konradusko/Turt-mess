@@ -82,8 +82,8 @@
                     </div>
                     <div class="wrap-input">
                         <label class="label-input">Your Nickname</label>
-                        <input id="nickname_id" class="input" type="text" name="Nickname" maxlength="10" autocomplete="off"
-                            maxlength="25" placeholder="Nickname" required>
+                        <input id="nickname_id" class="input" type="text" name="Nickname" maxlength="10"
+                            autocomplete="off" maxlength="25" placeholder="Nickname" required>
                         <span class="focus-input"></span>
                     </div>
                     <div class="wrap-input input-file-wrap">
@@ -156,19 +156,19 @@
                         <option>Users</option>
                         <option>Users Online</option>
                         <option>Friends</option>
-                      </select>
-                      <select name="" id="select_status_Id" class="select_users select_status">
+                    </select>
+                    <select name="" id="select_status_Id" class="select_users select_status">
                         <option class="select_users_opcions" value="0">★ Online</option>
                         <option class="select_users_opcions" value="1">☆ Idle</option>
                         <option class="select_users_opcions" value="2">☆ Away</option>
-                        <option  class="select_users_opcions" value="3">☆ Offline</option>
-                      </select>
+                        <option class="select_users_opcions" value="3">☆ Offline</option>
+                    </select>
                 </div>
-                       
+
                 <div class="users-online">
-          
+
                     <ul id="usersOnlineId" class="users-online-ul">
-                     
+
 
                     </ul>
                 </div>
@@ -177,16 +177,51 @@
             <!--Channels-->
             <div id="messenger_id" class="messenger">
                 <div id="setting-main" class="channel-setting-container">
+                    <div class="stting-main-top">
+                       <button id="edit_button_setting" class="edit-button">Edit</button>
+                        <button id="exit-button" class="exit_button_setting"> <i class="fa fa-times" aria-hidden="true"></i> </button>
+                    
+
+                        <img id="setting-picture" src="" alt="Channel-photo">
+                        <span class="boss-channelName"><b id="setting-channel-name">ChannelName</b></span>
+                        <span>Number of messages sent:0</span>
+                        <div class="container-channel-boss">
+                            <span>Channel belongs to</span>
+                            <div class="channel-boss">
+                                <img id="boss-picture" src="" alt="founder-avatar">
+                                <div class="channel-boss-status-and-nickName">
+                                    <span class="nice-box"><b id="boss-NickName">Xdddd</b></span>
+                                    <div class="nice-box box"><span>Status:</span><span id="boss-status"
+                                            class="">Online</span>
+                                    </div>
+
+                                </div>
+                              <div class="boss-Pw-button">
+                                    <button  >PW</button>
+                              </div>
+
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                    <div class="setting-main-bottom">
+
+                    </div>
+
+
 
                 </div>
                 <div class="messenger-top">
-                        <span id="channel_id" class="backToChannels"><i class="fa fa-long-arrow-left" aria-hidden="true"></i></span>
-                        <div id ="channel-setting-join" class="channel-setting">
-                               <img id="channel_photo" src="" alt="Channel-photo">
-                            <b id="channel_name"></b>
-                        </div>
-                        <span id="user_id" class="user_profile-Channel"><i class="fa fa-user-o" aria-hidden="true"></i>
-                            Account</span>
+                    <span id="channel_id" class="backToChannels"><i class="fa fa-long-arrow-left"
+                            aria-hidden="true"></i></span>
+                    <div id="channel-setting-join" class="channel-setting">
+                        <img id="channel_photo" src="" alt="Channel-photo">
+                        <b id="channel_name"></b>
+                    </div>
+                    <span id="user_id" class="user_profile-Channel"><i class="fa fa-user-o" aria-hidden="true"></i>
+                        Account</span>
                 </div>
 
                 <div class="messenger-text">

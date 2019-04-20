@@ -11,6 +11,7 @@ let publicChannelNumber = 1;
 let channelphotoVal = 0;
 /* sciezka do kanałow--->>> */
 let pathChannel = "undefined";
+let pathUsers = "undefined";
 
 //testy
 
@@ -187,6 +188,7 @@ firebase.auth().onAuthStateChanged(function (user) {
       let channelsname = snapshot.child("ChannelName").val();
       let channels_id = snapshot.child("Channel_Id").val();
       let channels_img = snapshot.child("ChannelPhoto").val();
+      let channel_boss = snapshot.child("founder").val();
       let channel_li = document.createElement("li");
       let create_div = document.createElement("div");
       let create_span = document.createElement("span");
@@ -218,8 +220,8 @@ firebase.auth().onAuthStateChanged(function (user) {
           let rtnIndOne = indexOne = 0;
           let rtnIndTwo = indexTwo = 1;
           clickEvent();
-          // nr0 haslo, nr 1 unikalne id, nr 2 obrazek, nr 3 nazwa kanalu
-          return passAndUniqId.push(password_datbase, uniquieID, channels_img, channelsname), rtnIndOne, rtnIndTwo;
+          // nr0 haslo, nr 1 unikalne id, nr 2 obrazek, nr 3 nazwa kanalu 4 channel boss
+          return passAndUniqId.push(password_datbase, uniquieID, channels_img, channelsname,channel_boss), rtnIndOne, rtnIndTwo;
         } else {
 
         }
@@ -252,13 +254,14 @@ firebase.auth().onAuthStateChanged(function (user) {
         console.log(login_channelPassword + " " + "true");
         textx22();
         let xd = 'Channels/' + passAndUniqId[1] + '/messages';
+        let channel_online_users = 'Channels/' + passAndUniqId[1] + '/Users_online';
        // console.log(passAndUniqId);
-        document.getElementById("channel_photo").src = passAndUniqId[2];
-        document.getElementById("channel_name").innerHTML = passAndUniqId[3];
+        
         //onChannel();
+        innerChannelSetting();
 cancelForm();
 
-return pathChannel = xd,snapMessages(),  joinPrivateAndPubChan();
+return pathChannel = xd, pathUsers = channel_online_users ,snapMessages(),  joinPrivateAndPubChan();
       } else {
         joinError.innerHTML = "The password provided is wrong."
         joinError.style.color = "red";
@@ -291,6 +294,59 @@ return pathChannel = xd,snapMessages(),  joinPrivateAndPubChan();
     }
 
 
+    // zamykanie ustawien kanalu
+    const exitSettingChannel = document.getElementById("exit-button");
+    exitSettingChannel.addEventListener("click", () =>{
+      console.log("working")
+      const settingMain = document.getElementById("setting-main");
+      settingMain.style.opacity = 0;
+      setTimeout(() =>{
+        settingMain.style.display = "none";
+      }, 1000)
+    })
+    // channel setting
+// otwieranie ustawien kanalu
+const channelSetting = document.getElementById("channel-setting-join");
+channelSetting.addEventListener("click", () =>{
+  console.log("working")
+ const settingMain = document.getElementById("setting-main");
+ settingMain.style.display = "flex";
+ setTimeout(() =>{
+   settingMain.style.opacity = 1;
+ }, 500)
+})
+// wyswietlanie informacji w setting kanalu oraz sprawdzanie czy jestes adminkiem zlotym kanału
+
+function innerChannelSetting(){
+  if(userId ===  passAndUniqId[4]){
+    console.log("admin królu złoty :) ");
+    document.getElementById("edit_button_setting").style.display = "block";
+  }else{
+    document.getElementById("edit_button_setting").style.display = "none";
+  }
+  document.getElementById("channel_photo").src = passAndUniqId[2];
+  document.getElementById("channel_name").innerHTML = passAndUniqId[3];
+  document.getElementById("setting-channel-name").innerHTML =  passAndUniqId[3];
+  document.getElementById("setting-picture").src = passAndUniqId[2];
+
+  const usersRef = firebase.database().ref('users/' + passAndUniqId[4]);
+  let usersOnline = firebase.database().ref(pathUsers);
+  //szef kanalu
+usersRef.once('value', function (snapshot) {
+  let userId  = snapshot.child("id").val();
+  let userImg = snapshot.child("photoURL").val();
+  let userNickName = snapshot.child("username").val();
+  let userEmail = snapshot.child("email").val();
+  let userStatus = snapshot.child("status").val();
+  document.getElementById("boss-picture").src = userImg;
+  document.getElementById("boss-NickName").innerHTML = userNickName;
+  document.getElementById("boss-status").innerHTML = userStatus;
+})
+firebase.database().ref().child('Channels/' + passAndUniqId[1]+ '/Users_online' ).push({
+  userId
+})
+
+}
 
     // klikniecie poza form do logowania = zamkniecie go, i wylaczenie eventu
     function clickEvent() {
@@ -360,7 +416,7 @@ return pathChannel = xd,snapMessages(),  joinPrivateAndPubChan();
       document.getElementById("user-photo").src = userImg;
       document.getElementById("userNick").innerHTML = userNickName;
       document.getElementById("user-email").innerHTML = userEmail;
-  
+    
     })
 
 
@@ -580,18 +636,8 @@ logOutButton.addEventListener("click", () =>{
       return publicChannelNumber;
 
     }
-// channel setting
-//function onChannel(){
-const channelSetting = document.getElementById("channel-setting-join");
-channelSetting.addEventListener("click", () =>{
-  console.log("working")
- const settingMain = document.getElementById("setting-main");
- settingMain.style.display = "flex";
- setTimeout(() =>{
-   settingMain.style.opacity = 1;
- })
-})
-//}
+
+
 
     //wyswietlenie profilu uzytkownika
     let user_button = document.getElementById("user_id");
