@@ -3,11 +3,7 @@
     padding:0;
     box-sizing:border-box;
 }
-html, body {
-    max-height: 100%!important;
-    height: 100vh;
-    overflow:auto;
-}
+
 
 .header{
     width:100%;
