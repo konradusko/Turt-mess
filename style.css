@@ -2,7 +2,6 @@
     margin:0;
     padding:0;
     box-sizing:border-box;
-    height:100%;
 }
 
 .header{
@@ -220,7 +219,7 @@ justify-content: center;
 }
 /* channel */
 .channel-container{
-    height:100vh; 
+    height:100%; 
     width:100%;
     transition:1s;
     background-color:black;
