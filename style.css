@@ -226,7 +226,7 @@ justify-content: center;
     height:100%; 
     width:100%;
     transition:1s;
-    background-color:black;
+ /*   background-color:black; */
     z-index: 2;
     overflow: hidden;
     }
