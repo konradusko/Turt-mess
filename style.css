@@ -218,7 +218,7 @@ justify-content: center;
 }
 .container-mess-page{
     width:200%;
- 
+ background-color:red;
     display:flex;
 }
 /* channel */
