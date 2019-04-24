@@ -540,8 +540,7 @@ font-size:15px;
     .messenger{
     background-color:black;
     transition:1s;
-    height:100%;
-        width:100%;
+
 display:none;
     width:0%;
     opacity:0;
