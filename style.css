@@ -218,7 +218,7 @@ justify-content: center;
 }
 .container-mess-page{
     width:200%;
- background-color:blue;
+ background-color:orange;
     display:flex;
 }
 /* channel */
@@ -540,7 +540,8 @@ font-size:15px;
     .messenger{
     background-color:black;
     transition:1s;
-    height:100vh;
+    height:100%;
+        width:100%;
 display:none;
     width:0%;
     opacity:0;
