@@ -21,10 +21,10 @@ firebase.auth().onAuthStateChanged(function (user) {
     // User is signed in.
     document.getElementById("header").style.display = "none";
     document.getElementById("mess-page").style.display = "block";
-  
-    
-  //  let userIdFromDatabase = "undefined";
-   
+
+
+    //  let userIdFromDatabase = "undefined";
+
     let userId = firebase.auth().currentUser.uid;
     let user = firebase.auth().currentUser;
     // uztkownik dopiero sie zarejestrowal, dodawanie go do bazy danych
@@ -38,7 +38,7 @@ firebase.auth().onAuthStateChanged(function (user) {
         photoURL: "https://firebasestorage.googleapis.com/v0/b/messenger-6923c.appspot.com/o/no-avatar.jpg?alt=media&token=d8878bd7-c518-48fb-9f82-52b299fa4b3a",
         Number_of_messages_sent: 0,
         status: "Online",
-        id : randomValue
+        id: randomValue
       })
       //dodawanie obrazka
       if (photoVal === 1) {
@@ -68,10 +68,10 @@ firebase.auth().onAuthStateChanged(function (user) {
         reader.readAsArrayBuffer(file);
 
         console.log("zadzialo sie");
-      } else {
-      }
+      } else {}
       rtn();
-      function rtn(){
+
+      function rtn() {
         let strIng = register_number = "undefined";
         return strIng;
       }
@@ -107,7 +107,7 @@ firebase.auth().onAuthStateChanged(function (user) {
 
       if (channel_name.length > 1 && channel_password.length > 1) {
         // dodawanie kanalu do bazy danych
-       firebase.database().ref("Channels/" + randomString).set({
+        firebase.database().ref("Channels/" + randomString).set({
           ChannelName: channel_name,
           ChannelPassword: channel_password,
           unique_id: randomString,
@@ -221,7 +221,7 @@ firebase.auth().onAuthStateChanged(function (user) {
           let rtnIndTwo = indexTwo = 1;
           clickEvent();
           // nr0 haslo, nr 1 unikalne id, nr 2 obrazek, nr 3 nazwa kanalu 4 channel boss
-          return passAndUniqId.push(password_datbase, uniquieID, channels_img, channelsname,channel_boss), rtnIndOne, rtnIndTwo;
+          return passAndUniqId.push(password_datbase, uniquieID, channels_img, channelsname, channel_boss), rtnIndOne, rtnIndTwo;
         } else {
 
         }
@@ -252,16 +252,14 @@ firebase.auth().onAuthStateChanged(function (user) {
         joinError.innerHTML = "The password provided is good."
         joinError.style.color = "white";
         console.log(login_channelPassword + " " + "true");
-        textx22();
+
         let xd = 'Channels/' + passAndUniqId[1] + '/messages';
         let channel_online_users = 'Channels/' + passAndUniqId[1] + '/Users_online';
-       // console.log(passAndUniqId);
-        
-        //onChannel();
+        document.getElementById("login-to-channel-password").value = "";
         innerChannelSetting();
-cancelForm();
-
-return pathChannel = xd, pathUsers = channel_online_users ,snapMessages(),  joinPrivateAndPubChan();
+        cancelForm();
+        
+        return pathChannel = xd, pathUsers = channel_online_users, snapMessages(), joinPrivateAndPubChan();
       } else {
         joinError.innerHTML = "The password provided is wrong."
         joinError.style.color = "red";
@@ -279,74 +277,75 @@ return pathChannel = xd, pathUsers = channel_online_users ,snapMessages(),  join
         login_photo.src = "";
         login_name.innerHTML = "";
         document.getElementById("channel-ul-container").classList.remove("block-click");
+        joinError.innerHTML = "";
       }, 1000);
-      //  document.getElementById("login-to-channel-password").value = "";
+     
       let rtnIndOne1 = indexOne = 3;
       let rtnIndTw2 = indexTwo = 0;
       clickEvent();
       return rtnIndOne1, rtnIndTw2, passAndUniqId = [];
     }
-
-    function textx22() {
-      //console.log(uniquieID);
-      console.log("xddddd");
-      window.alert("no i dziala jak powinno");
-    }
-
+    /*
+        function textx22() {
+          //console.log(uniquieID);
+          console.log("xddddd");
+          window.alert("no i dziala jak powinno");
+        }
+    */
 
     // zamykanie ustawien kanalu
     const exitSettingChannel = document.getElementById("exit-button");
-    exitSettingChannel.addEventListener("click", () =>{
+    exitSettingChannel.addEventListener("click", () => {
       console.log("working")
       const settingMain = document.getElementById("setting-main");
       settingMain.style.opacity = 0;
-      setTimeout(() =>{
+      setTimeout(() => {
         settingMain.style.display = "none";
       }, 1000)
     })
     // channel setting
-// otwieranie ustawien kanalu
-const channelSetting = document.getElementById("channel-setting-join");
-channelSetting.addEventListener("click", () =>{
-  console.log("working")
- const settingMain = document.getElementById("setting-main");
- settingMain.style.display = "flex";
- setTimeout(() =>{
-   settingMain.style.opacity = 1;
- }, 500)
-})
-// wyswietlanie informacji w setting kanalu oraz sprawdzanie czy jestes adminkiem zlotym kanału
+    // otwieranie ustawien kanalu
+    const channelSetting = document.getElementById("channel-setting-join");
+    channelSetting.addEventListener("click", () => {
+      console.log("working")
+      const settingMain = document.getElementById("setting-main");
+      settingMain.style.display = "flex";
+      setTimeout(() => {
+        settingMain.style.opacity = 1;
+      }, 500)
+    })
+    // wyswietlanie informacji w setting kanalu oraz sprawdzanie czy jestes adminkiem zlotym kanału
 
-function innerChannelSetting(){
-  if(userId ===  passAndUniqId[4]){
-    console.log("admin królu złoty :) ");
-    document.getElementById("edit_button_setting").style.display = "block";
-  }else{
-    document.getElementById("edit_button_setting").style.display = "none";
-  }
-  document.getElementById("channel_photo").src = passAndUniqId[2];
-  document.getElementById("channel_name").innerHTML = passAndUniqId[3];
-  document.getElementById("setting-channel-name").innerHTML =  passAndUniqId[3];
-  document.getElementById("setting-picture").src = passAndUniqId[2];
+    function innerChannelSetting() {
+      if (userId === passAndUniqId[4]) {
+        console.log("admin królu złoty :) ");
+        document.getElementById("edit_button_setting").style.display = "block";
+      } else {
+        document.getElementById("edit_button_setting").style.display = "none";
+      }
+      document.getElementById("channel_photo").src = passAndUniqId[2];
+      document.getElementById("channel_name").innerHTML = passAndUniqId[3];
+      document.getElementById("setting-channel-name").innerHTML = passAndUniqId[3];
+      document.getElementById("setting-picture").src = passAndUniqId[2];
 
-  const usersRef = firebase.database().ref('users/' + passAndUniqId[4]);
-  let usersOnline = firebase.database().ref(pathUsers);
-  //szef kanalu
-usersRef.once('value', function (snapshot) {
-  let userId  = snapshot.child("id").val();
-  let userImg = snapshot.child("photoURL").val();
-  let userNickName = snapshot.child("username").val();
-  let userEmail = snapshot.child("email").val();
-  let userStatus = snapshot.child("status").val();
-  document.getElementById("boss-picture").src = userImg;
-  document.getElementById("boss-NickName").innerHTML = userNickName;
-  document.getElementById("boss-status").innerHTML = userStatus;
-})
-firebase.database().ref().child('Channels/' + passAndUniqId[1]+ '/Users_online' ).push({
-  userId
-})
+      const usersRef = firebase.database().ref('users/' + passAndUniqId[4]);
+      let usersOnline = firebase.database().ref(pathUsers);
+      //szef kanalu
+      usersRef.once('value', function (snapshot) {
+        let userId = snapshot.child("id").val();
+        let userImg = snapshot.child("photoURL").val();
+        let userNickName = snapshot.child("username").val();
+        let userEmail = snapshot.child("email").val();
+        let userStatus = snapshot.child("status").val();
+        document.getElementById("boss-picture").src = userImg;
+        document.getElementById("boss-NickName").innerHTML = userNickName;
+        document.getElementById("boss-status").innerHTML = userStatus;
+      })
+      firebase.database().ref().child('Channels/' + passAndUniqId[1] + '/Users_online').push({
+        userId
+      })
 
-}
+    }
 
     // klikniecie poza form do logowania = zamkniecie go, i wylaczenie eventu
     function clickEvent() {
@@ -388,26 +387,10 @@ firebase.database().ref().child('Channels/' + passAndUniqId[1]+ '/Users_online' 
 
     // wysiwetlanie zalogowanego uzytkownika
     let userArray = new Array;
-//let userloginId;
-   const loginUserRef = firebase.database().ref('users/' + userId);
-    loginUserRef.on("value", function(snap){
-    let userId  = snap.child("id").val();
-    let userImg = snap.child("photoURL").val();
-    let userNickName = snap.child("username").val();
-    let userEmail = snap.child("email").val();
-    let userStatus = snap.child("status").val();
-         document.getElementById("channel-user-profile").src = userImg;
-         document.getElementById("user-photo").src = userImg;
-         document.getElementById("userNick").innerHTML = userNickName;
-         document.getElementById("user-email").innerHTML = userEmail;
-
-    return userArray.push(userImg, userNickName, userEmail, userId);
-    // 0 = userImg, 1 = userNickName, 2 = user-mail, 3 = userID
-    })
- 
-    loginUserRef.on("child_changed", function (snap) {
-      console.log(snap.val());
-     // let userId  = snap.child("id").val();
+    //let userloginId;
+    const loginUserRef = firebase.database().ref('users/' + userId);
+    loginUserRef.on("value", function (snap) {
+      let userId = snap.child("id").val();
       let userImg = snap.child("photoURL").val();
       let userNickName = snap.child("username").val();
       let userEmail = snap.child("email").val();
@@ -416,199 +399,213 @@ firebase.database().ref().child('Channels/' + passAndUniqId[1]+ '/Users_online' 
       document.getElementById("user-photo").src = userImg;
       document.getElementById("userNick").innerHTML = userNickName;
       document.getElementById("user-email").innerHTML = userEmail;
-    
+
+      return userArray.push(userImg, userNickName, userEmail, userId);
+      // 0 = userImg, 1 = userNickName, 2 = user-mail, 3 = userID
+    })
+
+    loginUserRef.on("child_changed", function (snap) {
+      console.log(snap.val());
+      // let userId  = snap.child("id").val();
+      let userImg = snap.child("photoURL").val();
+      let userNickName = snap.child("username").val();
+      let userEmail = snap.child("email").val();
+      let userStatus = snap.child("status").val();
+      document.getElementById("channel-user-profile").src = userImg;
+      document.getElementById("user-photo").src = userImg;
+      document.getElementById("userNick").innerHTML = userNickName;
+      document.getElementById("user-email").innerHTML = userEmail;
+
     })
 
 
 
     //zmiana statusu
     const UsStatus = document.getElementById("select_status_Id");
-    UsStatus.addEventListener('change', () =>{
+    UsStatus.addEventListener('change', () => {
       let stat = "★ Online";
-    let  val = document.getElementById("select_status_Id").value;
-      switch(val){
+      let val = document.getElementById("select_status_Id").value;
+      switch (val) {
         case "0":
-        stat = "★ Online";
-        break;
+          stat = "★ Online";
+          break;
         case "1":
-         stat = "☆ Idle";
-        break;
+          stat = "☆ Idle";
+          break;
         case "2":
-        stat = "☆ Away";
-        break;
+          stat = "☆ Away";
+          break;
         case "3":
-        stat = "☆ Offline"
-        break;
+          stat = "☆ Offline"
+          break;
       }
-    
-     firebase.database().ref("users/" + userId).update({
-        status : stat
+
+      firebase.database().ref("users/" + userId).update({
+        status: stat
       });
     })
-   
-
-// wyswietlanie uzytkownikow
-
-const usersRef = firebase.database().ref('users');
-usersRef.on('child_added', function (snapshot) {
-// console.log(snapshot.key());
-/*
-if(snapshot.val()){
-  loginUserRef.on("child_added", function(snapshot){
-    usersRef.onDisconnect().set('☆ offline');
-    usersRef.set('★ online');
-  })
-
-}
-*/
-let xd = snapshot.key;
-
-// console.log(userloginId);
-  let userImg = snapshot.child("photoURL").val();
-  let userNickName = snapshot.child("username").val();
-  let userStatus = snapshot.child("status").val();
-  let userDatabaseId = snapshot.child("id").val();
-if(userArray[3] === userDatabaseId ){
-  console.log("i cyk dziala i nie wyswietla")
-  
-}else{
-
-  let createLi = document.createElement("li");
-  //createLi.id =userDatabaseId;
-  let createImg = document.createElement("img");
-  createImg.src = userImg;
-  let createDiv = document.createElement("div");
-  createDiv.className = "user-name-status";
-  let createSpanOne = document.createElement("span");
-  let createB = document.createElement("b");
-  createB.append(userNickName);
-  createSpanOne.append(createB);
-  let createDivTwo = document.createElement("div");
-  createDivTwo.className = "user-status";
-  let createSpanTwo = document.createElement("span");
-  createSpanTwo.innerHTML = "Status:";
-  let createSpanThree = document.createElement("span");
-  createSpanThree.className ="span-status";
-  createSpanThree.append(userStatus);
-  createDivTwo.append(createSpanTwo,createSpanThree)
-  createDiv.append(createSpanOne,createDivTwo);
-  let createDivThree = document.createElement("div");
-  createDivThree.className = "button-container";
-  let createButton = document.createElement("button");
-  createButton.id = userDatabaseId;
-  createButton.className = "add_firend_button";
-  createButton.innerHTML = '<i class="fa fa-plus"></i>' + "Add friend";
-  createDivThree.append(createButton);
-createLi.append(createImg,createDiv,createDivThree);
-document.getElementById("usersOnlineId").append(createLi);
-
-const addFriendTarget = document.getElementById(userDatabaseId);
-addFriendTarget.addEventListener("click", (event) =>{
-  let xdd = event.target;
-
-  console.log( xdd)
-})
-}
-//let clickInSide = document.querySelectorAll(".add_firend_button").contains(event.target);
-//console.log(clickInSide);
-//let referencjaDoEventTarget =  event.target.classList.contains("add_firend_button");
 
 
- // console.log(xd);
+    // wyswietlanie uzytkownikow
 
-})
-// do poprawy
-/*
-usersRef.on("child_changed", function (snapshot) {
-  let userStatus = snapshot.child("status").val();
-  let userDatabaseId = snapshot.child("id").val();
-  console.log(userDatabaseId + userStatus);
-  let test = document.getElementById(userDatabaseId);
-  console.log(userDatabaseId)
-})
-// dodawanie do znajomych
-addFriend()
-function addFriend(){
-  console.log("dzieje sie to ?")
-let testbutton = document.querySelectorAll(".add_firend_button");
+    const usersRef = firebase.database().ref('users');
+    usersRef.on('child_added', function (snapshot) {
+      // console.log(snapshot.key());
+      /*
+      if(snapshot.val()){
+        loginUserRef.on("child_added", function(snapshot){
+          usersRef.onDisconnect().set('☆ offline');
+          usersRef.set('★ online');
+        })
 
-for (i = 0; i < testbutton.length; i++) {
-  console.log("a to sie dzieje ?")
-  testbutton[i].addEventListener("click", function() {
-  alert("you clicked"); });
-}
+      }
+      */
+      let xd = snapshot.key;
 
-}    
-*/
-let testbutton = document.querySelectorAll(".add_firend_button");
+      // console.log(userloginId);
+      let userImg = snapshot.child("photoURL").val();
+      let userNickName = snapshot.child("username").val();
+      let userStatus = snapshot.child("status").val();
+      let userDatabaseId = snapshot.child("id").val();
+      if (userArray[3] === userDatabaseId) {
+        console.log("i cyk dziala i nie wyswietla")
 
-function testxd(){
-console.log("we dzialaj")
+      } else {
+
+        let createLi = document.createElement("li");
+        //createLi.id =userDatabaseId;
+        let createImg = document.createElement("img");
+        createImg.src = userImg;
+        let createDiv = document.createElement("div");
+        createDiv.className = "user-name-status";
+        let createSpanOne = document.createElement("span");
+        let createB = document.createElement("b");
+        createB.append(userNickName);
+        createSpanOne.append(createB);
+        let createDivTwo = document.createElement("div");
+        createDivTwo.className = "user-status";
+        let createSpanTwo = document.createElement("span");
+        createSpanTwo.innerHTML = "Status:";
+        let createSpanThree = document.createElement("span");
+        createSpanThree.className = "span-status";
+        createSpanThree.append(userStatus);
+        createDivTwo.append(createSpanTwo, createSpanThree)
+        createDiv.append(createSpanOne, createDivTwo);
+        let createDivThree = document.createElement("div");
+        createDivThree.className = "button-container";
+        let createButton = document.createElement("button");
+        createButton.id = userDatabaseId;
+        createButton.className = "add_firend_button";
+        createButton.innerHTML = '<i class="fa fa-plus"></i>' + "Add friend";
+        createDivThree.append(createButton);
+        createLi.append(createImg, createDiv, createDivThree);
+        document.getElementById("usersOnlineId").append(createLi);
+
+        const addFriendTarget = document.getElementById(userDatabaseId);
+        addFriendTarget.addEventListener("click", (event) => {
+          let xdd = event.target;
+
+          console.log(xdd)
+        })
+      }
+      //let clickInSide = document.querySelectorAll(".add_firend_button").contains(event.target);
+      //console.log(clickInSide);
+      //let referencjaDoEventTarget =  event.target.classList.contains("add_firend_button");
 
 
-for (i = 0; i < testbutton.length; i++) {
-  console.log("a to sie dzieje ?")
-  testbutton[i].addEventListener("click", function() {
-  alert("you clicked"); });
-}
+      // console.log(xd);
 
-}
-/////
-for(var i = 0; i < testbutton.length; i++) {
-  console.log("xxxxxx")
-  testbutton[i].addEventListener("click", bindClick(i));
-}
+    })
+    // do poprawy
+    /*
+    usersRef.on("child_changed", function (snapshot) {
+      let userStatus = snapshot.child("status").val();
+      let userDatabaseId = snapshot.child("id").val();
+      console.log(userDatabaseId + userStatus);
+      let test = document.getElementById(userDatabaseId);
+      console.log(userDatabaseId)
+    })
+    // dodawanie do znajomych
+    addFriend()
+    function addFriend(){
+      console.log("dzieje sie to ?")
+    let testbutton = document.querySelectorAll(".add_firend_button");
 
-function bindClick(i) {
-return function() {
-   console.log("you clicked region number " + i);
-};
-}
-/*
-window.addEventListener("click", function(event){
-  let referencjaDoEventTarget =  event.target.classList.contains("add_firend_button");
-  let xdd = event.target;
- 
-  if(referencjaDoEventTarget === true){
-    console.log( xdd)
-   // console.log(xd);
-  }else{
-    console.log("to chyba nie jest button add heheheheh")
-  }
-   
-  })
-  */
+    for (i = 0; i < testbutton.length; i++) {
+      console.log("a to sie dzieje ?")
+      testbutton[i].addEventListener("click", function() {
+      alert("you clicked"); });
+    }
+
+    }    
+
+    let testbutton = document.querySelectorAll(".add_firend_button");
+
+    function testxd(){
+    console.log("we dzialaj")
+
+
+    for (i = 0; i < testbutton.length; i++) {
+      console.log("a to sie dzieje ?")
+      testbutton[i].addEventListener("click", function() {
+      alert("you clicked"); });
+    }
+
+    }
+    /////
+    for(var i = 0; i < testbutton.length; i++) {
+      console.log("xxxxxx")
+      testbutton[i].addEventListener("click", bindClick(i));
+    }
+
+    function bindClick(i) {
+    return function() {
+       console.log("you clicked region number " + i);
+    };
+    }
+    /*
+    window.addEventListener("click", function(event){
+      let referencjaDoEventTarget =  event.target.classList.contains("add_firend_button");
+      let xdd = event.target;
+     
+      if(referencjaDoEventTarget === true){
+        console.log( xdd)
+       // console.log(xd);
+      }else{
+        console.log("to chyba nie jest button add heheheheh")
+      }
+       
+      })
+      */
     //test
 
-   
+
     // wysylanie public na wysylanie wiadomosci
 
-  
+
 
     //mechanika
     //wylogowanie
 
-logOutButton.addEventListener("click", () =>{
-  logOutThinks();
-  firebase.auth().signOut();
-  location.reload();
-})
+    logOutButton.addEventListener("click", () => {
+      logOutThinks();
+      firebase.auth().signOut();
+      location.reload();
+    })
 
 
     function logOutThinks() {
 
-      messenger.style.opacity = 0;
+
+      channel_container.style.transform = "initial";
+      messenger.style.transform = "initial";
+      user_profile_container.style.transform = "initial";
       setTimeout(() => {
         messenger.style.display = "none";
+        messenger.style.opacity = 0;
         containerMessPage.style.width = 200 + "%";
-        channel_container.style.transform = "initial";
-        messenger.style.transform = "initial";
-        user_profile_container.style.transform = "initial";
         messenger.style.width = 0 + "%";
       }, 1000);
-     // document.getElementById("usersOnlineId").innerHTML = "";
-      //messenger.classList.remove("blur");
-
       publicChannelNumber = 1;
       return publicChannelNumber;
     }
@@ -619,7 +616,7 @@ logOutButton.addEventListener("click", () =>{
     publicChannel.addEventListener("click", () => {
       document.getElementById("channel_photo").src = "img/public-background.jpg";
       document.getElementById("channel_name").innerHTML = "Public";
-      return pathChannel = 'PublicChannel/',  snapMessages(),  joinPrivateAndPubChan();
+      return pathChannel = 'PublicChannel/', snapMessages(), joinPrivateAndPubChan();
     })
 
     function joinPrivateAndPubChan() {
@@ -630,14 +627,25 @@ logOutButton.addEventListener("click", () =>{
       messenger.style.width = 100 + "%";
       messenger.style.display = "flex";
       publicChannelNumber = 2;
+      messenger.style.opacity = 1;
       setTimeout(() => {
-        messenger.style.opacity = 1;
+        scrollbottom();
       }, 1000);
+      console.log("tes");
+
       return publicChannelNumber;
 
     }
 
-
+    //scroll testy
+    function scrollbottom() {
+      console.log("ze to sie dzieje i scrolluje")
+      document.getElementById('list').scrollIntoView({
+        behavior: 'smooth',
+        block: 'end'
+      });
+      //let items = document.querySelectorAll(".Message-list")
+    }
 
     //wyswietlenie profilu uzytkownika
     let user_button = document.getElementById("user_id");
@@ -649,7 +657,7 @@ logOutButton.addEventListener("click", () =>{
     //powrot do kanałow kanalow
     let channel_button = document.getElementById("channel_id");
     channel_button.addEventListener("click", () => {
-document.getElementById("list").innerHTML ="";
+      document.getElementById("list").innerHTML = "";
       logOutThinks();
       //  messenger.classList.add("blur");
       console.log("xd");
@@ -689,7 +697,7 @@ document.getElementById("list").innerHTML ="";
     })
     // wyswietlanie wiadomosci kanalu glownego
     function snapMessages() {
-    
+
       console.log(pathChannel);
       var messageRef = firebase.database().ref(pathChannel);
       messageRef.on('child_added', function (snapshot) {
@@ -698,54 +706,56 @@ document.getElementById("list").innerHTML ="";
         let photo_value = snapshot.child("Photo").val();
         let time = snapshot.child("time").val();
         let date = snapshot.child("date").val();
-                console.log(photo_value);
+        console.log(photo_value);
         let createLi = document.createElement("li");
+        createLi.className = "Message-list";
         let createSpan = document.createElement("span");
         let createDiv = document.createElement("div");
         let createImg = document.createElement("img");
         let createThirdDiv = document.createElement("div");
-       // let createP = document.createElement("p");
-     //   createP.append(message_value);
+        // let createP = document.createElement("p");
+        //   createP.append(message_value);
         //let createB2 = document.createElement("b");
         let createB3 = document.createElement("b");
 
-     
-     createThirdDiv.className = "date_hours"
-     createThirdDiv.append("Date: " + date +" " + "Time: " + time);
-     let createDivSecont = document.createElement("div");
-     createDivSecont.className = "li_div_message-text"
-     createDivSecont.append(message_value);
+
+        createThirdDiv.className = "date_hours"
+        createThirdDiv.append("Date: " + date + " " + "Time: " + time);
+        let createDivSecont = document.createElement("div");
+        createDivSecont.className = "li_div_message-text"
+        createDivSecont.append(message_value);
         createDiv.className = "li_div";
         createDiv.append(createImg, createDivSecont);
         createB3.append(nickName_value);
         createSpan.append(createB3);
         createImg.src = photo_value;
-        createLi.append(createSpan, createDiv,createThirdDiv);
+        createLi.append(createSpan, createDiv, createThirdDiv);
         document.getElementById("list").append(createLi);
       });
     }
-// wysylanie wiadomosci
-let send_message = document.getElementById("send-message");
-send_message.addEventListener("click", () => {
-  let today = new Date();
-let time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-  let text_area = document.getElementById("messenger_text_area").value;
-  firebase.database().ref().child(pathChannel).push({
-    Message: text_area,
-    Nickname: userArray[1],
-    Photo: userArray[0],
-    email: userArray[2],
-    time: time,
-    date: date
+    // wysylanie wiadomosci
 
-  });
+    let send_message = document.getElementById("send-message");
+    send_message.addEventListener("click", () => {
+      let today = new Date();
+      let time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+      var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+      let text_area = document.getElementById("messenger_text_area").value;
+      firebase.database().ref().child(pathChannel).push({
+        Message: text_area,
+        Nickname: userArray[1],
+        Photo: userArray[0],
+        email: userArray[2],
+        time: time,
+        date: date
 
-   // 0 = userImg, 1 = userNickName, 2 = user-mail, 3 = userID
-})
+      });
+
+      // 0 = userImg, 1 = userNickName, 2 = user-mail, 3 = userID
+    })
 
 
-// testowanie uzytkownikow online
+    // testowanie uzytkownikow online
 
 
 
