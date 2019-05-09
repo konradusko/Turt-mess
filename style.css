@@ -3,10 +3,10 @@
     padding:0;
     box-sizing:border-box;
 }
-html, body {
-  height:100%;
+html,body{
+height:100%;
+  
 }
-
 .header{
     width:100%;
     height:100%;
@@ -211,7 +211,9 @@ justify-content: center;
 .mess-page{
     width:100%;
     height:100%;
-
+   /* min-height: 100vh;
+    max-height: 100vh;
+    */
     overflow: hidden;
 }
 .container-mess-page{
@@ -220,10 +222,10 @@ justify-content: center;
 }
 /* channel */
 .channel-container{
-    height:100%;
+    height:100%; 
     width:100%;
     transition:1s;
-    background-color:black;
+  background-color:black; 
     z-index: 2;
     overflow: hidden;
     }
@@ -346,7 +348,7 @@ justify-content: center;
 .users-online{
     width:90%;
     margin:0 auto;
-    height:calc(100% - 350px);
+    height:calc(100vh - 350px);
     overflow: auto;
 }
 .users_and_others{
@@ -537,6 +539,7 @@ font-size:15px;
     .messenger{
     background-color:black;
     transition:1s;
+
 display:none;
     width:0%;
     opacity:0;
@@ -546,6 +549,7 @@ display:none;
         width:100%;
         display:flex;
         height:50px;
+        position: fixed;
         background-color:darkgrey;
         padding:0 5%;
         color:white;
@@ -585,9 +589,10 @@ display:flex;
    }
     .messenger-text{
         width: 100%;
-    height: calc(100% - 80px);
+    height: calc(100% - 110px);
     overflow: auto;
-  
+    position: fixed;
+    top: 80px;
     
     }
     .messenger-top-ul{
@@ -655,23 +660,11 @@ display:flex;
 
 .messenger-text-area{
     width:100%;
-    height:35px;
+    height:30px;
     background-color:yellow;
-    display:flex;
+    position: fixed;
+    bottom:0;
     
-}
-.input-send-message{
-    width: calc(100% - 90px);
-    height: 25px;
-    margin: auto;
-    background-color: whitesmoke;
-    border-radius: 5px;
-}
-.button-send-message{
-    width:60px;
-    height:25px;
-    margin:auto;
-    background-color:red;
 }
 /* channel setting*/
 .channel-setting-container{
