@@ -219,6 +219,7 @@ justify-content: center;
 .container-mess-page{
     width:200%;
     display:flex;
+    height:100%;
 }
 /* channel */
 .channel-container{
@@ -549,7 +550,6 @@ display:none;
         width:100%;
         display:flex;
         height:50px;
-        position: fixed;
         background-color:darkgrey;
         padding:0 5%;
         color:white;
@@ -589,11 +589,8 @@ display:flex;
    }
     .messenger-text{
         width: 100%;
-    height: calc(100% - 110px);
-    overflow: auto;
-    position: fixed;
-    top: 80px;
-    
+        height: calc(100% - 80px);
+        overflow: auto;
     }
     .messenger-top-ul{
         width:100%;
@@ -660,11 +657,23 @@ display:flex;
 
 .messenger-text-area{
     width:100%;
-    height:30px;
     background-color:yellow;
-    position: fixed;
-    bottom:0;
+    display:flex;
+    height:35px;
     
+}
+.input-send-message{
+    width: calc(100% - 90px);
+    height: 25px;
+    margin: auto;
+    background-color: whitesmoke;
+    border-radius: 5px;
+}
+.button-send-message{
+    width:60px;
+    height:25px;
+    margin:auto;
+    background-color:red;
 }
 /* channel setting*/
 .channel-setting-container{
