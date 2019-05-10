@@ -278,6 +278,7 @@ firebase.auth().onAuthStateChanged(function (user) {
         login_name.innerHTML = "";
         document.getElementById("channel-ul-container").classList.remove("block-click");
         joinError.innerHTML = "";
+        document.getElementById("login-to-channel-password").value = "";
       }, 1000);
      
       let rtnIndOne1 = indexOne = 3;
