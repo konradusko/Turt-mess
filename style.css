@@ -673,9 +673,12 @@ display:flex;
     width:60px;
     height:25px;
     color:white;
-    text-transform: uppercase;
     margin:auto;
     background-color:darkslategray;
+    display:none;
+}
+.button-send-icon-message{
+display:block;
 }
 /* channel setting*/
 .channel-setting-container{

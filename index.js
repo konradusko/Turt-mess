@@ -86,16 +86,16 @@ firebase.auth().onAuthStateChanged(function (user) {
 
     // tworzenie kanalu
 
-    let create_channel = document.getElementById("button-New-channel");
+    const create_channel = document.getElementById("button-New-channel");
     create_channel.addEventListener("click", () => {
-      let channel_name = document.getElementById("channel_name_id").value;
-      let channel_password = document.getElementById("channel_password_id").value;
-      let error_message = document.getElementById("newChannel-error");
-      let randomValue = Math.random().toString(36).substring(5);
-
+      const channel_name = document.getElementById("channel_name_id").value;
+      const channel_password = document.getElementById("channel_password_id").value;
+      const error_message = document.getElementById("newChannel-error");
+      const randomValue = Math.random().toString(36).substring(5);
+      const icon = '<i class="fa fa-thumbs-up" aria-hidden="true"></i>'
       function randomString(len, charSet) {
         charSet = charSet || 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-        var randomString = '';
+        let randomString = '';
         for (var i = 0; i < len; i++) {
           var randomPoz = Math.floor(Math.random() * charSet.length);
           randomString += charSet.substring(randomPoz, randomPoz + 1);
@@ -113,6 +113,7 @@ firebase.auth().onAuthStateChanged(function (user) {
           unique_id: randomString,
           Channel_Id: randomValue,
           founder: userId,
+          icon: icon,
           ChannelPhoto: "https://firebasestorage.googleapis.com/v0/b/messenger-6923c.appspot.com/o/No-Photo-Available.jpg?alt=media&token=e7d6e25d-eb5b-4262-8287-c6b976791840"
 
 
@@ -173,6 +174,7 @@ firebase.auth().onAuthStateChanged(function (user) {
     })
 
     let passAndUniqId = new Array;
+    let chan_icon = new Array;
     let btnJoin = document.getElementById("login-to-channel-join");
     let btnCancel = document.getElementById("login-to-channel-cancel");
     let form = document.getElementById("login-to-channel_id");
@@ -185,10 +187,13 @@ firebase.auth().onAuthStateChanged(function (user) {
     // wyswietlanie kanałów
     const channelsRef = firebase.database().ref('Channels/');
     channelsRef.on('child_added', function (snapshot) {
+      //pobieranie informacji z bazych danych o kanale
       let channelsname = snapshot.child("ChannelName").val();
       let channels_id = snapshot.child("Channel_Id").val();
       let channels_img = snapshot.child("ChannelPhoto").val();
       let channel_boss = snapshot.child("founder").val();
+      let channel_icon = snapshot.child("icon").val();
+
       let channel_li = document.createElement("li");
       let create_div = document.createElement("div");
       let create_span = document.createElement("span");
@@ -202,6 +207,7 @@ firebase.auth().onAuthStateChanged(function (user) {
       create_span.append(channelsname);
       channel_li.append(create_div, create_span);
       document.getElementById("channel-ul-container").append(channel_li);
+      // dolaczenie do kanau 
       const joinChannel = document.getElementById(channels_id);
       joinChannel.addEventListener("click", (e) => {
         document.getElementById("channel-ul-container").classList.add("block-click");
@@ -220,8 +226,8 @@ firebase.auth().onAuthStateChanged(function (user) {
           let rtnIndOne = indexOne = 0;
           let rtnIndTwo = indexTwo = 1;
           clickEvent();
-          // nr0 haslo, nr 1 unikalne id, nr 2 obrazek, nr 3 nazwa kanalu 4 channel boss
-          return passAndUniqId.push(password_datbase, uniquieID, channels_img, channelsname, channel_boss), rtnIndOne, rtnIndTwo;
+          // nr0 haslo, nr 1 unikalne id, nr 2 obrazek, nr 3 nazwa kanalu 4 channel boss 
+          return passAndUniqId.push(password_datbase, uniquieID, channels_img, channelsname, channel_boss), rtnIndOne, rtnIndTwo, chan_icon.push(channel_icon);
         } else {
 
         }
@@ -310,7 +316,7 @@ firebase.auth().onAuthStateChanged(function (user) {
       }, 500)
     })
     // wyswietlanie informacji w setting kanalu oraz sprawdzanie czy jestes adminkiem zlotym kanału
-
+  
     function innerChannelSetting() {
       if (userId === passAndUniqId[4]) {
         console.log("admin królu złoty :) ");
@@ -318,11 +324,12 @@ firebase.auth().onAuthStateChanged(function (user) {
       } else {
         document.getElementById("edit_button_setting").style.display = "none";
       }
+      // wyswietlanie zdj kanalu i nazwy 
       document.getElementById("channel_photo").src = passAndUniqId[2];
       document.getElementById("channel_name").innerHTML = passAndUniqId[3];
       document.getElementById("setting-channel-name").innerHTML = passAndUniqId[3];
       document.getElementById("setting-picture").src = passAndUniqId[2];
-
+      document.getElementById("send-icon").innerHTML = chan_icon[0]; // wyswietlanie iconki(domyslnie kciuka)
       const usersRef = firebase.database().ref('users/' + passAndUniqId[4]);
       let usersOnline = firebase.database().ref(pathUsers);
       //szef kanalu
@@ -336,10 +343,10 @@ firebase.auth().onAuthStateChanged(function (user) {
         document.getElementById("boss-NickName").innerHTML = userNickName;
         document.getElementById("boss-status").innerHTML = userStatus;
       })
-      firebase.database().ref().child('Channels/' + passAndUniqId[1] + '/Users_online').push({
+    /*  firebase.database().ref().child('Channels/' + passAndUniqId[1] + '/Users_online').push({
         userId
-      })
-
+      }) */
+         
     }
 
     // klikniecie poza form do logowania = zamkniecie go, i wylaczenie eventu
@@ -630,16 +637,6 @@ firebase.auth().onAuthStateChanged(function (user) {
 
     }
 
-    //scroll testy
-    function scrollbottom() {
-      console.log("ze to sie dzieje i scrolluje")
-      document.getElementById('list').scrollIntoView({
-        behavior: 'smooth',
-        block: 'end'
-      });
-    }
-    document.getElementById("messenger_text_area").addEventListener("click", scrollbottom);
-
 
     //wyswietlenie profilu uzytkownika
     let user_button = document.getElementById("user_id");
@@ -653,8 +650,8 @@ firebase.auth().onAuthStateChanged(function (user) {
     channel_button.addEventListener("click", () => {
       document.getElementById("list").innerHTML = "";
       logOutThinks();
-      //  messenger.classList.add("blur");
       console.log("xd");
+      return pathChannel = "undefined", pathUsers = "undefined", passAndUniqId = [],chan_icon = [];
     })
 
     // nowe
@@ -689,7 +686,7 @@ firebase.auth().onAuthStateChanged(function (user) {
         createForm.style.display = "none";
       }, 1500);
     })
-    // wyswietlanie wiadomosci kanalu glownego
+    // wyswietlanie wiadomosci kanalu
     function snapMessages() {
 
       console.log(pathChannel);
@@ -717,7 +714,7 @@ firebase.auth().onAuthStateChanged(function (user) {
         createThirdDiv.append("Date: " + date + " " + "Time: " + time);
         let createDivSecont = document.createElement("div");
         createDivSecont.className = "li_div_message-text"
-        createDivSecont.append(message_value);
+        createDivSecont.innerHTML = message_value;
         createDiv.className = "li_div";
         createDiv.append(createImg, createDivSecont);
         createB3.append(nickName_value);
@@ -729,27 +726,74 @@ firebase.auth().onAuthStateChanged(function (user) {
     }
     // wysylanie wiadomosci
 
-    let send_message = document.getElementById("send-message");
+let switchSendMessage = "undefined";
+
+  
+const send_icon = document.getElementById("send-icon");
+send_icon.addEventListener("click", () =>{
+  console.log(chan_icon[0]);
+  return switchSendMessage = chan_icon[0], sendMessageOrIcon();
+
+})
+    
+    const send_message = document.getElementById("send-message");
     send_message.addEventListener("click", () => {
-      let today = new Date();
-      let time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-      var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
-      let text_area = document.getElementById("messenger_text_area").value;
+      const text_area = document.getElementById("messenger_text_area").value;
+      return switchSendMessage = text_area, sendMessageOrIcon();
+    })
+
+
+    function sendMessageOrIcon(){
+      //czyszczenie pola do wysylania
+      document.getElementById("messenger_text_area").value = ""
+     clearMessagefield();
+
+      // wysylanie wiadomosci
+      const today = new Date();
+      const time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+      const date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
       firebase.database().ref().child(pathChannel).push({
-        Message: text_area,
+        Message: switchSendMessage,
         Nickname: userArray[1],
         Photo: userArray[0],
         email: userArray[2],
         time: time,
         date: date
-
       });
+         // 0 = userImg, 1 = userNickName, 2 = user-mail, 3 = userID
+         scrollbottom();
+    }
 
-      // 0 = userImg, 1 = userNickName, 2 = user-mail, 3 = userID
-    })
+window.addEventListener("keyup", clearMessagefield);
+function clearMessagefield(){
+  const area_text = document.getElementById("messenger_text_area").value;
+  if( area_text == ""     ||  area_text.length  == 0){
+ // icon
+ document.getElementById("send-icon").style.display = "block";
+ document.getElementById("send-message").style.display = "none";
 
+  }else{
+  // send
+    document.getElementById("send-icon").style.display = "none";
+    document.getElementById("send-message").style.display = "block";
+  }
+}
+  
+    //scroll testy
+    // scrollowanie do ostatniej wiadomosci 
+    function scrollbottom() {
+      console.log("ze to sie dzieje i scrolluje")
+      document.getElementById('list').scrollIntoView({
+        behavior: 'smooth',
+        block: 'end'
+      });
+    }
+    document.getElementById("messenger_text_area").addEventListener("click", () =>{
+      scrollbottom();
+      console.log("dziala");
 
-    // testowanie uzytkownikow online
+    });
+
 
 
 
