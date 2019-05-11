@@ -286,13 +286,7 @@ firebase.auth().onAuthStateChanged(function (user) {
       clickEvent();
       return rtnIndOne1, rtnIndTw2, passAndUniqId = [];
     }
-    /*
-        function textx22() {
-          //console.log(uniquieID);
-          console.log("xddddd");
-          window.alert("no i dziala jak powinno");
-        }
-    */
+
 
     // zamykanie ustawien kanalu
     const exitSettingChannel = document.getElementById("exit-button");
@@ -596,8 +590,6 @@ firebase.auth().onAuthStateChanged(function (user) {
 
 
     function logOutThinks() {
-
-
       channel_container.style.transform = "initial";
       messenger.style.transform = "initial";
       user_profile_container.style.transform = "initial";
@@ -645,8 +637,9 @@ firebase.auth().onAuthStateChanged(function (user) {
         behavior: 'smooth',
         block: 'end'
       });
-      //let items = document.querySelectorAll(".Message-list")
     }
+    document.getElementById("messenger_text_area").addEventListener("click", scrollbottom);
+
 
     //wyswietlenie profilu uzytkownika
     let user_button = document.getElementById("user_id");

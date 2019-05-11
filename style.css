@@ -349,7 +349,7 @@ justify-content: center;
 .users-online{
     width:90%;
     margin:0 auto;
-    height:calc(100vh - 300px);
+    height:calc(100vh - 350px);
     overflow: auto;
 }
 .users_and_others{
@@ -591,7 +591,6 @@ display:flex;
         width: 100%;
         height: calc(100% - 100px);
         overflow: auto;
-        overflow-y: hidden;
     }
     .messenger-top-ul{
         width:100%;
@@ -658,7 +657,7 @@ display:flex;
 
 .messenger-text-area{
     width:100%;
-    background-color:yellow;
+    background-color:gray;
     display:flex;
     height:35px;
     
@@ -673,8 +672,10 @@ display:flex;
 .button-send-message{
     width:60px;
     height:25px;
+    color:white;
+    text-transform: uppercase;
     margin:auto;
-    background-color:red;
+    background-color:darkslategray;
 }
 /* channel setting*/
 .channel-setting-container{
