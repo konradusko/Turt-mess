@@ -780,6 +780,7 @@ function clearMessagefield(){
     document.getElementById("send-icon").style.display = "none";
     document.getElementById("send-message").style.display = "block";
   }
+  scrollbottom();
 }
   
     //scroll testy
@@ -792,7 +793,10 @@ function clearMessagefield(){
       });
     }
     document.getElementById("messenger_text_area").addEventListener("focus", () =>{
-      scrollbottom();
+      setTimeout(() => {
+        scrollbottom();
+      }, 500);
+    
       console.log("dziala");
 
     });

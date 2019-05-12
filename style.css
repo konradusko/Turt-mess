@@ -668,6 +668,7 @@ display:flex;
     margin: auto;
     background-color: whitesmoke;
     border-radius: 5px;
+    outline:none;
 }
 .button-send-message{
     width:60px;
