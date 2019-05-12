@@ -697,19 +697,14 @@ firebase.auth().onAuthStateChanged(function (user) {
         let photo_value = snapshot.child("Photo").val();
         let time = snapshot.child("time").val();
         let date = snapshot.child("date").val();
-        console.log(photo_value);
+       // console.log(photo_value);
         let createLi = document.createElement("li");
         createLi.className = "Message-list";
         let createSpan = document.createElement("span");
         let createDiv = document.createElement("div");
         let createImg = document.createElement("img");
         let createThirdDiv = document.createElement("div");
-        // let createP = document.createElement("p");
-        //   createP.append(message_value);
-        //let createB2 = document.createElement("b");
         let createB3 = document.createElement("b");
-
-
         createThirdDiv.className = "date_hours"
         createThirdDiv.append("Date: " + date + " " + "Time: " + time);
         let createDivSecont = document.createElement("div");
@@ -722,7 +717,10 @@ firebase.auth().onAuthStateChanged(function (user) {
         createImg.src = photo_value;
         createLi.append(createSpan, createDiv, createThirdDiv);
         document.getElementById("list").append(createLi);
+        scrollbottom();
+        console.log('pobralem baze danych')
       });
+      
     }
     // wysylanie wiadomosci
 
