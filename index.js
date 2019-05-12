@@ -761,7 +761,10 @@ send_icon.addEventListener("click", () =>{
         date: date
       });
          // 0 = userImg, 1 = userNickName, 2 = user-mail, 3 = userID
-         scrollbottom();
+         setTimeout(() => {
+          scrollbottom();
+         }, 500);
+      
     }
 
 window.addEventListener("keyup", clearMessagefield);
@@ -788,7 +791,7 @@ function clearMessagefield(){
         block: 'end'
       });
     }
-    document.getElementById("messenger_text_area").addEventListener("click", () =>{
+    document.getElementById("messenger_text_area").addEventListener("focus", () =>{
       scrollbottom();
       console.log("dziala");
 
