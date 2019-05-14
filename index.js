@@ -13,6 +13,8 @@ let channelphotoVal = 0;
 let pathChannel = "undefined";
 let pathUsers = "undefined";
 
+
+
 //testy
 
 // logowanie
@@ -93,6 +95,7 @@ firebase.auth().onAuthStateChanged(function (user) {
       const error_message = document.getElementById("newChannel-error");
       const randomValue = Math.random().toString(36).substring(5);
       const icon = '<i class="fa fa-thumbs-up" aria-hidden="true"></i>'
+
       function randomString(len, charSet) {
         charSet = charSet || 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
         let randomString = '';
@@ -264,7 +267,7 @@ firebase.auth().onAuthStateChanged(function (user) {
         document.getElementById("login-to-channel-password").value = "";
         innerChannelSetting();
         cancelForm();
-        
+
         return pathChannel = xd, pathUsers = channel_online_users, snapMessages(), joinPrivateAndPubChan();
       } else {
         joinError.innerHTML = "The password provided is wrong."
@@ -286,7 +289,7 @@ firebase.auth().onAuthStateChanged(function (user) {
         joinError.innerHTML = "";
         document.getElementById("login-to-channel-password").value = "";
       }, 1000);
-     
+
       let rtnIndOne1 = indexOne = 3;
       let rtnIndTw2 = indexTwo = 0;
       clickEvent();
@@ -316,7 +319,7 @@ firebase.auth().onAuthStateChanged(function (user) {
       }, 500)
     })
     // wyswietlanie informacji w setting kanalu oraz sprawdzanie czy jestes adminkiem zlotym kanału
-  
+
     function innerChannelSetting() {
       if (userId === passAndUniqId[4]) {
         console.log("admin królu złoty :) ");
@@ -343,10 +346,10 @@ firebase.auth().onAuthStateChanged(function (user) {
         document.getElementById("boss-NickName").innerHTML = userNickName;
         document.getElementById("boss-status").innerHTML = userStatus;
       })
-    /*  firebase.database().ref().child('Channels/' + passAndUniqId[1] + '/Users_online').push({
-        userId
-      }) */
-         
+      /*  firebase.database().ref().child('Channels/' + passAndUniqId[1] + '/Users_online').push({
+          userId
+        }) */
+
     }
 
     // klikniecie poza form do logowania = zamkniecie go, i wylaczenie eventu
@@ -616,6 +619,8 @@ firebase.auth().onAuthStateChanged(function (user) {
     publicChannel.addEventListener("click", () => {
       document.getElementById("channel_photo").src = "img/public-background.jpg";
       document.getElementById("channel_name").innerHTML = "Public";
+      document.getElementById("send-icon").innerHTML = '<i class=\"fa fa-thumbs-up\" aria-hidden=\"true\"></i>';
+
       return pathChannel = 'PublicChannel/', snapMessages(), joinPrivateAndPubChan();
     })
 
@@ -629,8 +634,11 @@ firebase.auth().onAuthStateChanged(function (user) {
       publicChannelNumber = 2;
       messenger.style.opacity = 1;
       setTimeout(() => {
-        scrollbottom();
-      }, 1000);
+        document.getElementById('list').scrollIntoView({
+        //  behavior: 'smooth',
+          block: 'end'
+        });
+      }, 500);
       console.log("tes");
 
       return publicChannelNumber;
@@ -651,7 +659,7 @@ firebase.auth().onAuthStateChanged(function (user) {
       document.getElementById("list").innerHTML = "";
       logOutThinks();
       console.log("xd");
-      return pathChannel = "undefined", pathUsers = "undefined", passAndUniqId = [],chan_icon = [];
+      return pathChannel = "undefined", pathUsers = "undefined", passAndUniqId = [], chan_icon = [], snapMessages();
     })
 
     // nowe
@@ -687,11 +695,21 @@ firebase.auth().onAuthStateChanged(function (user) {
       }, 1500);
     })
     // wyswietlanie wiadomosci kanalu
-    function snapMessages() {
 
-      console.log(pathChannel);
+
+
+ 
+
+ 
+
+
+    function snapMessages() {
+    //  console.log("dzialalallala jak bozia p")
+
       var messageRef = firebase.database().ref(pathChannel);
-      messageRef.on('child_added', function (snapshot) {
+      //tu sie troche rozpierdala
+   return  messageRef.on('child_added', function (snapshot) {
+     //   console.log(snapshot.val());
         let message_value = snapshot.child("Message").val();
         let nickName_value = snapshot.child("Nickname").val();
         let photo_value = snapshot.child("Photo").val();
@@ -717,23 +735,72 @@ firebase.auth().onAuthStateChanged(function (user) {
         createImg.src = photo_value;
         createLi.append(createSpan, createDiv, createThirdDiv);
         document.getElementById("list").append(createLi);
+        setTimeout(() => {
+          scrollBottomArrow();
+        }, 1000);
+  
+      });
+
+      /*
+// pobiera tylko raz
+      messageRef.once('value', function(snapshot) {
+        snapshot.forEach(function(childSnapshot) {
+          var childKey = childSnapshot.key;
+          var childData = childSnapshot.val();
+          console.log(childData);
+          // ...
+          let message_value = childSnapshot.child("Message").val();
+        let nickName_value = childSnapshot.child("Nickname").val();
+        let photo_value = childSnapshot.child("Photo").val();
+        let time = childSnapshot.child("time").val();
+        let date = childSnapshot.child("date").val();
+
+      // console.log(photo_value);
+        let createLi = document.createElement("li");
+        createLi.className = "Message-list";
+        let createSpan = document.createElement("span");
+        let createDiv = document.createElement("div");
+        let createImg = document.createElement("img");
+        let createThirdDiv = document.createElement("div");
+        let createB3 = document.createElement("b");
+        createThirdDiv.className = "date_hours"
+        createThirdDiv.append("Date: " + date + " " + "Time: " + time);
+        let createDivSecont = document.createElement("div");
+        createDivSecont.className = "li_div_message-text"
+        createDivSecont.innerHTML = message_value;
+        createDiv.className = "li_div";
+        createDiv.append(createImg, createDivSecont);
+        createB3.append(nickName_value);
+        createSpan.append(createB3);
+        createImg.src = photo_value;
+        createLi.append(createSpan, createDiv, createThirdDiv);
+        document.getElementById("list").append(createLi);
         scrollbottom();
         console.log('pobralem baze danych')
+        });
       });
-      
+*/
+
     }
-    // wysylanie wiadomosci
 
-let switchSendMessage = "undefined";
 
-  
-const send_icon = document.getElementById("send-icon");
-send_icon.addEventListener("click", () =>{
-  console.log(chan_icon[0]);
-  return switchSendMessage = chan_icon[0], sendMessageOrIcon();
 
-})
-    
+
+
+
+
+    //testy
+
+    let switchSendMessage = "undefined";
+
+
+    const send_icon = document.getElementById("send-icon");
+    send_icon.addEventListener("click", () => {
+      console.log(chan_icon[0]);
+      return switchSendMessage = chan_icon[0], sendMessageOrIcon();
+
+    })
+
     const send_message = document.getElementById("send-message");
     send_message.addEventListener("click", () => {
       const text_area = document.getElementById("messenger_text_area").value;
@@ -741,10 +808,10 @@ send_icon.addEventListener("click", () =>{
     })
 
 
-    function sendMessageOrIcon(){
+    function sendMessageOrIcon() {
       //czyszczenie pola do wysylania
       document.getElementById("messenger_text_area").value = ""
-     clearMessagefield();
+      clearMessagefield();
 
       // wysylanie wiadomosci
       const today = new Date();
@@ -758,49 +825,90 @@ send_icon.addEventListener("click", () =>{
         time: time,
         date: date
       });
-         // 0 = userImg, 1 = userNickName, 2 = user-mail, 3 = userID
-         setTimeout(() => {
-          scrollbottom();
-         }, 500);
-      
+      // 0 = userImg, 1 = userNickName, 2 = user-mail, 3 = userID
+      setTimeout(() => {
+        scrollbottom();
+      }, 500);
+
     }
 
-window.addEventListener("keyup", clearMessagefield);
-function clearMessagefield(){
-  const area_text = document.getElementById("messenger_text_area").value;
-  if( area_text == ""     ||  area_text.length  == 0){
- // icon
- document.getElementById("send-icon").style.display = "block";
- document.getElementById("send-message").style.display = "none";
+    window.addEventListener("keyup", clearMessagefield);
 
-  }else{
-  // send
-    document.getElementById("send-icon").style.display = "none";
-    document.getElementById("send-message").style.display = "block";
-  }
-  scrollbottom();
-}
-  
+    function clearMessagefield() {
+      const area_text = document.getElementById("messenger_text_area").value;
+      if (area_text == "" || area_text.length == 0) {
+        // icon
+        document.getElementById("send-icon").style.display = "block";
+        document.getElementById("send-message").style.display = "none";
+
+      } else {
+        // send
+        document.getElementById("send-icon").style.display = "none";
+        document.getElementById("send-message").style.display = "block";
+      }
+      scrollbottom();
+    }
+
     //scroll testy
+    //szczaleczka nie chcemy zeby podczas przegladania ciagle nam scrollowalo
+  const arrScroll = document.getElementById("arrowScroll");
+   arrScroll.addEventListener("click", () =>{
+     scrollbottom();
+     document.getElementById("newMessagesAlertId").style.display = "none";
+   })
+  let testswitch = 0;
+
+    let containerUlList = document.getElementById("lel");
+    containerUlList.addEventListener("scroll", function (event) {
+      let scroll = this.scrollTop;
+      let listUlWithAllMessages = document.getElementById("list");
+      let listUlWithAllMessagesHeight = listUlWithAllMessages.offsetHeight; //wysokosc calej listy
+      let containerOfListUlHeight = containerUlList.offsetHeight; // wysokosc jednego okna
+      if(listUlWithAllMessagesHeight- containerOfListUlHeight  >scroll+ containerOfListUlHeight){
+     arrScroll.style.display = "flex";
+console.log("co tuu sie dziejejejej")
+      }else if(listUlWithAllMessagesHeight === scroll+ containerOfListUlHeight){
+        document.getElementById("newMessagesAlertId").style.display = "none";
+      }else{
+        arrScroll.style.display = "none";
+
+      }
+  
+      return testswitch = scroll;
+      
+  });
+  function scrollBottomArrow(){
+    let listUlWithAllMessages = document.getElementById("list");
+    let listUlWithAllMessagesHeight = listUlWithAllMessages.offsetHeight; //wysokosc calej listy
+    let containerOfListUlHeight = containerUlList.offsetHeight; // wysokosc jednego okna
+   let positionOfScroll = testswitch; // wysokosc scrolla
+    if(listUlWithAllMessagesHeight- containerOfListUlHeight  < positionOfScroll+ containerOfListUlHeight){
+    console.log("jestes na dole i dostaniesz scrolla do nastepnej wiadomosci");
+  scrollbottom();
+    }else{
+      console.log("new message kurwa");
+      document.getElementById("newMessagesAlertId").style.display = "flex";
+    }
+  }
     // scrollowanie do ostatniej wiadomosci 
     function scrollbottom() {
-      console.log("ze to sie dzieje i scrolluje")
       document.getElementById('list').scrollIntoView({
         behavior: 'smooth',
         block: 'end'
       });
     }
-    document.getElementById("messenger_text_area").addEventListener("focus", () =>{
+    // po klikniecie w inputa scrolluje
+    document.getElementById("messenger_text_area").addEventListener("focus", () => {
       setTimeout(() => {
         scrollbottom();
       }, 500);
-    
+
       console.log("dziala");
 
     });
 
-
-
+  
+ 
 
 
 
