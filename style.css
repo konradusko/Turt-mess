@@ -592,6 +592,8 @@ display:flex;
         height: calc(100% - 100px);
         position:relative;
         overflow: auto;
+        opacity:0;
+        transition:1s;
     }
     .newMessagesAlert{
         position:fixed;

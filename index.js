@@ -267,7 +267,9 @@ firebase.auth().onAuthStateChanged(function (user) {
         document.getElementById("login-to-channel-password").value = "";
         innerChannelSetting();
         cancelForm();
-
+        setTimeout(() => {
+          document.getElementById("lel").style.opacity = 1;
+        }, 500);
         return pathChannel = xd, pathUsers = channel_online_users, snapMessages(), joinPrivateAndPubChan();
       } else {
         joinError.innerHTML = "The password provided is wrong."
@@ -462,7 +464,6 @@ firebase.auth().onAuthStateChanged(function (user) {
           usersRef.onDisconnect().set('☆ offline');
           usersRef.set('★ online');
         })
-
       }
       */
       let xd = snapshot.key;
@@ -535,34 +536,26 @@ firebase.auth().onAuthStateChanged(function (user) {
     function addFriend(){
       console.log("dzieje sie to ?")
     let testbutton = document.querySelectorAll(".add_firend_button");
-
     for (i = 0; i < testbutton.length; i++) {
       console.log("a to sie dzieje ?")
       testbutton[i].addEventListener("click", function() {
       alert("you clicked"); });
     }
-
     }    
-
     let testbutton = document.querySelectorAll(".add_firend_button");
-
     function testxd(){
     console.log("we dzialaj")
-
-
     for (i = 0; i < testbutton.length; i++) {
       console.log("a to sie dzieje ?")
       testbutton[i].addEventListener("click", function() {
       alert("you clicked"); });
     }
-
     }
     /////
     for(var i = 0; i < testbutton.length; i++) {
       console.log("xxxxxx")
       testbutton[i].addEventListener("click", bindClick(i));
     }
-
     function bindClick(i) {
     return function() {
        console.log("you clicked region number " + i);
@@ -615,13 +608,25 @@ firebase.auth().onAuthStateChanged(function (user) {
 
 
     // join to channel
+
+    //join to public
     let publicChannel = document.getElementById("public_id");
     publicChannel.addEventListener("click", () => {
-      document.getElementById("channel_photo").src = "img/public-background.jpg";
-      document.getElementById("channel_name").innerHTML = "Public";
-      document.getElementById("send-icon").innerHTML = '<i class=\"fa fa-thumbs-up\" aria-hidden=\"true\"></i>';
 
-      return pathChannel = 'PublicChannel/', snapMessages(), joinPrivateAndPubChan();
+      const teeeeeeee = firebase.database().ref('PublicChannel');
+      teeeeeeee.on('value', function (snapshot) {
+        let publicName = snapshot.child("ChannelName").val();
+        let publicPicture = snapshot.child("ChannelPhoto").val();
+        let publicIcon = snapshot.child("icon").val();
+        let publicfounder = snapshot.child("founder").val();
+        document.getElementById("channel_photo").src = publicPicture;
+        document.getElementById("channel_name").innerHTML = publicName;
+        document.getElementById("send-icon").innerHTML = publicIcon;
+        return pathChannel = 'PublicChannel/messages', chan_icon.push(publicIcon), snapMessages(), joinPrivateAndPubChan();
+      })
+      // nr0 haslo, nr 1 unikalne id, nr 2 obrazek, nr 3 nazwa kanalu 4 channel boss 
+
+
     })
 
     function joinPrivateAndPubChan() {
@@ -635,7 +640,7 @@ firebase.auth().onAuthStateChanged(function (user) {
       messenger.style.opacity = 1;
       setTimeout(() => {
         document.getElementById('list').scrollIntoView({
-        //  behavior: 'smooth',
+          //  behavior: 'smooth',
           block: 'end'
         });
       }, 500);
@@ -698,24 +703,24 @@ firebase.auth().onAuthStateChanged(function (user) {
 
 
 
- 
 
- 
+
+
 
 
     function snapMessages() {
-    //  console.log("dzialalallala jak bozia p")
+      //  console.log("dzialalallala jak bozia p")
 
       var messageRef = firebase.database().ref(pathChannel);
       //tu sie troche rozpierdala
-   return  messageRef.on('child_added', function (snapshot) {
-     //   console.log(snapshot.val());
+      return messageRef.on('child_added', function (snapshot) {
+        //   console.log(snapshot.val());
         let message_value = snapshot.child("Message").val();
         let nickName_value = snapshot.child("Nickname").val();
         let photo_value = snapshot.child("Photo").val();
         let time = snapshot.child("time").val();
         let date = snapshot.child("date").val();
-       // console.log(photo_value);
+        // console.log(photo_value);
         let createLi = document.createElement("li");
         createLi.className = "Message-list";
         let createSpan = document.createElement("span");
@@ -735,10 +740,8 @@ firebase.auth().onAuthStateChanged(function (user) {
         createImg.src = photo_value;
         createLi.append(createSpan, createDiv, createThirdDiv);
         document.getElementById("list").append(createLi);
-        setTimeout(() => {
-          scrollBottomArrow();
-        }, 1000);
-  
+        scrollBottomArrow();
+
       });
 
       /*
@@ -754,7 +757,6 @@ firebase.auth().onAuthStateChanged(function (user) {
         let photo_value = childSnapshot.child("Photo").val();
         let time = childSnapshot.child("time").val();
         let date = childSnapshot.child("date").val();
-
       // console.log(photo_value);
         let createLi = document.createElement("li");
         createLi.className = "Message-list";
@@ -826,9 +828,7 @@ firebase.auth().onAuthStateChanged(function (user) {
         date: date
       });
       // 0 = userImg, 1 = userNickName, 2 = user-mail, 3 = userID
-      setTimeout(() => {
-        scrollbottom();
-      }, 500);
+
 
     }
 
@@ -851,12 +851,12 @@ firebase.auth().onAuthStateChanged(function (user) {
 
     //scroll testy
     //szczaleczka nie chcemy zeby podczas przegladania ciagle nam scrollowalo
-  const arrScroll = document.getElementById("arrowScroll");
-   arrScroll.addEventListener("click", () =>{
-     scrollbottom();
-     document.getElementById("newMessagesAlertId").style.display = "none";
-   })
-  let testswitch = 0;
+    const arrScroll = document.getElementById("arrowScroll");
+    arrScroll.addEventListener("click", () => {
+      scrollbottom();
+      document.getElementById("newMessagesAlertId").style.display = "none";
+    })
+    let testswitch = 0;
 
     let containerUlList = document.getElementById("lel");
     containerUlList.addEventListener("scroll", function (event) {
@@ -864,32 +864,33 @@ firebase.auth().onAuthStateChanged(function (user) {
       let listUlWithAllMessages = document.getElementById("list");
       let listUlWithAllMessagesHeight = listUlWithAllMessages.offsetHeight; //wysokosc calej listy
       let containerOfListUlHeight = containerUlList.offsetHeight; // wysokosc jednego okna
-      if(listUlWithAllMessagesHeight- containerOfListUlHeight  >scroll+ containerOfListUlHeight){
-     arrScroll.style.display = "flex";
-console.log("co tuu sie dziejejejej")
-      }else if(listUlWithAllMessagesHeight === scroll+ containerOfListUlHeight){
+      if (listUlWithAllMessagesHeight - containerOfListUlHeight > scroll + containerOfListUlHeight) {
+        arrScroll.style.display = "flex";
+        console.log("co tuu sie dziejejejej")
+      } else if (listUlWithAllMessagesHeight === scroll + containerOfListUlHeight) {
         document.getElementById("newMessagesAlertId").style.display = "none";
-      }else{
+      } else {
         arrScroll.style.display = "none";
 
       }
-  
+
       return testswitch = scroll;
-      
-  });
-  function scrollBottomArrow(){
-    let listUlWithAllMessages = document.getElementById("list");
-    let listUlWithAllMessagesHeight = listUlWithAllMessages.offsetHeight; //wysokosc calej listy
-    let containerOfListUlHeight = containerUlList.offsetHeight; // wysokosc jednego okna
-   let positionOfScroll = testswitch; // wysokosc scrolla
-    if(listUlWithAllMessagesHeight- containerOfListUlHeight  < positionOfScroll+ containerOfListUlHeight){
-    console.log("jestes na dole i dostaniesz scrolla do nastepnej wiadomosci");
-  scrollbottom();
-    }else{
-      console.log("new message kurwa");
-      document.getElementById("newMessagesAlertId").style.display = "flex";
+
+    });
+
+    function scrollBottomArrow() {
+      let listUlWithAllMessages = document.getElementById("list");
+      let listUlWithAllMessagesHeight = listUlWithAllMessages.offsetHeight; //wysokosc calej listy
+      let containerOfListUlHeight = containerUlList.offsetHeight; // wysokosc jednego okna
+      let positionOfScroll = testswitch; // wysokosc scrolla
+      if (listUlWithAllMessagesHeight - containerOfListUlHeight < positionOfScroll + containerOfListUlHeight) {
+        console.log("jestes na dole i dostaniesz scrolla do nastepnej wiadomosci");
+        scrollbottom();
+      } else {
+        console.log("new message kurwa");
+        document.getElementById("newMessagesAlertId").style.display = "flex";
+      }
     }
-  }
     // scrollowanie do ostatniej wiadomosci 
     function scrollbottom() {
       document.getElementById('list').scrollIntoView({
@@ -907,8 +908,8 @@ console.log("co tuu sie dziejejejej")
 
     });
 
-  
- 
+
+
 
 
 
