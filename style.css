@@ -276,6 +276,7 @@ justify-content: center;
     max-width: 95%;
     margin:10px auto;
     height:90px;
+    position:relative;
   
 }
 .channels-container-scroll{
@@ -334,7 +335,6 @@ justify-content: center;
     list-style-type: none;
     display:flex;
     flex-direction: row;
-    position:relative;
 } 
 .block-click::before{
     content:"";
@@ -483,7 +483,7 @@ flex-direction: column;
        left: 50%;
        top: 50%;
        transform: translate(-50%,-50%);
-       height:270px;
+     /*  height:270px;*/
        background-color:darkslategray;
        position: absolute;
        z-index:10;
@@ -518,7 +518,7 @@ flex-direction: column;
 font-size:15px;
    }
    .login-to-channel-form .buttons-login-to-channel{
-       margin:0 auto;
+       margin:10px auto 0 auto;
        height:60px;
 
    }

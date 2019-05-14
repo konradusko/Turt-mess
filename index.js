@@ -178,6 +178,7 @@ firebase.auth().onAuthStateChanged(function (user) {
 
     let passAndUniqId = new Array;
     let chan_icon = new Array;
+    let publicuniquieId = new Array;
     let btnJoin = document.getElementById("login-to-channel-join");
     let btnCancel = document.getElementById("login-to-channel-cancel");
     let form = document.getElementById("login-to-channel_id");
@@ -190,9 +191,10 @@ firebase.auth().onAuthStateChanged(function (user) {
     // wyswietlanie kanałów
     const channelsRef = firebase.database().ref('Channels/');
     channelsRef.on('child_added', function (snapshot) {
+      
       //pobieranie informacji z bazych danych o kanale
-      let channelsname = snapshot.child("ChannelName").val();
       let channels_id = snapshot.child("Channel_Id").val();
+      let channelsname = snapshot.child("ChannelName").val();
       let channels_img = snapshot.child("ChannelPhoto").val();
       let channel_boss = snapshot.child("founder").val();
       let channel_icon = snapshot.child("icon").val();
@@ -201,24 +203,40 @@ firebase.auth().onAuthStateChanged(function (user) {
       let create_div = document.createElement("div");
       let create_span = document.createElement("span");
       let create_img = document.createElement("img");
+      let createB = document.createElement("b");
+ 
       channel_li.id = channels_id;
       channel_li.className = "container-channel";
       create_div.className = "wheel-channel created";
       create_span.classList = "create-chanel-span";
       create_div.append(create_img);
       create_img.src = channels_img;
-      create_span.append(channelsname);
+      createB.append(channelsname);
+      create_span.append(createB);
       channel_li.append(create_div, create_span);
-      document.getElementById("channel-ul-container").append(channel_li);
+      if(channels_id === "Public"){
+   
+        document.getElementById("publicChannel").append(channel_li);
+        let publicUnicId = snapshot.child("unique_id").val();
+        publicuniquieId.push(publicUnicId);
+      }else{
+        document.getElementById("channel-ul-container").append(channel_li);
+      }
+     
       // dolaczenie do kanau 
       const joinChannel = document.getElementById(channels_id);
       joinChannel.addEventListener("click", (e) => {
-        document.getElementById("channel-ul-container").classList.add("block-click");
+        document.getElementById("channels-container-id").classList.add("block-click");
         let targetClick = joinChannel.contains(e.target);
 
         if (targetClick === true) {
           let password_datbase = snapshot.child("ChannelPassword").val();
           let uniquieID = snapshot.child("unique_id").val();
+          if(uniquieID === publicuniquieId[0]){
+            console.log("xd");
+            document.getElementById("channel-loginPasswordInputContainer").style.display = "none";
+            joinError.style.display = "none";
+          }
           form.style.display = "flex";
           login_photo.src = channels_img;
           login_name.innerHTML = channelsname;
@@ -287,9 +305,12 @@ firebase.auth().onAuthStateChanged(function (user) {
         form.style.display = "none";
         login_photo.src = "";
         login_name.innerHTML = "";
-        document.getElementById("channel-ul-container").classList.remove("block-click");
+        document.getElementById("channels-container-id").classList.remove("block-click");
         joinError.innerHTML = "";
         document.getElementById("login-to-channel-password").value = "";
+        document.getElementById("channel-loginPasswordInputContainer").style.display = "block";
+        joinError.style.display = "block";
+        joinError.innerHTML = "";
       }, 1000);
 
       let rtnIndOne1 = indexOne = 3;
@@ -370,7 +391,10 @@ firebase.auth().onAuthStateChanged(function (user) {
                 form.style.display = "none";
                 login_photo.src = "";
                 login_name.innerHTML = "";
-                document.getElementById("channel-ul-container").classList.remove("block-click");
+                document.getElementById("channels-container-id").classList.remove("block-click");
+                document.getElementById("channel-loginPasswordInputContainer").style.display = "block";
+                joinError.style.display = "block";
+                joinError.innerHTML = "";
               }, 1000);
               //  document.getElementById("login-to-channel-password").value = "";
 
@@ -608,7 +632,7 @@ firebase.auth().onAuthStateChanged(function (user) {
 
 
     // join to channel
-
+/*
     //join to public
     let publicChannel = document.getElementById("public_id");
     publicChannel.addEventListener("click", () => {
@@ -628,7 +652,7 @@ firebase.auth().onAuthStateChanged(function (user) {
 
 
     })
-
+*/
     function joinPrivateAndPubChan() {
       containerMessPage.style.width = 300 + "%";
       channel_container.style.transform = ("translate", "translate3d(-" + 100 + "%,0,0)");
@@ -664,6 +688,7 @@ firebase.auth().onAuthStateChanged(function (user) {
       document.getElementById("list").innerHTML = "";
       logOutThinks();
       console.log("xd");
+      document.getElementById("lel").style.opacity = 0;
       return pathChannel = "undefined", pathUsers = "undefined", passAndUniqId = [], chan_icon = [], snapMessages();
     })
 
@@ -864,7 +889,7 @@ firebase.auth().onAuthStateChanged(function (user) {
       let listUlWithAllMessages = document.getElementById("list");
       let listUlWithAllMessagesHeight = listUlWithAllMessages.offsetHeight; //wysokosc calej listy
       let containerOfListUlHeight = containerUlList.offsetHeight; // wysokosc jednego okna
-      if (listUlWithAllMessagesHeight - containerOfListUlHeight > scroll + containerOfListUlHeight) {
+      if (listUlWithAllMessagesHeight - containerOfListUlHeight > scroll + containerOfListUlHeight ) {
         arrScroll.style.display = "flex";
         console.log("co tuu sie dziejejejej")
       } else if (listUlWithAllMessagesHeight === scroll + containerOfListUlHeight) {
@@ -886,8 +911,10 @@ firebase.auth().onAuthStateChanged(function (user) {
       if (listUlWithAllMessagesHeight - containerOfListUlHeight < positionOfScroll + containerOfListUlHeight) {
         console.log("jestes na dole i dostaniesz scrolla do nastepnej wiadomosci");
         scrollbottom();
-      } else {
-        console.log("new message kurwa");
+      } else if( containerOfListUlHeight < listUlWithAllMessagesHeight ){
+        console.log("new message");
+        console.log(containerOfListUlHeight);
+        console.log(listUlWithAllMessagesHeight);
         document.getElementById("newMessagesAlertId").style.display = "flex";
       }
     }
