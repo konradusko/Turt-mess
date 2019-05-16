@@ -12,7 +12,7 @@ let channelphotoVal = 0;
 /* sciezka do kanałow--->>> */
 let pathChannel = "undefined";
 let pathUsers = "undefined";
-
+let pathNumbersOfPost = "undefined";
 
 
 //testy
@@ -116,6 +116,7 @@ firebase.auth().onAuthStateChanged(function (user) {
           unique_id: randomString,
           Channel_Id: randomValue,
           founder: userId,
+          number_of_messages_sent: 0,
           icon: icon,
           ChannelPhoto: "https://firebasestorage.googleapis.com/v0/b/messenger-6923c.appspot.com/o/No-Photo-Available.jpg?alt=media&token=e7d6e25d-eb5b-4262-8287-c6b976791840"
 
@@ -191,7 +192,7 @@ firebase.auth().onAuthStateChanged(function (user) {
     // wyswietlanie kanałów
     const channelsRef = firebase.database().ref('Channels/');
     channelsRef.on('child_added', function (snapshot) {
-      
+
       //pobieranie informacji z bazych danych o kanale
       let channels_id = snapshot.child("Channel_Id").val();
       let channelsname = snapshot.child("ChannelName").val();
@@ -204,7 +205,7 @@ firebase.auth().onAuthStateChanged(function (user) {
       let create_span = document.createElement("span");
       let create_img = document.createElement("img");
       let createB = document.createElement("b");
- 
+
       channel_li.id = channels_id;
       channel_li.className = "container-channel";
       create_div.className = "wheel-channel created";
@@ -214,16 +215,16 @@ firebase.auth().onAuthStateChanged(function (user) {
       createB.append(channelsname);
       create_span.append(createB);
       channel_li.append(create_div, create_span);
-      if(channels_id === "Public"){
-   
+      if (channels_id === "Public") {
+
         document.getElementById("publicChannel").append(create_div, create_span);
         document.getElementById("publicChannel").id = channels_id;
         let publicUnicId = snapshot.child("unique_id").val();
         publicuniquieId.push(publicUnicId);
-      }else{
+      } else {
         document.getElementById("channel-ul-container").append(channel_li);
       }
-     
+
       // dolaczenie do kanau 
       const joinChannel = document.getElementById(channels_id);
       joinChannel.addEventListener("click", (e) => {
@@ -233,7 +234,7 @@ firebase.auth().onAuthStateChanged(function (user) {
         if (targetClick === true) {
           let password_datbase = snapshot.child("ChannelPassword").val();
           let uniquieID = snapshot.child("unique_id").val();
-          if(uniquieID === publicuniquieId[0]){
+          if (uniquieID === publicuniquieId[0]) {
             console.log("xd");
             document.getElementById("channel-loginPasswordInputContainer").style.display = "none";
             joinError.style.display = "none";
@@ -283,13 +284,14 @@ firebase.auth().onAuthStateChanged(function (user) {
 
         let xd = 'Channels/' + passAndUniqId[1] + '/messages';
         let channel_online_users = 'Channels/' + passAndUniqId[1] + '/Users_online';
+        let channel_Number_Of_Post = 'Channels/' + passAndUniqId[1] + '/number_of_messages_sent';
         document.getElementById("login-to-channel-password").value = "";
         innerChannelSetting();
         cancelForm();
         setTimeout(() => {
           document.getElementById("lel").style.opacity = 1;
         }, 500);
-        return pathChannel = xd, pathUsers = channel_online_users, snapMessages(), joinPrivateAndPubChan();
+        return pathChannel = xd, pathUsers = channel_online_users, pathNumbersOfPost = channel_Number_Of_Post, snapMessages(), joinPrivateAndPubChan();
       } else {
         joinError.innerHTML = "The password provided is wrong."
         joinError.style.color = "red";
@@ -478,8 +480,7 @@ firebase.auth().onAuthStateChanged(function (user) {
     })
 
 
-    // wyswietlanie uzytkownikow
-
+    // wyswietlanie uzytkownikow na na glownej
     const usersRef = firebase.database().ref('users');
     usersRef.on('child_added', function (snapshot) {
       // console.log(snapshot.key());
@@ -633,27 +634,27 @@ firebase.auth().onAuthStateChanged(function (user) {
 
 
     // join to channel
-/*
-    //join to public
-    let publicChannel = document.getElementById("public_id");
-    publicChannel.addEventListener("click", () => {
+    /*
+        //join to public
+        let publicChannel = document.getElementById("public_id");
+        publicChannel.addEventListener("click", () => {
 
-      const teeeeeeee = firebase.database().ref('PublicChannel');
-      teeeeeeee.on('value', function (snapshot) {
-        let publicName = snapshot.child("ChannelName").val();
-        let publicPicture = snapshot.child("ChannelPhoto").val();
-        let publicIcon = snapshot.child("icon").val();
-        let publicfounder = snapshot.child("founder").val();
-        document.getElementById("channel_photo").src = publicPicture;
-        document.getElementById("channel_name").innerHTML = publicName;
-        document.getElementById("send-icon").innerHTML = publicIcon;
-        return pathChannel = 'PublicChannel/messages', chan_icon.push(publicIcon), snapMessages(), joinPrivateAndPubChan();
-      })
-      // nr0 haslo, nr 1 unikalne id, nr 2 obrazek, nr 3 nazwa kanalu 4 channel boss 
+          const teeeeeeee = firebase.database().ref('PublicChannel');
+          teeeeeeee.on('value', function (snapshot) {
+            let publicName = snapshot.child("ChannelName").val();
+            let publicPicture = snapshot.child("ChannelPhoto").val();
+            let publicIcon = snapshot.child("icon").val();
+            let publicfounder = snapshot.child("founder").val();
+            document.getElementById("channel_photo").src = publicPicture;
+            document.getElementById("channel_name").innerHTML = publicName;
+            document.getElementById("send-icon").innerHTML = publicIcon;
+            return pathChannel = 'PublicChannel/messages', chan_icon.push(publicIcon), snapMessages(), joinPrivateAndPubChan();
+          })
+          // nr0 haslo, nr 1 unikalne id, nr 2 obrazek, nr 3 nazwa kanalu 4 channel boss 
 
 
-    })
-*/
+        })
+    */
     function joinPrivateAndPubChan() {
       containerMessPage.style.width = 300 + "%";
       channel_container.style.transform = ("translate", "translate3d(-" + 100 + "%,0,0)");
@@ -690,7 +691,7 @@ firebase.auth().onAuthStateChanged(function (user) {
       logOutThinks();
       console.log("xd");
       document.getElementById("lel").style.opacity = 0;
-      return pathChannel = "undefined", pathUsers = "undefined", passAndUniqId = [], chan_icon = [], snapMessages();
+      return pathChannel = "undefined", pathUsers = "undefined", pathNumbersOfPost = "undefined", passAndUniqId = [], chan_icon = [], snapMessages();
     })
 
     // nowe
@@ -735,7 +736,6 @@ firebase.auth().onAuthStateChanged(function (user) {
 
 
     function snapMessages() {
-      //  console.log("dzialalallala jak bozia p")
 
       var messageRef = firebase.database().ref(pathChannel);
       //tu sie troche rozpierdala
@@ -854,8 +854,20 @@ firebase.auth().onAuthStateChanged(function (user) {
         date: date
       });
       // 0 = userImg, 1 = userNickName, 2 = user-mail, 3 = userID
+      numbersOfMessagesCount();
 
-
+    }
+    // liczenie postow na kanale
+    function numbersOfMessagesCount() {
+      const numbersRef = firebase.database().ref(pathNumbersOfPost);
+      numbersRef.once("value", function (snapshot) {
+        let numberPost = snapshot.child("numberSend").val();
+      numberPost++;
+          numbersRef.update({
+            numberSend: numberPost
+            });
+      })
+    
     }
 
     window.addEventListener("keyup", clearMessagefield);
@@ -890,7 +902,7 @@ firebase.auth().onAuthStateChanged(function (user) {
       let listUlWithAllMessages = document.getElementById("list");
       let listUlWithAllMessagesHeight = listUlWithAllMessages.offsetHeight; //wysokosc calej listy
       let containerOfListUlHeight = containerUlList.offsetHeight; // wysokosc jednego okna
-      if (listUlWithAllMessagesHeight - containerOfListUlHeight > scroll + containerOfListUlHeight ) {
+      if (listUlWithAllMessagesHeight - containerOfListUlHeight > scroll + containerOfListUlHeight) {
         arrScroll.style.display = "flex";
         console.log("co tuu sie dziejejejej")
       } else if (listUlWithAllMessagesHeight === scroll + containerOfListUlHeight) {
@@ -912,7 +924,7 @@ firebase.auth().onAuthStateChanged(function (user) {
       if (listUlWithAllMessagesHeight - containerOfListUlHeight < positionOfScroll + containerOfListUlHeight) {
         console.log("jestes na dole i dostaniesz scrolla do nastepnej wiadomosci");
         scrollbottom();
-      } else if( containerOfListUlHeight < listUlWithAllMessagesHeight ){
+      } else if (containerOfListUlHeight < listUlWithAllMessagesHeight) {
         console.log("new message");
         console.log(containerOfListUlHeight);
         console.log(listUlWithAllMessagesHeight);
