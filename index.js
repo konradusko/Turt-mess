@@ -216,7 +216,8 @@ firebase.auth().onAuthStateChanged(function (user) {
       channel_li.append(create_div, create_span);
       if(channels_id === "Public"){
    
-        document.getElementById("publicChannel").append(channel_li);
+        document.getElementById("publicChannel").append(create_div, create_span);
+        document.getElementById("publicChannel").id = channels_id;
         let publicUnicId = snapshot.child("unique_id").val();
         publicuniquieId.push(publicUnicId);
       }else{
