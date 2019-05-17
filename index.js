@@ -728,86 +728,49 @@ firebase.auth().onAuthStateChanged(function (user) {
     })
     // wyswietlanie wiadomosci kanalu
 
-
-
-
-
-
-
-
     function snapMessages() {
-
+       let userInfo = new Array;
       var messageRef = firebase.database().ref(pathChannel);
       //tu sie troche rozpierdala
-      return messageRef.on('child_added', function (snapshot) {
+       messageRef.on('child_added', function (snapshot) {
+         let user = snapshot.child("user").val();
+         let message_value = snapshot.child("Message").val();
+         let time = snapshot.child("time").val();
+         let date = snapshot.child("date").val();
+         firebase.database().ref("users/" + user).once("value", function(snapshot){
+          let photo_value = snapshot.child("photoURL").val();
+          let nickName_value = snapshot.child("username").val();
+          return userInfo.push(photo_value, nickName_value);
+         })
+         let createLi = document.createElement("li");
+         createLi.className = "Message-list";
+         let createSpan = document.createElement("span");
+         let createDiv = document.createElement("div");
+         let createImg = document.createElement("img");
+         let createThirdDiv = document.createElement("div");
+         let createB3 = document.createElement("b");
+         createThirdDiv.className = "date_hours"
+         createThirdDiv.append("Date: " + date + " " + "Time: " + time);
+         let createDivSecont = document.createElement("div");
+         createDivSecont.className = "li_div_message-text"
+         createDivSecont.innerHTML = message_value;
+         createDiv.className = "li_div";
+         createDiv.append(createImg, createDivSecont);
+         createB3.append(userInfo[1]);
+         createSpan.append(createB3);
+         createImg.src = userInfo[0];
+         createLi.append(createSpan, createDiv, createThirdDiv);
+         document.getElementById("list").append(createLi);
+         scrollBottomArrow();
         //   console.log(snapshot.val());
-        let message_value = snapshot.child("Message").val();
-        let nickName_value = snapshot.child("Nickname").val();
-        let photo_value = snapshot.child("Photo").val();
-        let time = snapshot.child("time").val();
-        let date = snapshot.child("date").val();
+       
+       // let nickName_value = snapshot.child("Nickname").val();
+      //  let photo_value = snapshot.child("Photo").val();
+   
         // console.log(photo_value);
-        let createLi = document.createElement("li");
-        createLi.className = "Message-list";
-        let createSpan = document.createElement("span");
-        let createDiv = document.createElement("div");
-        let createImg = document.createElement("img");
-        let createThirdDiv = document.createElement("div");
-        let createB3 = document.createElement("b");
-        createThirdDiv.className = "date_hours"
-        createThirdDiv.append("Date: " + date + " " + "Time: " + time);
-        let createDivSecont = document.createElement("div");
-        createDivSecont.className = "li_div_message-text"
-        createDivSecont.innerHTML = message_value;
-        createDiv.className = "li_div";
-        createDiv.append(createImg, createDivSecont);
-        createB3.append(nickName_value);
-        createSpan.append(createB3);
-        createImg.src = photo_value;
-        createLi.append(createSpan, createDiv, createThirdDiv);
-        document.getElementById("list").append(createLi);
-        scrollBottomArrow();
+       
 
       });
-
-      /*
-// pobiera tylko raz
-      messageRef.once('value', function(snapshot) {
-        snapshot.forEach(function(childSnapshot) {
-          var childKey = childSnapshot.key;
-          var childData = childSnapshot.val();
-          console.log(childData);
-          // ...
-          let message_value = childSnapshot.child("Message").val();
-        let nickName_value = childSnapshot.child("Nickname").val();
-        let photo_value = childSnapshot.child("Photo").val();
-        let time = childSnapshot.child("time").val();
-        let date = childSnapshot.child("date").val();
-      // console.log(photo_value);
-        let createLi = document.createElement("li");
-        createLi.className = "Message-list";
-        let createSpan = document.createElement("span");
-        let createDiv = document.createElement("div");
-        let createImg = document.createElement("img");
-        let createThirdDiv = document.createElement("div");
-        let createB3 = document.createElement("b");
-        createThirdDiv.className = "date_hours"
-        createThirdDiv.append("Date: " + date + " " + "Time: " + time);
-        let createDivSecont = document.createElement("div");
-        createDivSecont.className = "li_div_message-text"
-        createDivSecont.innerHTML = message_value;
-        createDiv.className = "li_div";
-        createDiv.append(createImg, createDivSecont);
-        createB3.append(nickName_value);
-        createSpan.append(createB3);
-        createImg.src = photo_value;
-        createLi.append(createSpan, createDiv, createThirdDiv);
-        document.getElementById("list").append(createLi);
-        scrollbottom();
-        console.log('pobralem baze danych')
-        });
-      });
-*/
 
     }
 
@@ -847,9 +810,7 @@ firebase.auth().onAuthStateChanged(function (user) {
       const date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
       firebase.database().ref().child(pathChannel).push({
         Message: switchSendMessage,
-        Nickname: userArray[1],
-        Photo: userArray[0],
-        email: userArray[2],
+        user: userId,
         time: time,
         date: date
       });
