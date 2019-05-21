@@ -146,6 +146,7 @@ justify-content: center;
       margin:auto;
       display:flex;
       justify-content: space-between;
+      
   }
   button{
       outline:none;
@@ -721,7 +722,7 @@ font-size:20px;
 .channel-setting-container{
     position: absolute;
     width:100%;
-    height:100vh;
+    height:100%;
   top:0;
   left:0;
     background-color:gray;
@@ -729,93 +730,131 @@ font-size:20px;
     display:none;
     opacity:0;
     transition:1s;
-    flex-direction: column;
 }
 .stting-main-top{
-    height:50%;
     width:100%;
-    display:flex;
-    flex-direction: column;
-    justify-content: space-around;
-}
-.boss-channelName{
-    width:100%;
-    height:20px;
-    text-align: center;
-}
-.stting-main-top .channel-boss{
-    width:90%;
-    height:60px;
-    background-color:darkgray;
-    border-radius:5px;
-    margin:5px auto;
-    display:flex;
-    flex-direction: row;
-    justify-content:space-between;
-}
-.channel-setting-container .stting-main-top .channel-boss img{
-    height: 50px;
-    width: 50px;
-    border-radius: 50%;
-    margin: auto 5px;
-    background-position: center;
-    background-size: cover;
-    background-repeat: no-repeat;
-}
-.stting-main-top .channel-boss .channel-boss-status-and-nickName{
-    width:70%;
     height:100%;
-    padding:5px;
+    overflow-y: auto;
     display:flex;
     flex-direction: column;
 }
-.stting-main-top .channel-boss .channel-boss-status-and-nickName .nice-box{
+.stting-main-top .buttons{
     width:100%;
-    height:50%;
-    margin:auto;
+    height:40px;
+    position:relative;
 }
-.stting-main-top .channel-boss .channel-boss-status-and-nickName .box{
-    display:flex;
-    flex-direction: row;
-}
-
-.channel-setting-container .stting-main-top .edit-button{
-    width:60px;
-    height:30px;
-    font-size:15px;
-    background-color:blue;
-    display:none;
+.edit-button{
+    width: 40px;
+    height: 30px;
     position: absolute;
-    top:5px;
-    left:5px;
+    background-color: blue;
+    border-radius: 5px;
+    top: 5px;
+    left: 5px;
 }
-.channel-setting-container .stting-main-top .exit_button_setting{
-    width:40px;
-    height:30px;
-    background-color:red;
-    font-size:20px;
+.exit_button_setting{
     position: absolute;
     top:5px;
     right:5px;
-
+    width:40px;
+    height:30px;
+    font-size:30px;
 }
-.channel-setting-container .stting-main-top img{
-    width:120px;
-    height:120px;
-    border-radius:50%;
-    background-color:blue;
-    margin:0 auto;
-}
-.channel-setting-container .stting-main-top .boss-Pw-button{
-    width:20%;
-    height:100%;
-    background-color:red;
-}
-.setting-main-bottom{
+.stting-main-top .channel-setting-img-container{
     width:100%;
-    height:50%;
-    background-color:green;
+    height:200px;
+    display:flex;
 }
+.stting-main-top .channel-setting-img-container img{
+    width:150px;
+    height:150px;
+    margin:auto;
+    border-radius:50%;
+}
+.channel-setting-channel-name{
+    width:100%;
+    height:40px;
+    display:flex;
+}
+.channel-setting-channel-name span{
+    margin:auto;
+}
+.channel-setting-number-of-messages-send,
+.channel-setting-emoji{
+    width:100%;
+    height:40px;
+    display:flex;
+    justify-content: space-between;
+    margin:10px 0;
+}
+.channel-setting-number-of-messages-send span,
+.channel-setting-emoji span{
+    margin:auto 10px;
+}
+.channel-setting-emoji-new-emoji{
+    height:100px;
+    width:100%;
+    background-color:red;
+    position: absolute;
+    display:none;
+}
+.channel-setting-founder-container{
+    width:100%;
+    height:100px;
+    display:flex;
+    flex-direction: column;
+    margin: 10px 0;
+}
+.channel-setting-founder-container .info-about-founder{
+    width:100%;
+    height:20px;
+    padding-left:10px;
+}
+.channel-setting-founder-container .founder-status-and-img-container{
+    height:60px;
+    width:280px;
+    margin:auto;
+    display:flex;
+    justify-content: space-between;
+}
+.channel-setting-founder-container .founder-status-and-img-container img{
+    width:60px;
+    height:60px;
+    border-radius:50%;
+    margin:auto;
+}
+.channel-setting-founder-container .founder-status-and-img-container .founder-status-and-name{
+    width:180px;
+    height:100%;
+}
+.channel-setting-founder-container .founder-status-and-img-container .founder-setting{
+    width: 20px;
+    height: 100%;
+    display:flex;
+}
+.channel-setting-founder-container .founder-status-and-img-container .founder-setting i{
+    font-size:30px;
+    margin:auto;
+}
+.founder-name{
+    height:25px;
+    width:100%;
+    display:flex;
+}
+.founder-name b{
+    margin: auto 0 auto 5px;
+}
+.status-and-name{
+    height:35px;
+    width:100%;
+    display:flex;
+}
+.status-and-name-STATUS, .status-and-name-STATUS-user-name{
+    margin:auto 0 auto 5px;
+}
+
+
+
 
     /* user profile */
     .user-profile-container{

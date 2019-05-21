@@ -137,11 +137,9 @@
                             </div>
                             <span class="create-chanel-span">Create Channel</span>
                         </div>
-                     <div id="publicChannel" class="container-channel">
-
-                     </div>
+                        <div id="publicChannel" class="container-channel">
+                        </div>
                         <ul id="channel-ul-container" class="channel-ul">
-
                         </ul>
                     </div>
 
@@ -163,10 +161,7 @@
                 </div>
 
                 <div class="users-online">
-
                     <ul id="usersOnlineId" class="users-online-ul">
-
-
                     </ul>
                 </div>
                 <footer class="items-footer-container">footer</footer>
@@ -175,11 +170,48 @@
             <div id="messenger_id" class="messenger">
                 <div id="setting-main" class="channel-setting-container">
                     <div class="stting-main-top">
+                        <div class="buttons">
+                            <button id="edit_button_setting" class="edit-button">Edit</button>
+                            <button id="exit-button" class="exit_button_setting"> <i class="fa fa-times"
+                                    aria-hidden="true"></i> </button>
+                        </div>
+                        <div class="channel-setting-img-container">
+                            <img id="setting-picture" src="" alt="channel-photo">
+                        </div>
+                        <div class="channel-setting-channel-name">
+                            <span><b id="setting-channel-name"></b></span>
+
+                        </div>
+                        <div class="channel-setting-number-of-messages-send">
+                            <span>Number of messages sent:</span> <span>0</span>
+                        </div>
+                        <div class="channel-setting-emoji">
+                            <span>Emoji:</span> <span><i class="fa fa-thumbs-up" aria-hidden="true"></i></span>
+                            <div class="channel-setting-emoji-new-emoji">
+                                XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+                            </div>
+                        </div>
+                        <div class="channel-setting-founder-container">
+                            <span class="info-about-founder">Channel belongs to:</span>
+                            <div class="founder-status-and-img-container">
+                                <img id="boss-picture" src="" alt="founder-avatar">
+                                <div class="founder-status-and-name">
+                                    <span class="founder-name"> <b id="boss-NickName"> username</b></span>
+                                    <div class="status-and-name">
+                                        <span class="status-and-name-STATUS">Status:</span>
+                                        <span id="boss-status" class="status-and-name-STATUS-user-name"></span>
+                                    </div>
+                                </div>
+                                <div class="founder-setting">
+                                    <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 
                         <button id="edit_button_setting" class="edit-button">Edit</button>
                         <button id="exit-button" class="exit_button_setting"> <i class="fa fa-times"
                                 aria-hidden="true"></i> </button>
-
-
                         <img id="setting-picture" src="" alt="Channel-photo">
                         <span class="boss-channelName"><b id="setting-channel-name">ChannelName</b></span>
                         <span>Number of messages sent:0</span>
@@ -200,16 +232,9 @@
 
                             </div>
                         </div>
-
-
-
-                    </div>
-                    <div class="setting-main-bottom">
+                          -->
 
                     </div>
-
-
-
                 </div>
                 <div class="messenger-top">
                     <span id="channel_id" class="backToChannels"><i class="fa fa-long-arrow-left"
@@ -223,18 +248,18 @@
                 </div>
 
                 <div id="lel" class="messenger-text">
-                        <div id="newMessagesAlertId" class="newMessagesAlert">
-                                <p>A new message has appeared! </p>
-                        </div>
+                    <div id="newMessagesAlertId" class="newMessagesAlert">
+                        <p>A new message has appeared! </p>
+                    </div>
                     <ul id="list" class="messenger-top-ul">
-                   
+
                         <!--  <li> <span>USERNAME</span>
                 <div class="li_div"><img src="img/background.png" alt="User_Avatar"> <p>text</p> </div></li>  -->
 
                     </ul>
-                      <div id="arrowScroll" class="arrowScrollBottom">
+                    <div id="arrowScroll" class="arrowScrollBottom">
                         <i class="fa fa-arrow-down" aria-hidden="true"></i>
-                      </div>
+                    </div>
                 </div>
                 <div class="messenger-text-area">
                     <input class="input-send-message" id="messenger_text_area" type="text">

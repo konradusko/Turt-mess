@@ -324,6 +324,7 @@ firebase.auth().onAuthStateChanged(function (user) {
 
 
     // zamykanie ustawien kanalu
+    
     const exitSettingChannel = document.getElementById("exit-button");
     exitSettingChannel.addEventListener("click", () => {
       console.log("working")
@@ -333,6 +334,7 @@ firebase.auth().onAuthStateChanged(function (user) {
         settingMain.style.display = "none";
       }, 1000)
     })
+    
     // channel setting
     // otwieranie ustawien kanalu
     const channelSetting = document.getElementById("channel-setting-join");
@@ -347,6 +349,7 @@ firebase.auth().onAuthStateChanged(function (user) {
     // wyswietlanie informacji w setting kanalu oraz sprawdzanie czy jestes adminkiem zlotym kanału
 
     function innerChannelSetting() {
+      
       if (userId === passAndUniqId[4]) {
         console.log("admin królu złoty :) ");
         document.getElementById("edit_button_setting").style.display = "block";
