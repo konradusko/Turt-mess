@@ -13,6 +13,7 @@ let channelphotoVal = 0;
 let pathChannel = "undefined";
 let pathUsers = "undefined";
 let pathNumbersOfPost = "undefined";
+let pathEmoji = "undefined";
 
 
 //testy
@@ -285,13 +286,14 @@ firebase.auth().onAuthStateChanged(function (user) {
         let xd = 'Channels/' + passAndUniqId[1] + '/messages';
         let channel_online_users = 'Channels/' + passAndUniqId[1] + '/Users_online';
         let channel_Number_Of_Post = 'Channels/' + passAndUniqId[1] + '/number_of_messages_sent';
+        let channel_emoji = 'Channels/' + passAndUniqId[1];
         document.getElementById("login-to-channel-password").value = "";
         innerChannelSetting();
         cancelForm();
         setTimeout(() => {
           document.getElementById("lel").style.opacity = 1;
         }, 500);
-        return pathChannel = xd, pathUsers = channel_online_users, pathNumbersOfPost = channel_Number_Of_Post, snapMessages(), joinPrivateAndPubChan();
+        return pathChannel = xd, pathUsers = channel_online_users, pathEmoji = channel_emoji, pathNumbersOfPost = channel_Number_Of_Post, snapMessages(), joinPrivateAndPubChan();
       } else {
         joinError.innerHTML = "The password provided is wrong."
         joinError.style.color = "red";
@@ -324,7 +326,7 @@ firebase.auth().onAuthStateChanged(function (user) {
 
 
     // zamykanie ustawien kanalu
-    
+
     const exitSettingChannel = document.getElementById("exit-button");
     exitSettingChannel.addEventListener("click", () => {
       console.log("working")
@@ -334,7 +336,7 @@ firebase.auth().onAuthStateChanged(function (user) {
         settingMain.style.display = "none";
       }, 1000)
     })
-    
+
     // channel setting
     // otwieranie ustawien kanalu
     const channelSetting = document.getElementById("channel-setting-join");
@@ -349,10 +351,59 @@ firebase.auth().onAuthStateChanged(function (user) {
     // wyswietlanie informacji w setting kanalu oraz sprawdzanie czy jestes adminkiem zlotym kanału
 
     function innerChannelSetting() {
-      
+
       if (userId === passAndUniqId[4]) {
+        firebase.database().ref('Emoji/').on("child_added", function (snapshot) {
+          //  console.log(snapshot.val());
+          let create_li = document.createElement("li");
+          create_li.className = "li_emoji";
+          create_li.append(snapshot.val());
+          document.getElementById("emoji_list").append(create_li);
+        })
+
         console.log("admin królu złoty :) ");
         document.getElementById("edit_button_setting").style.display = "block";
+        const emojiEventListener = document.getElementById("change-emoji");
+        emojiEventListener.addEventListener("click", (e) => {
+          console.log("xd")
+          const emoji_container = document.getElementById("choose-emoji");
+          emoji_container.style.display = "flex";
+          setTimeout(() => {
+            emoji_container.style.opacity = 1;
+          }, 500);
+
+          let emoji = document.querySelectorAll(".li_emoji");
+          console.log(emoji.length);
+          for (var i = 0; i < emoji.length; i++) {
+            emoji[i].addEventListener("click", (event) => {
+              let emojiTarget = this.event.target;
+              // console.log(xdasd.innerText);
+              let emojiContent = emojiTarget.innerText;
+              firebase.database().ref(pathEmoji).update({
+                icon: emojiContent
+              }).then(function () {
+                setTimeout(() => {
+                  emoji_container.style.opacity = 0;
+                }, 500);
+                emoji_container.style.display = "none";
+
+              })
+            })
+
+          }
+
+
+          window.addEventListener("click", function (event) {
+            let isClickInside = emojiEventListener.contains(event.target);
+            if (isClickInside) {
+
+            } else {
+              emoji_container.style.display = "none";
+              emoji_container.style.opacity = 0;
+
+            }
+          })
+        })
       } else {
         document.getElementById("edit_button_setting").style.display = "none";
       }
@@ -363,13 +414,13 @@ firebase.auth().onAuthStateChanged(function (user) {
       document.getElementById("setting-picture").src = passAndUniqId[2];
       document.getElementById("send-icon").innerHTML = chan_icon[0]; // wyswietlanie iconki(domyslnie kciuka)
       const usersRef = firebase.database().ref('users/' + passAndUniqId[4]);
-      let usersOnline = firebase.database().ref(pathUsers);
+      //let usersOnline = firebase.database().ref(pathUsers);
       //szef kanalu
       usersRef.once('value', function (snapshot) {
-        let userId = snapshot.child("id").val();
+        //let userId = snapshot.child("id").val();
         let userImg = snapshot.child("photoURL").val();
         let userNickName = snapshot.child("username").val();
-        let userEmail = snapshot.child("email").val();
+        // let userEmail = snapshot.child("email").val();
         let userStatus = snapshot.child("status").val();
         document.getElementById("boss-picture").src = userImg;
         document.getElementById("boss-NickName").innerHTML = userNickName;
@@ -378,8 +429,8 @@ firebase.auth().onAuthStateChanged(function (user) {
       /*  firebase.database().ref().child('Channels/' + passAndUniqId[1] + '/Users_online').push({
           userId
         }) */
-
     }
+
 
     // klikniecie poza form do logowania = zamkniecie go, i wylaczenie eventu
     function clickEvent() {
@@ -694,7 +745,7 @@ firebase.auth().onAuthStateChanged(function (user) {
       logOutThinks();
       console.log("xd");
       document.getElementById("lel").style.opacity = 0;
-      return pathChannel = "undefined", pathUsers = "undefined", pathNumbersOfPost = "undefined", passAndUniqId = [], chan_icon = [], snapMessages();
+      return pathChannel = "undefined", pathEmoji = "undefined", pathUsers = "undefined", pathNumbersOfPost = "undefined", passAndUniqId = [], chan_icon = [], snapMessages();
     })
 
     // nowe
@@ -732,46 +783,46 @@ firebase.auth().onAuthStateChanged(function (user) {
     // wyswietlanie wiadomosci kanalu
 
     function snapMessages() {
-       let userInfo = new Array;
+      let userInfo = new Array;
       var messageRef = firebase.database().ref(pathChannel);
       //tu sie troche rozpierdala
-       messageRef.on('child_added', function (snapshot) {
-         let user = snapshot.child("user").val();
-         let message_value = snapshot.child("Message").val();
-         let time = snapshot.child("time").val();
-         let date = snapshot.child("date").val();
-         firebase.database().ref("users/" + user).once("value", function(snapshot){
+      messageRef.on('child_added', function (snapshot) {
+        let user = snapshot.child("user").val();
+        let message_value = snapshot.child("Message").val();
+        let time = snapshot.child("time").val();
+        let date = snapshot.child("date").val();
+        firebase.database().ref("users/" + user).once("value", function (snapshot) {
           let photo_value = snapshot.child("photoURL").val();
           let nickName_value = snapshot.child("username").val();
           return userInfo.push(photo_value, nickName_value);
-         })
-         let createLi = document.createElement("li");
-         createLi.className = "Message-list";
-         let createSpan = document.createElement("span");
-         let createDiv = document.createElement("div");
-         let createImg = document.createElement("img");
-         let createThirdDiv = document.createElement("div");
-         let createB3 = document.createElement("b");
-         createThirdDiv.className = "date_hours"
-         createThirdDiv.append("Date: " + date + " " + "Time: " + time);
-         let createDivSecont = document.createElement("div");
-         createDivSecont.className = "li_div_message-text"
-         createDivSecont.innerHTML = message_value;
-         createDiv.className = "li_div";
-         createDiv.append(createImg, createDivSecont);
-         createB3.append(userInfo[1]);
-         createSpan.append(createB3);
-         createImg.src = userInfo[0];
-         createLi.append(createSpan, createDiv, createThirdDiv);
-         document.getElementById("list").append(createLi);
-         scrollBottomArrow();
+        })
+        let createLi = document.createElement("li");
+        createLi.className = "Message-list";
+        let createSpan = document.createElement("span");
+        let createDiv = document.createElement("div");
+        let createImg = document.createElement("img");
+        let createThirdDiv = document.createElement("div");
+        let createB3 = document.createElement("b");
+        createThirdDiv.className = "date_hours"
+        createThirdDiv.append("Date: " + date + " " + "Time: " + time);
+        let createDivSecont = document.createElement("div");
+        createDivSecont.className = "li_div_message-text"
+        createDivSecont.innerHTML = message_value;
+        createDiv.className = "li_div";
+        createDiv.append(createImg, createDivSecont);
+        createB3.append(userInfo[1]);
+        createSpan.append(createB3);
+        createImg.src = userInfo[0];
+        createLi.append(createSpan, createDiv, createThirdDiv);
+        document.getElementById("list").append(createLi);
+        scrollBottomArrow();
         //   console.log(snapshot.val());
-       
-       // let nickName_value = snapshot.child("Nickname").val();
-      //  let photo_value = snapshot.child("Photo").val();
-   
+
+        // let nickName_value = snapshot.child("Nickname").val();
+        //  let photo_value = snapshot.child("Photo").val();
+
         // console.log(photo_value);
-       
+
 
       });
 
@@ -826,12 +877,12 @@ firebase.auth().onAuthStateChanged(function (user) {
       const numbersRef = firebase.database().ref(pathNumbersOfPost);
       numbersRef.once("value", function (snapshot) {
         let numberPost = snapshot.child("numberSend").val();
-      numberPost++;
-          numbersRef.update({
-            numberSend: numberPost
-            });
+        numberPost++;
+        numbersRef.update({
+          numberSend: numberPost
+        });
       })
-    
+
     }
 
     window.addEventListener("keyup", clearMessagefield);
