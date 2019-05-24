@@ -274,9 +274,9 @@ firebase.auth().onAuthStateChanged(function (user) {
     })
     //logowanie do channelu
     btnJoin.addEventListener("click", () => {
-      console.log(passAndUniqId)
+     // console.log(passAndUniqId)
       let login_channelPassword = document.getElementById("login-to-channel-password").value;
-      console.log(passAndUniqId[0]);
+     // console.log(passAndUniqId[0]);
       if (login_channelPassword === passAndUniqId[0]) {
         console.log(passAndUniqId[1])
         joinError.innerHTML = "The password provided is good."
@@ -686,29 +686,6 @@ firebase.auth().onAuthStateChanged(function (user) {
       return publicChannelNumber;
     }
 
-
-    // join to channel
-    /*
-        //join to public
-        let publicChannel = document.getElementById("public_id");
-        publicChannel.addEventListener("click", () => {
-
-          const teeeeeeee = firebase.database().ref('PublicChannel');
-          teeeeeeee.on('value', function (snapshot) {
-            let publicName = snapshot.child("ChannelName").val();
-            let publicPicture = snapshot.child("ChannelPhoto").val();
-            let publicIcon = snapshot.child("icon").val();
-            let publicfounder = snapshot.child("founder").val();
-            document.getElementById("channel_photo").src = publicPicture;
-            document.getElementById("channel_name").innerHTML = publicName;
-            document.getElementById("send-icon").innerHTML = publicIcon;
-            return pathChannel = 'PublicChannel/messages', chan_icon.push(publicIcon), snapMessages(), joinPrivateAndPubChan();
-          })
-          // nr0 haslo, nr 1 unikalne id, nr 2 obrazek, nr 3 nazwa kanalu 4 channel boss 
-
-
-        })
-    */
     function joinPrivateAndPubChan() {
       containerMessPage.style.width = 300 + "%";
       channel_container.style.transform = ("translate", "translate3d(-" + 100 + "%,0,0)");
@@ -783,18 +760,20 @@ firebase.auth().onAuthStateChanged(function (user) {
     // wyswietlanie wiadomosci kanalu
 
     function snapMessages() {
-      let userInfo = new Array;
+      let userInfo_photo = "undefined";
+      let userInfo_NickName = "undefined";
       var messageRef = firebase.database().ref(pathChannel);
       //tu sie troche rozpierdala
       messageRef.on('child_added', function (snapshot) {
         let user = snapshot.child("user").val();
+        console.log(user);
         let message_value = snapshot.child("Message").val();
         let time = snapshot.child("time").val();
         let date = snapshot.child("date").val();
         firebase.database().ref("users/" + user).once("value", function (snapshot) {
           let photo_value = snapshot.child("photoURL").val();
           let nickName_value = snapshot.child("username").val();
-          return userInfo.push(photo_value, nickName_value);
+          return userInfo_NickName = nickName_value, userInfo_photo = photo_value;
         })
         let createLi = document.createElement("li");
         createLi.className = "Message-list";
@@ -810,9 +789,9 @@ firebase.auth().onAuthStateChanged(function (user) {
         createDivSecont.innerHTML = message_value;
         createDiv.className = "li_div";
         createDiv.append(createImg, createDivSecont);
-        createB3.append(userInfo[1]);
+        createB3.append(userInfo_NickName);
         createSpan.append(createB3);
-        createImg.src = userInfo[0];
+        createImg.src = userInfo_photo;
         createLi.append(createSpan, createDiv, createThirdDiv);
         document.getElementById("list").append(createLi);
         scrollBottomArrow();
