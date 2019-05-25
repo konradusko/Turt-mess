@@ -314,7 +314,7 @@ firebase.auth().onAuthStateChanged(function (user) {
       }
     });
     function addUserTochannel(){
-      firebase.database().ref(channel_online_users).push({
+      firebase.database().ref(pathUsers).push({
         userId
       })
     }
