@@ -300,10 +300,11 @@ firebase.auth().onAuthStateChanged(function (user) {
         firebase.database().ref(channel_online_users).on("child_added", function(snapshot){
          let userOnChannel = snapshot.child("userId").val();
          console.log(userOnChannel)
-       if(userOnChannel != userId){
-    return addUserTochannel();
+       if(userOnChannel === userId){
+
+    console.log("juz nalezysz do kanalu")
        }else{
-         console.log("juz nalezysz do kanalu")
+        return addUserTochannel();
        }
         })
         //
