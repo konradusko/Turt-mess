@@ -298,13 +298,6 @@ firebase.auth().onAuthStateChanged(function (user) {
          console.log("juz nalezysz do kanalu")
        }
         })
-        function addUserTochannel(){
-          firebase.database().ref(channel_online_users).push({
-            userId
-          })
-        }
-      
-       
         //
         document.getElementById("login-to-channel-password").value = "";
         innerChannelSetting();
@@ -320,6 +313,11 @@ firebase.auth().onAuthStateChanged(function (user) {
         console.log(login_channelPassword.length)
       }
     });
+    function addUserTochannel(){
+      firebase.database().ref(channel_online_users).push({
+        userId
+      })
+    }
     //anulacja
     btnCancel.addEventListener("click", cancelForm)
 
