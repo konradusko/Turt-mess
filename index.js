@@ -283,7 +283,7 @@ firebase.auth().onAuthStateChanged(function (user) {
         joinError.innerHTML = "The password provided is good."
         joinError.style.color = "white";
         console.log(login_channelPassword + " " + "true");
-
+        let switchUser = 0;
         let xd = 'Channels/' + passAndUniqId[1] + '/messages';
         let channel_online_users = 'Channels/' + passAndUniqId[1] + '/Users_on_channel';
         let channel_Number_Of_Post = 'Channels/' + passAndUniqId[1] + '/number_of_messages_sent';
@@ -293,14 +293,17 @@ firebase.auth().onAuthStateChanged(function (user) {
          let userOnChannel = snapshot.child("userId").val();
          console.log(userOnChannel)
        if(userOnChannel != userId){
-       firebase.database().ref(channel_online_users).push({
-         userId
-       })
-
+    return addUserTochannel();
        }else{
          console.log("juz nalezysz do kanalu")
        }
         })
+        function addUserTochannel(){
+          firebase.database().ref(channel_online_users).push({
+            userId
+          })
+        }
+      
        
         //
         document.getElementById("login-to-channel-password").value = "";
