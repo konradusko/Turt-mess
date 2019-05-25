@@ -120,9 +120,10 @@ firebase.auth().onAuthStateChanged(function (user) {
           number_of_messages_sent: 0,
           icon: icon,
           ChannelPhoto: "https://firebasestorage.googleapis.com/v0/b/messenger-6923c.appspot.com/o/No-Photo-Available.jpg?alt=media&token=e7d6e25d-eb5b-4262-8287-c6b976791840"
-
-
         });
+        firebase.database().ref("Channels/" + randomString + "/Users_on_channel").push({
+          userId
+        })
 
 
         console.log(channelphotoVal);
@@ -284,9 +285,24 @@ firebase.auth().onAuthStateChanged(function (user) {
         console.log(login_channelPassword + " " + "true");
 
         let xd = 'Channels/' + passAndUniqId[1] + '/messages';
-        let channel_online_users = 'Channels/' + passAndUniqId[1] + '/Users_online';
+        let channel_online_users = 'Channels/' + passAndUniqId[1] + '/Users_on_channel';
         let channel_Number_Of_Post = 'Channels/' + passAndUniqId[1] + '/number_of_messages_sent';
         let channel_emoji = 'Channels/' + passAndUniqId[1];
+        //dodanie uzytkownika do kanalu
+        firebase.database().ref(channel_online_users).on("child_added", function(snapshot){
+         let userOnChannel = snapshot.child("userId").val();
+         console.log(userOnChannel)
+       if(userOnChannel != userId){
+       firebase.database().ref(channel_online_users).push({
+         userId
+       })
+
+       }else{
+         console.log("juz nalezysz do kanalu")
+       }
+        })
+       
+        //
         document.getElementById("login-to-channel-password").value = "";
         innerChannelSetting();
         cancelForm();
@@ -413,9 +429,10 @@ firebase.auth().onAuthStateChanged(function (user) {
       document.getElementById("setting-channel-name").innerHTML = passAndUniqId[3];
       document.getElementById("setting-picture").src = passAndUniqId[2];
       document.getElementById("send-icon").innerHTML = chan_icon[0]; // wyswietlanie iconki(domyslnie kciuka)
-      const usersRef = firebase.database().ref('users/' + passAndUniqId[4]);
+   
       //let usersOnline = firebase.database().ref(pathUsers);
       //szef kanalu
+      const usersRef = firebase.database().ref('users/' + passAndUniqId[4]);
       usersRef.once('value', function (snapshot) {
         //let userId = snapshot.child("id").val();
         let userImg = snapshot.child("photoURL").val();
@@ -430,6 +447,18 @@ firebase.auth().onAuthStateChanged(function (user) {
           userId
         }) */
     }
+
+// pokazywanie uzytkownikow na kanale 
+const buttonShowUserOnChannel = document.getElementById("btn-show-user-on-channel");
+
+buttonShowUserOnChannel.addEventListener("click", () =>{
+  const userOnChannelContainer = document.getElementById("userOnChannel_container");
+  userOnChannelContainer.style.display = "block";
+
+})
+
+
+
 
 
     // klikniecie poza form do logowania = zamkniecie go, i wylaczenie eventu
