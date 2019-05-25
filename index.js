@@ -283,31 +283,28 @@ firebase.auth().onAuthStateChanged(function (user) {
         joinError.innerHTML = "The password provided is good."
         joinError.style.color = "white";
         console.log(login_channelPassword + " " + "true");
-      
+       let switchUser = "undefined";
         let xd = 'Channels/' + passAndUniqId[1] + '/messages';
         let channel_online_users = 'Channels/' + passAndUniqId[1] + '/Users_on_channel';
         let channel_Number_Of_Post = 'Channels/' + passAndUniqId[1] + '/number_of_messages_sent';
         let channel_emoji = 'Channels/' + passAndUniqId[1];
         //dodanie uzytkownika do kanalu
-        function addUserTochannel(){
-          console.log("working dodawanie")
-          console.log(pathUsers);
-          firebase.database().ref(channel_online_users).push({
-            userId
-          });
-          console.log(channel_online_users)
-        }
+     
         firebase.database().ref(channel_online_users).on("child_added", function(snapshot){
          let userOnChannel = snapshot.child("userId").val();
-         console.log(userOnChannel)
-         console.log(userId)
-       if(userOnChannel === userId){
-    console.log("juz nalezysz do kanalu")
-       }else{
-     //   return addUserTochannel();
-     console.log("powinien byc return");
-       }
+      //   console.log(userOnChannel)
+        // console.log(userId)
+         return switchUser = userOnChannel;
         })
+        console.log(switchUser)
+        if(switchUser === userId){
+          console.log("juz nalezysz do kanalu")
+             }else{
+              firebase.database().ref(channel_online_users).push({
+                userId
+              });
+           console.log("powinien byc return");
+             }
         //
         document.getElementById("login-to-channel-password").value = "";
         innerChannelSetting();
