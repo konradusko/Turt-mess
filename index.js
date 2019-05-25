@@ -294,17 +294,23 @@ firebase.auth().onAuthStateChanged(function (user) {
          let userOnChannel = snapshot.child("userId").val();
       //   console.log(userOnChannel)
         // console.log(userId)
-         return switchUser = userOnChannel;
-        })
-        console.log(switchUser)
         if(switchUser === userId){
           console.log("juz nalezysz do kanalu")
              }else{
-              firebase.database().ref(channel_online_users).push({
-                userId
-              });
-           console.log("powinien byc return");
+            
+           console.log("nie nalezysz");
+           return addingUserToChannel();
              }
+      //   return switchUser = userOnChannel;
+        })
+        console.log(switchUser)
+       function addingUserToChannel(){
+         console.log("dodaje");
+        firebase.database().ref(channel_online_users).push({
+          userId
+        });
+        return;
+       }
         //
         document.getElementById("login-to-channel-password").value = "";
         innerChannelSetting();
