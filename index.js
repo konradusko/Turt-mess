@@ -16,6 +16,7 @@ let pathNumbersOfPost = "undefined";
 let pathEmoji = "undefined";
 
 
+
 //testy
 
 // logowanie
@@ -227,6 +228,9 @@ firebase.auth().onAuthStateChanged(function (user) {
         document.getElementById("channel-ul-container").append(channel_li);
       }
 
+
+     
+
       // dolaczenie do kanau 
       const joinChannel = document.getElementById(channels_id);
       joinChannel.addEventListener("click", (e) => {
@@ -262,7 +266,7 @@ firebase.auth().onAuthStateChanged(function (user) {
     })
     // po dodaniu kanalu automatycznie zmienia obrazek na obrazek dodany przez uzytkownika
     channelsRef.on("child_changed", function (snapshot) {
-      console.log(snapshot.val());
+    //  console.log(snapshot.val());
       let channel_img = snapshot.child("ChannelPhoto").val();
       let channels_id = snapshot.child("Channel_Id").val();
       let img_container = document.getElementById(channels_id).firstElementChild;
@@ -289,7 +293,7 @@ firebase.auth().onAuthStateChanged(function (user) {
         let channel_emoji = 'Channels/' + passAndUniqId[1];
         //dodanie uzytkownika do kanalu
         firebase.database().ref(channel_online_users).orderByChild("userId").equalTo(userId).once('value', function (snapshot) {
-          console.log(snapshot.val());
+        //  console.log(snapshot.val());
           if (snapshot.val() === null) {
             console.log("ale bym sobie dodal");
              firebase.database().ref(channel_online_users).push({
@@ -300,15 +304,16 @@ firebase.auth().onAuthStateChanged(function (user) {
           }
      
         })
+      
     
         document.getElementById("login-to-channel-password").value = "";
-        innerChannelSetting();
-        console.log("its happening")
-        cancelForm();
+     
+        //console.log("its happening")
+   
         setTimeout(() => {
           document.getElementById("lel").style.opacity = 1;
         }, 500);
-        return pathChannel = xd, pathUsers = channel_online_users, pathEmoji = channel_emoji, pathNumbersOfPost = channel_Number_Of_Post, snapMessages(), joinPrivateAndPubChan();
+        return pathChannel = xd, pathUsers = channel_online_users, pathEmoji = channel_emoji, pathNumbersOfPost = channel_Number_Of_Post,   innerChannelSetting(), snapMessages(), joinPrivateAndPubChan(),     cancelForm();
       } else {
         joinError.innerHTML = "The password provided is wrong."
         joinError.style.color = "red";
@@ -366,23 +371,32 @@ firebase.auth().onAuthStateChanged(function (user) {
       }, 500)
     })
     // wyswietlanie informacji w setting kanalu oraz sprawdzanie czy jestes adminkiem zlotym kanału
-
+  let xd;
     function innerChannelSetting() {
-
+      console.log(passAndUniqId);
+ // console.log(xd);
+  xd = passAndUniqId[4];
+ console.log(xd)
+      const emojiEventListener = document.getElementById("change-emoji");
       if (userId === passAndUniqId[4]) {
-        firebase.database().ref('Emoji/').on("child_added", function (snapshot) {
-          //  console.log(snapshot.val());
-          let create_li = document.createElement("li");
-          create_li.className = "li_emoji";
-          create_li.append(snapshot.val());
-          document.getElementById("emoji_list").append(create_li);
-        })
+           //testy wyswietlanie emotek
+           firebase.database().ref('Emoji/').on("child_added", function (snapshot) {
+            //  console.log(snapshot.val());
+            let create_li = document.createElement("li");
+            create_li.className = "li_emoji";
+            create_li.append(snapshot.val());
+            document.getElementById("emoji_list").append(create_li);
+          })
+          //testy
+        console.log(passAndUniqId[4]+"bazadanych");
+    
 
         console.log("admin królu złoty :) ");
         document.getElementById("edit_button_setting").style.display = "block";
-        const emojiEventListener = document.getElementById("change-emoji");
-        emojiEventListener.addEventListener("click", (e) => {
-          console.log("xd")
+     
+        emojiEventListener.addEventListener("click", () =>{
+        if(userId === xd){
+      
           const emoji_container = document.getElementById("choose-emoji");
           emoji_container.style.display = "flex";
           setTimeout(() => {
@@ -393,7 +407,7 @@ firebase.auth().onAuthStateChanged(function (user) {
           console.log(emoji.length);
           for (var i = 0; i < emoji.length; i++) {
             emoji[i].addEventListener("click", (event) => {
-              let emojiTarget = this.event.target;
+              let emojiTarget = event.target;
               // console.log(xdasd.innerText);
               let emojiContent = emojiTarget.innerText;
               firebase.database().ref(pathEmoji).update({
@@ -408,21 +422,43 @@ firebase.auth().onAuthStateChanged(function (user) {
             })
 
           }
-
-
-          window.addEventListener("click", function (event) {
+        window.addEventListener("click", function (event) {
             let isClickInside = emojiEventListener.contains(event.target);
             if (isClickInside) {
-
+            
             } else {
               emoji_container.style.display = "none";
               emoji_container.style.opacity = 0;
 
             }
           })
+        
+     
+        }else{
+
+        }
+    
         })
+           const editChannelForm = document.getElementById("edit-container");
+           document.getElementById("change-password-buton-id").addEventListener("click", ()=>{
+            editChannelForm.style.display = "flex";
+            setTimeout(() => {
+              editChannelForm.style.opacity = 1;
+            }, 500);
+           })
+
+
+
+        //ukrywanie szefa kanału
+        document.getElementById("boss-container").style.display = "none";
+        document.getElementById("change-password-container").style.display = "flex";// 
       } else {
         document.getElementById("edit_button_setting").style.display = "none";
+        document.getElementById("change-password-container").style.display = "none";
+        document.getElementById("boss-container").style.display = "flex";
+    
+
+   
       }
       // wyswietlanie zdj kanalu i nazwy 
       document.getElementById("channel_photo").src = passAndUniqId[2];
@@ -431,7 +467,7 @@ firebase.auth().onAuthStateChanged(function (user) {
       document.getElementById("setting-picture").src = passAndUniqId[2];
       document.getElementById("send-icon").innerHTML = chan_icon[0]; // wyswietlanie iconki(domyslnie kciuka)
 
-      //let usersOnline = firebase.database().ref(pathUsers);
+
       //szef kanalu
       const usersRef = firebase.database().ref('users/' + passAndUniqId[4]);
       usersRef.once('value', function (snapshot) {
@@ -444,21 +480,82 @@ firebase.auth().onAuthStateChanged(function (user) {
         document.getElementById("boss-NickName").innerHTML = userNickName;
         document.getElementById("boss-status").innerHTML = userStatus;
       })
-      /*  firebase.database().ref().child('Channels/' + passAndUniqId[1] + '/Users_online').push({
-          userId
-        }) */
+      /*  Wyswietlanie uzytkownikow na kanale */
+//console.log("czy to dziala wogole ?");
+
+      firebase.database().ref(pathUsers).on("child_added", function(snapshot){
+        console.log(snapshot.val());
+        let userOnChannel = snapshot.child("userId").val();
+
+        let userImg = "undefined";
+        let userNickName = "undefined";
+        let userStatus = "undefined";
+        let userDatabaseId = "undefined";
+
+        firebase.database().ref("users/" + userOnChannel).on("value", function (snapshot) {
+          let userImgUser = snapshot.child("photoURL").val();
+          let userNickNameUser = snapshot.child("username").val();
+          let userStatusUser = snapshot.child("status").val();
+          let userDatabaseIdUser = snapshot.child("id").val();
+          return userImg = userImgUser, userNickName = userNickNameUser, userStatus = userStatusUser, userDatabaseId = userDatabaseIdUser;
+        })
+
+
+        if (userArray[3] === userDatabaseId) {
+        //  console.log("i cyk dziala i nie wyswietla")
+  
+        } else {
+      // console.log(userImg);
+          let createLi = document.createElement("li");
+          //createLi.id =userDatabaseId;
+          let createImg = document.createElement("img");
+          createImg.src = userImg;
+          let createDiv = document.createElement("div");
+          createDiv.className = "user-name-status";
+          let createSpanOne = document.createElement("span");
+          let createB = document.createElement("b");
+          createB.append(userNickName);
+          createSpanOne.append(createB);
+          let createDivTwo = document.createElement("div");
+          createDivTwo.className = "user-status";
+          let createSpanTwo = document.createElement("span");
+          createSpanTwo.innerHTML = "Status:";
+          let createSpanThree = document.createElement("span");
+          createSpanThree.className = "span-status";
+          createSpanThree.append(userStatus);
+          createDivTwo.append(createSpanTwo, createSpanThree)
+          createDiv.append(createSpanOne, createDivTwo);
+          let createDivThree = document.createElement("div");
+          createDivThree.className = "button-container";
+          let createButton = document.createElement("button");
+          createButton.id = userDatabaseId;
+          createButton.className = "add_firend_button";
+          createButton.innerHTML = '<i class="fa fa-plus"></i>' + "Add friend";
+          createDivThree.append(createButton);
+          createLi.append(createImg, createDiv, createDivThree);
+          document.getElementById("ul-listOf-userOnChannel").append(createLi);
+      
+        }
+
+    })
     }
 
     // pokazywanie uzytkownikow na kanale 
     const buttonShowUserOnChannel = document.getElementById("btn-show-user-on-channel");
-
+    let switchShowUserOnChannel = 1;
     buttonShowUserOnChannel.addEventListener("click", () => {
       const userOnChannelContainer = document.getElementById("userOnChannel_container");
-      userOnChannelContainer.style.display = "block";
+      if(switchShowUserOnChannel === 1){
+        userOnChannelContainer.style.display = "block";
+        return switchShowUserOnChannel = 2;
+      }else if(switchShowUserOnChannel === 2){
+        userOnChannelContainer.style.display = "none";
+        return switchShowUserOnChannel = 1;
+      }
+    
+    
 
-    })
-
-
+  })
 
 
 
@@ -567,18 +664,6 @@ firebase.auth().onAuthStateChanged(function (user) {
     // wyswietlanie uzytkownikow na na glownej
     const usersRef = firebase.database().ref('users');
     usersRef.on('child_added', function (snapshot) {
-      // console.log(snapshot.key());
-      /*
-      if(snapshot.val()){
-        loginUserRef.on("child_added", function(snapshot){
-          usersRef.onDisconnect().set('☆ offline');
-          usersRef.set('★ online');
-        })
-      }
-      */
-      let xd = snapshot.key;
-
-      // console.log(userloginId);
       let userImg = snapshot.child("photoURL").val();
       let userNickName = snapshot.child("username").val();
       let userStatus = snapshot.child("status").val();
@@ -616,13 +701,14 @@ firebase.auth().onAuthStateChanged(function (user) {
         createDivThree.append(createButton);
         createLi.append(createImg, createDiv, createDivThree);
         document.getElementById("usersOnlineId").append(createLi);
-
+/*
         const addFriendTarget = document.getElementById(userDatabaseId);
         addFriendTarget.addEventListener("click", (event) => {
           let xdd = event.target;
 
           console.log(xdd)
         })
+        */
       }
       //let clickInSide = document.querySelectorAll(".add_firend_button").contains(event.target);
       //console.log(clickInSide);
@@ -749,10 +835,12 @@ firebase.auth().onAuthStateChanged(function (user) {
     let channel_button = document.getElementById("channel_id");
     channel_button.addEventListener("click", () => {
       document.getElementById("list").innerHTML = "";
+      document.getElementById("ul-listOf-userOnChannel").innerHTML = "";
+      document.getElementById("userOnChannel_container").style.display = "none";
       logOutThinks();
       console.log("xd");
       document.getElementById("lel").style.opacity = 0;
-      return pathChannel = "undefined", pathEmoji = "undefined", pathUsers = "undefined", pathNumbersOfPost = "undefined", passAndUniqId = [], chan_icon = [], snapMessages();
+      return pathChannel = "undefined", pathEmoji = "undefined", pathUsers = "undefined", pathNumbersOfPost = "undefined",switchShowUserOnChannel = 1, passAndUniqId = [], chan_icon = [], snapMessages();
     })
 
     // nowe
@@ -796,7 +884,7 @@ firebase.auth().onAuthStateChanged(function (user) {
       //tu sie troche rozpierdala
       messageRef.on('child_added', function (snapshot) {
         let user = snapshot.child("user").val();
-        console.log(user);
+        //console.log(user);
         let message_value = snapshot.child("Message").val();
         let time = snapshot.child("time").val();
         let date = snapshot.child("date").val();

@@ -169,6 +169,24 @@
             <!--Channels-->
             <div id="messenger_id" class="messenger">
                 <div id="setting-main" class="channel-setting-container">
+                    <!-- edit channel
+                    <div class="edit-channel-container">
+                        <span class="title-edit-channel"><b>Edit your channel!</b></span>
+                        <div class="wrap-input input-adding">
+                            <label class="label-input">Channel Name</label>
+                            <input id="channel_name_id" class="input channel-create" type="text" name="Channel Name"
+                                autocomplete="off" maxlength="10" placeholder="Channel Name" required="">
+                            <span class="focus-input"></span>
+                        </div>
+                        <div class="wrap-input input-adding">
+                            <label class="label-input">Your Channel Password</label>
+                            <input id="channel_password_id" class="input channel-create" type="password"
+                                name="Channel Password" autocomplete="off" maxlength="25" placeholder="Channel Password"
+                                required="">
+                            <span class="focus-input"></span>
+                        </div>
+                    </div>
+                    channel setting-->
                     <div id="main-top" class="stting-main-top">
                         <div class="buttons">
                             <button id="edit_button_setting" class="edit-button">Edit</button>
@@ -188,12 +206,12 @@
                         <div id="change-emoji" class="channel-setting-emoji">
                             <span>Emoji:</span> <span><i class="fa fa-thumbs-up" aria-hidden="true"></i></span>
                             <div id="choose-emoji" class="channel-setting-emoji-new-emoji">
-                            <ul id="emoji_list" class="emoji_list_container">
+                                <ul id="emoji_list" class="emoji_list_container">
 
-                            </ul>
+                                </ul>
                             </div>
                         </div>
-                        <div class="channel-setting-founder-container">
+                        <div id="boss-container" class="channel-setting-founder-container">
                             <span class="info-about-founder">Channel belongs to:</span>
                             <div class="founder-status-and-img-container">
                                 <img id="boss-picture" src="" alt="founder-avatar">
@@ -209,44 +227,49 @@
                                 </div>
                             </div>
                         </div>
-
-                        <!-- 
-                        <button id="edit_button_setting" class="edit-button">Edit</button>
-                        <button id="exit-button" class="exit_button_setting"> <i class="fa fa-times"
-                                aria-hidden="true"></i> </button>
-                        <img id="setting-picture" src="" alt="Channel-photo">
-                        <span class="boss-channelName"><b id="setting-channel-name">ChannelName</b></span>
-                        <span>Number of messages sent:0</span>
-                        <div class="container-channel-boss">
-                            <span>Channel belongs to</span>
-                            <div class="channel-boss">
-                                <img id="boss-picture" src="" alt="founder-avatar">
-                                <div class="channel-boss-status-and-nickName">
-                                    <span class="nice-box"><b id="boss-NickName">Xdddd</b></span>
-                                    <div class="nice-box box"><span>Status:</span><span id="boss-status"
-                                            class="">Online</span>
-                                    </div>
-
-                                </div>
-                                <div class="boss-Pw-button">
-                                    <button>PW</button>
-                                </div>
-
-                            </div>
+                        <div id="change-password-container" class="change-password-on-channel-cotainer">
+                            <button id="change-password-buton-id" class="change-password-button"><b>Change password</b></button>
                         </div>
-                          -->
-                          <div class="container-button-show-users-online">
-                              <button id="btn-show-user-on-channel" class="button-show-users-online">
-                              <b>  Show channel users </b> <i class="fa fa-caret-down" aria-hidden="true"></i>
-                              </button>
-                          </div>
-                     <div id="userOnChannel_container" class="user-online-container">
-                         <ul class="ul-userOnChannel_container">
+                  
+                        <div class="container-button-show-users-online">
+                            <button id="btn-show-user-on-channel" class="button-show-users-online">
+                                <b> Show channel users </b> <i class="fa fa-caret-down" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                        <div id="userOnChannel_container" class="user-online-container">
+                            <ul id="ul-listOf-userOnChannel" class="users-online-ul user-on-channel">
 
-                         </ul>
-                     </div>
+                            </ul>
+                        </div>
+                        <div id="edit-container" class="login-to-channel-form change-password-name-or-img-in-channel-setting">
+                              <b class="change-password-title">Change password!</b>
+                                 <div class="wrap-input input-adding">
+                                    <label class="label-input">Current channel password</label>
+                                    <input  class="input channel-create" type="password" name="Current channel password"
+                                        autocomplete="off" maxlength="25"  required="">
+                                    <span class="focus-input"></span>
+                                </div>
+                                <div class="wrap-input input-adding">
+                                    <label class="label-input">Your new channel password</label>
+                                    <input  class="input channel-create" type="password" name="Your new channel password"
+                                        autocomplete="off" maxlength="25"   required="">
+                                    <span class="focus-input"></span>
+                                </div>
+                                <div class="wrap-input input-adding">
+                                    <label class="label-input">Repeat password</label>
+                                    <input  class="input channel-create" type="password" name="Repeat password"
+                                        autocomplete="off" maxlength="25"  required="">
+                                    <span class="focus-input"></span>
+                                </div>
+                                <div class="wrap-buttons buttons-New_channel">
+                                    <button  class="button_Sign-In button-edit-channel_accept"> Create</button>
+                                    <button  class="button_Sign-Up button-edit-channel_cancel"> Cancel </button>
+                                </div>
+                                <span  class="info-span"></span>
+                        </div>
                     </div>
                 </div>
+                <!--wiadomosci-->
                 <div class="messenger-top">
                     <span id="channel_id" class="backToChannels"><i class="fa fa-long-arrow-left"
                             aria-hidden="true"></i></span>
