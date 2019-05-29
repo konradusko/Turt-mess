@@ -439,7 +439,7 @@ firebase.auth().onAuthStateChanged(function (user) {
         }
     
         })
-           const editChannelForm = document.getElementById("edit-container");
+           const editChannelForm = document.getElementById("change-password-show-form");
            document.getElementById("change-password-buton-id").addEventListener("click", ()=>{
             editChannelForm.style.display = "flex";
             setTimeout(() => {
