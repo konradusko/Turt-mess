@@ -228,36 +228,39 @@
                             </div>
                         </div>
                         <div id="change-password-container" class="change-password-on-channel-cotainer">
-                            <button id="change-password-buton-id" class="change-password-button"><b>Change password</b></button>
+                            <button id="change-password-buton-id" class="change-password-button"><b>Change
+                                    password</b></button>
                             <div id="change-password-show-form" class="change-password-form">
                                 <b class="change-password-title">Change password!</b>
                                 <div class="wrap-input input-adding change-password-input">
-                                   <label class="label-input">Current channel password</label>
-                                   <input  class="input channel-create" type="password" name="Current channel password"
-                                       autocomplete="off" maxlength="25"  required="">
-                                   <span class="focus-input"></span>
-                               </div>
-                               <div class="wrap-input input-adding change-password-input">
-                                   <label class="label-input">Your new channel password</label>
-                                   <input  class="input channel-create" type="password" name="Your new channel password"
-                                       autocomplete="off" maxlength="25"   required="">
-                                   <span class="focus-input"></span>
-                               </div>
-                               <div class="wrap-input input-adding change-password-input">
-                                   <label class="label-input">Repeat password</label>
-                                   <input  class="input channel-create" type="password" name="Repeat password"
-                                       autocomplete="off" maxlength="25"  required="">
-                                   <span class="focus-input"></span>
-                               </div>
-                               <span  class="info-span"></span>
-                               <div class="wrap-buttons buttons-New_channel wrap-buttons-edit-password">
-                                   <button  class="button_Sign-In button-edit-channel_accept"> Change</button>
-                                   <button  class="button_Sign-Up button-edit-channel_cancel"> Cancel </button>
-                               </div>
-                          
+                                    <label class="label-input">Current channel password</label>
+                                    <input id="old_password_input" class="input channel-create" type="password" name="Current channel password"
+                                        autocomplete="off" maxlength="25" required="">
+                                    <span class="focus-input"></span>
+                                </div>
+                                <div class="wrap-input input-adding change-password-input">
+                                    <label class="label-input">Your new channel password</label>
+                                    <input id="new_password_input" class="input channel-create" type="password" name="Your new channel password"
+                                        autocomplete="off" maxlength="25" required="">
+                                    <span class="focus-input"></span>
+                                </div>
+                                <div class="wrap-input input-adding change-password-input">
+                                    <label class="label-input">Repeat password</label>
+                                    <input id="repeat_new_password_input" class="input channel-create" type="password" name="Repeat password"
+                                        autocomplete="off" maxlength="25" required="">
+                                    <span class="focus-input"></span>
+                                </div>
+                                <span id="change_password_span" class="info-span"></span>
+                                <div class="wrap-buttons buttons-New_channel wrap-buttons-edit-password">
+                                    <button id="change-button-edit-password"
+                                        class="button_Sign-In button-edit-channel_accept"> Change</button>
+                                    <button id="cancel-button-edit-password"
+                                        class="button_Sign-Up button-edit-channel_cancel"> Cancel </button>
+                                </div>
+
                             </div>
                         </div>
-                  
+
                         <div class="container-button-show-users-online">
                             <button id="btn-show-user-on-channel" class="button-show-users-online">
                                 <b> Show channel users </b> <i class="fa fa-caret-down" aria-hidden="true"></i>
@@ -270,8 +273,9 @@
                         </div>
 
 
-                        <div id="edit-container" class="login-to-channel-form change-password-name-or-img-in-channel-setting">
-                            
+                        <div id="edit-container"
+                            class="login-to-channel-form change-password-name-or-img-in-channel-setting">
+
                         </div>
                     </div>
                 </div>

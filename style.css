@@ -735,18 +735,19 @@ button {
 .messenger-top-ul li {
     height: 100%;
     width: 80%;
-    margin: 10px auto;
+    /* margin: 10px auto; */
     list-style-type: none;
     display: flex;
     flex-direction: column;
     color: white;
-
+    /* margin-left: 10px; */
+    margin: 5px auto 5px 10px;
 }
 
 .messenger-top-ul li span {
     display: block;
-    height: 30px;
-    /* text-align: center; */
+   /* height: 30px;
+     text-align: center; */
     margin-left: 60px;
     /* width: 100%; */
 }
@@ -829,7 +830,12 @@ button {
     display: block;
     font-size: 20px;
 }
-
+.botName{
+    color:green;
+}
+.botMessage{
+    color:springgreen;
+}
 /* channel setting*/
 .channel-setting-container {
     position: absolute;
@@ -1045,9 +1051,9 @@ button {
 
 .user-online-container {
     width: 100%;
-    /* height: 300px; */
-    max-height: 300px;
-    /* height: 100%; */
+    height: 300px; 
+     /* max-height: 300px;
+   height: 100%; */
     background-color: rgb(75, 73, 73);
     margin-top: 20px;
     display: none;
@@ -1071,6 +1077,8 @@ button {
 .change-password-form{
     position: absolute;
     display: none;
+    opacity:0;
+    transition:1s;
     flex-direction: column;
     width: 100%;
     background-color: gray;

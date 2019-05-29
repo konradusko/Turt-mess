@@ -229,7 +229,7 @@ firebase.auth().onAuthStateChanged(function (user) {
       }
 
 
-     
+
 
       // dolaczenie do kanau 
       const joinChannel = document.getElementById(channels_id);
@@ -266,7 +266,7 @@ firebase.auth().onAuthStateChanged(function (user) {
     })
     // po dodaniu kanalu automatycznie zmienia obrazek na obrazek dodany przez uzytkownika
     channelsRef.on("child_changed", function (snapshot) {
-    //  console.log(snapshot.val());
+      //  console.log(snapshot.val());
       let channel_img = snapshot.child("ChannelPhoto").val();
       let channels_id = snapshot.child("Channel_Id").val();
       let img_container = document.getElementById(channels_id).firstElementChild;
@@ -293,27 +293,27 @@ firebase.auth().onAuthStateChanged(function (user) {
         let channel_emoji = 'Channels/' + passAndUniqId[1];
         //dodanie uzytkownika do kanalu
         firebase.database().ref(channel_online_users).orderByChild("userId").equalTo(userId).once('value', function (snapshot) {
-        //  console.log(snapshot.val());
+          //  console.log(snapshot.val());
           if (snapshot.val() === null) {
             console.log("ale bym sobie dodal");
-             firebase.database().ref(channel_online_users).push({
+            firebase.database().ref(channel_online_users).push({
               userId
-             });
-          }else if(snapshot.val() != null){
+            });
+          } else if (snapshot.val() != null) {
             console.log("to sie zateguje");
           }
-     
+
         })
-      
-    
+
+
         document.getElementById("login-to-channel-password").value = "";
-     
+
         //console.log("its happening")
-   
+
         setTimeout(() => {
           document.getElementById("lel").style.opacity = 1;
         }, 500);
-        return pathChannel = xd, pathUsers = channel_online_users, pathEmoji = channel_emoji, pathNumbersOfPost = channel_Number_Of_Post,   innerChannelSetting(), snapMessages(), joinPrivateAndPubChan(),     cancelForm();
+        return pathChannel = xd, pathUsers = channel_online_users, pathEmoji = channel_emoji, pathNumbersOfPost = channel_Number_Of_Post, innerChannelSetting(), snapMessages(), joinPrivateAndPubChan(), cancelForm();
       } else {
         joinError.innerHTML = "The password provided is wrong."
         joinError.style.color = "red";
@@ -371,94 +371,154 @@ firebase.auth().onAuthStateChanged(function (user) {
       }, 500)
     })
     // wyswietlanie informacji w setting kanalu oraz sprawdzanie czy jestes adminkiem zlotym kanału
-  let xd;
+    let idFromDatabaseswitch;
+    let channelPassword_switch;
+    let channeluniqIdSwitch;
+    const buttonShowUserOnChannel = document.getElementById("btn-show-user-on-channel"); // btn pokazuje uzytkownikow na kanale
+    const userOnChannelContainer = document.getElementById("userOnChannel_container"); //lista uzytkownikow na kanale
     function innerChannelSetting() {
       console.log(passAndUniqId);
- // console.log(xd);
-  xd = passAndUniqId[4];
- console.log(xd)
+      // console.log(xd);
+      idFromDatabaseswitch = passAndUniqId[4];
+      channelPassword_switch = passAndUniqId[0];
+      channeluniqIdSwitch = passAndUniqId[1];
+     // console.log(xd)
       const emojiEventListener = document.getElementById("change-emoji");
       if (userId === passAndUniqId[4]) {
-           //testy wyswietlanie emotek
-           firebase.database().ref('Emoji/').on("child_added", function (snapshot) {
-            //  console.log(snapshot.val());
-            let create_li = document.createElement("li");
-            create_li.className = "li_emoji";
-            create_li.append(snapshot.val());
-            document.getElementById("emoji_list").append(create_li);
-          })
-          //testy
-        console.log(passAndUniqId[4]+"bazadanych");
-    
+        //testy wyswietlanie emotek
+        firebase.database().ref('Emoji/').on("child_added", function (snapshot) {
+          //  console.log(snapshot.val());
+          let create_li = document.createElement("li");
+          create_li.className = "li_emoji";
+          create_li.append(snapshot.val());
+          document.getElementById("emoji_list").append(create_li);
+        })
+        //testy
+        console.log(passAndUniqId[4] + "bazadanych");
+
 
         console.log("admin królu złoty :) ");
         document.getElementById("edit_button_setting").style.display = "block";
-     
-        emojiEventListener.addEventListener("click", () =>{
-        if(userId === xd){
-      
-          const emoji_container = document.getElementById("choose-emoji");
-          emoji_container.style.display = "flex";
-          setTimeout(() => {
-            emoji_container.style.opacity = 1;
-          }, 500);
 
-          let emoji = document.querySelectorAll(".li_emoji");
-          console.log(emoji.length);
-          for (var i = 0; i < emoji.length; i++) {
-            emoji[i].addEventListener("click", (event) => {
-              let emojiTarget = event.target;
-              // console.log(xdasd.innerText);
-              let emojiContent = emojiTarget.innerText;
-              firebase.database().ref(pathEmoji).update({
-                icon: emojiContent
-              }).then(function () {
-                setTimeout(() => {
-                  emoji_container.style.opacity = 0;
-                }, 500);
-                emoji_container.style.display = "none";
+        emojiEventListener.addEventListener("click", () => {
+          if (userId === idFromDatabaseswitch) {
 
+            const emoji_container = document.getElementById("choose-emoji");
+            emoji_container.style.display = "flex";
+            setTimeout(() => {
+              emoji_container.style.opacity = 1;
+            }, 500);
+
+            let emoji = document.querySelectorAll(".li_emoji");
+            console.log(emoji.length);
+            for (var i = 0; i < emoji.length; i++) {
+              emoji[i].addEventListener("click", (event) => {
+                let emojiTarget = event.target;
+                // console.log(xdasd.innerText);
+                let emojiContent = emojiTarget.innerText;
+                firebase.database().ref(pathEmoji).update({
+                  icon: emojiContent
+                }).then(function () {
+                  setTimeout(() => {
+                    emoji_container.style.opacity = 0;
+                  }, 500);
+                  emoji_container.style.display = "none";
+
+                })
               })
-            })
-
-          }
-        window.addEventListener("click", function (event) {
-            let isClickInside = emojiEventListener.contains(event.target);
-            if (isClickInside) {
-            
-            } else {
-              emoji_container.style.display = "none";
-              emoji_container.style.opacity = 0;
 
             }
-          })
-        
-     
-        }else{
+            window.addEventListener("click", function (event) {
+              let isClickInside = emojiEventListener.contains(event.target);
+              if (isClickInside) {
 
-        }
-    
+              } else {
+                emoji_container.style.display = "none";
+                emoji_container.style.opacity = 0;
+
+              }
+            })
+          }
         })
-           const editChannelForm = document.getElementById("change-password-show-form");
-           document.getElementById("change-password-buton-id").addEventListener("click", ()=>{
-            editChannelForm.style.display = "flex";
-            setTimeout(() => {
-              editChannelForm.style.opacity = 1;
-            }, 500);
-           })
+        const editChannelForm = document.getElementById("change-password-show-form");
+        document.getElementById("change-password-buton-id").addEventListener("click", () => {
+          editChannelForm.style.display = "flex";
+          setTimeout(() => {
+            buttonShowUserOnChannel.style.display = "none";
+            userOnChannelContainer.style.display = "none";
+            editChannelForm.style.opacity = 1;
+          }, 500);
+        });
+        const buttonCancelEditPassword = document.getElementById("cancel-button-edit-password");
+        buttonCancelEditPassword.addEventListener("click", () => {
+          buttonShowUserOnChannel.style.display = "block";
+          editChannelForm.style.opacity = 0;
+          document.getElementById("old_password_input").value = "";
+          document.getElementById("new_password_input").value = "";
+          document.getElementById("repeat_new_password_input").value = "";
+          infoAboutChangePassword.innerHTML = "";
+          setTimeout(() => {
+            editChannelForm.style.display = "none";
+          }, 500);
+        });
+        const infoAboutChangePassword = document.getElementById("change_password_span");
+        const changePasswordButton = document.getElementById("change-button-edit-password");
+        changePasswordButton.addEventListener("click", () => {
+          let oldPasswordFromDatabase = channelPassword_switch;
+          console.log(oldPasswordFromDatabase);
+          let oldPassword = document.getElementById("old_password_input").value;
+          let newPassword = document.getElementById("new_password_input").value;
+          let repeatNewPassword = document.getElementById("repeat_new_password_input").value;
+          if (newPassword != repeatNewPassword) {
+            infoAboutChangePassword.innerHTML = "The passwords are not the same.";
+          } else if (oldPasswordFromDatabase != oldPassword) {
+            infoAboutChangePassword.innerHTML = "The old password is incorrect.";
+          } else if (newPassword < 1) {
+            infoAboutChangePassword.innerHTML = "Enter the new password."
+          } else if (newPassword === oldPasswordFromDatabase) {
+            infoAboutChangePassword.innerHTML = "The old and new password is the same."
+          } else {
+
+            firebase.database().ref("Channels/" + channeluniqIdSwitch ).update({
+              ChannelPassword: newPassword
+            }).then(() =>{
+              infoAboutChangePassword.innerHTML = "Password has been changed.";
+              setTimeout(() => {
+              editChannelForm.style.display = "none"; 
+              buttonShowUserOnChannel.opacity = 0; 
+              buttonShowUserOnChannel.style.display = "block"; 
+              infoAboutChangePassword.innerHTML = "";
+              document.getElementById("old_password_input").value = "";
+              document.getElementById("new_password_input").value = "";
+              document.getElementById("repeat_new_password_input").value = "";
+              const today = new Date();
+              const time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+              const date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+              firebase.database().ref().child("Channels/" + channeluniqIdSwitch  + '/messages').push({
+                Message: "The administrator changed the password.",
+                user: "botBartek",
+                time: time,
+                date: date
+              });
+              }, 1000);
+            }).catch((error) =>{
+               infoAboutChangePassword.innerHTML = error.code;
+            })
+          }
+        });
 
 
 
         //ukrywanie szefa kanału
         document.getElementById("boss-container").style.display = "none";
-        document.getElementById("change-password-container").style.display = "flex";// 
+        document.getElementById("change-password-container").style.display = "flex"; // 
       } else {
         document.getElementById("edit_button_setting").style.display = "none";
         document.getElementById("change-password-container").style.display = "none";
         document.getElementById("boss-container").style.display = "flex";
-    
 
-   
+
+
       }
       // wyswietlanie zdj kanalu i nazwy 
       document.getElementById("channel_photo").src = passAndUniqId[2];
@@ -481,9 +541,9 @@ firebase.auth().onAuthStateChanged(function (user) {
         document.getElementById("boss-status").innerHTML = userStatus;
       })
       /*  Wyswietlanie uzytkownikow na kanale */
-//console.log("czy to dziala wogole ?");
+      //console.log("czy to dziala wogole ?");
 
-      firebase.database().ref(pathUsers).on("child_added", function(snapshot){
+      firebase.database().ref(pathUsers).on("child_added", function (snapshot) {
         console.log(snapshot.val());
         let userOnChannel = snapshot.child("userId").val();
 
@@ -502,10 +562,10 @@ firebase.auth().onAuthStateChanged(function (user) {
 
 
         if (userArray[3] === userDatabaseId) {
-        //  console.log("i cyk dziala i nie wyswietla")
-  
+          //  console.log("i cyk dziala i nie wyswietla")
+
         } else {
-      // console.log(userImg);
+          // console.log(userImg);
           let createLi = document.createElement("li");
           //createLi.id =userDatabaseId;
           let createImg = document.createElement("img");
@@ -534,28 +594,27 @@ firebase.auth().onAuthStateChanged(function (user) {
           createDivThree.append(createButton);
           createLi.append(createImg, createDiv, createDivThree);
           document.getElementById("ul-listOf-userOnChannel").append(createLi);
-      
+
         }
 
-    })
+      })
     }
 
     // pokazywanie uzytkownikow na kanale 
-    const buttonShowUserOnChannel = document.getElementById("btn-show-user-on-channel");
+
     let switchShowUserOnChannel = 1;
     buttonShowUserOnChannel.addEventListener("click", () => {
-      const userOnChannelContainer = document.getElementById("userOnChannel_container");
-      if(switchShowUserOnChannel === 1){
+      if (switchShowUserOnChannel === 1) {
         userOnChannelContainer.style.display = "block";
         return switchShowUserOnChannel = 2;
-      }else if(switchShowUserOnChannel === 2){
+      } else if (switchShowUserOnChannel === 2) {
         userOnChannelContainer.style.display = "none";
         return switchShowUserOnChannel = 1;
       }
-    
-    
 
-  })
+
+
+    })
 
 
 
@@ -701,14 +760,14 @@ firebase.auth().onAuthStateChanged(function (user) {
         createDivThree.append(createButton);
         createLi.append(createImg, createDiv, createDivThree);
         document.getElementById("usersOnlineId").append(createLi);
-/*
-        const addFriendTarget = document.getElementById(userDatabaseId);
-        addFriendTarget.addEventListener("click", (event) => {
-          let xdd = event.target;
+        /*
+                const addFriendTarget = document.getElementById(userDatabaseId);
+                addFriendTarget.addEventListener("click", (event) => {
+                  let xdd = event.target;
 
-          console.log(xdd)
-        })
-        */
+                  console.log(xdd)
+                })
+                */
       }
       //let clickInSide = document.querySelectorAll(".add_firend_button").contains(event.target);
       //console.log(clickInSide);
@@ -840,7 +899,10 @@ firebase.auth().onAuthStateChanged(function (user) {
       logOutThinks();
       console.log("xd");
       document.getElementById("lel").style.opacity = 0;
-      return pathChannel = "undefined", pathEmoji = "undefined", pathUsers = "undefined", pathNumbersOfPost = "undefined",switchShowUserOnChannel = 1, passAndUniqId = [], chan_icon = [], snapMessages();
+      document.getElementById("change-password-show-form").style.display = "none"; //
+      document.getElementById("change-password-show-form").style.opacity = 0; // tu i wyzej zamyka form do zmiany hasla
+      document.getElementById("btn-show-user-on-channel").style.display = "block"; // po powrocie pokazuje znow przycisk
+      return pathChannel = "undefined", pathEmoji = "undefined", pathUsers = "undefined", pathNumbersOfPost = "undefined", switchShowUserOnChannel = 1, passAndUniqId = [], chan_icon = [], snapMessages();
     })
 
     // nowe
@@ -883,14 +945,16 @@ firebase.auth().onAuthStateChanged(function (user) {
       var messageRef = firebase.database().ref(pathChannel);
       //tu sie troche rozpierdala
       messageRef.on('child_added', function (snapshot) {
+        console.log(snapshot.val());
         let user = snapshot.child("user").val();
-        //console.log(user);
+        console.log(user);
         let message_value = snapshot.child("Message").val();
         let time = snapshot.child("time").val();
         let date = snapshot.child("date").val();
         firebase.database().ref("users/" + user).once("value", function (snapshot) {
           let photo_value = snapshot.child("photoURL").val();
           let nickName_value = snapshot.child("username").val();
+           console.log(snapshot.val())
           return userInfo_NickName = nickName_value, userInfo_photo = photo_value;
         })
         let createLi = document.createElement("li");
@@ -911,6 +975,10 @@ firebase.auth().onAuthStateChanged(function (user) {
         createSpan.append(createB3);
         createImg.src = userInfo_photo;
         createLi.append(createSpan, createDiv, createThirdDiv);
+        if(user=== "botBartek"){
+          createB3.className = "botName";
+          createDivSecont.className = "li_div_message-text botMessage";
+        }
         document.getElementById("list").append(createLi);
         scrollBottomArrow();
         //   console.log(snapshot.val());
