@@ -9,6 +9,7 @@ let register_number = "undefined";
 let photoVal;
 let publicChannelNumber = 1;
 let channelphotoVal = 0;
+let channelPhotoValChange = 0;
 /* sciezka do kanałow--->>> */
 let pathChannel = "undefined";
 let pathUsers = "undefined";
@@ -506,7 +507,57 @@ firebase.auth().onAuthStateChanged(function (user) {
             })
           }
         });
+            // edycja obrazka kanału
+             const imgChannel = document.getElementById("setting-picture"); // obrazek klikalny
+             const buttonChangeImg = document.getElementById("change-picture-edit");
+             const buttonChangeImgCancel = document.getElementById("cancel-picture-edit");
+            // imgChannel.classList.add("edit_imageChannel");
+            imgChannel.addEventListener("click", () =>{
+              if (userId === idFromDatabaseswitch){
+              document.getElementById("edit-container").style.display = "flex";
+              document.getElementById("edit-container").style.opacity = 1;
+              }
+            });
+            buttonChangeImgCancel.addEventListener("click", () =>{
+              document.getElementById("edit-container").style.display = "none";
+              document.getElementById("edit-container").style.opacity = 0;
+            });
+            buttonChangeImg.addEventListener("click", () =>{
+              if (channelPhotoValChange === 1) {
+                let file = document.getElementById("input-change-photo-on-channel").files[0];
+                var reader = new FileReader();
+                reader.onloadend = function (evt) {
+                  var blob = new Blob([evt.target.result], {
+                    type: "image/jpeg"
+                  });
+                  var storageRef = firebase.storage().ref("Channels/" + channeluniqIdSwitch + "/Channel_photo.jpg");
+                  storageRef.put(blob).then(function (snapshot) {
+                    snapshot.ref.getDownloadURL().then(function (url) {
+                      let ur = url;
+                      firebase.database().ref("Channels/" + channeluniqIdSwitch).update({
+                        ChannelPhoto: ur // <- URL from uploaded photo.
+                      }).then(function () {
+                        document.getElementById("error-change-photo-on-channel").innerHTML = "Photo has been changed.";
+                      setTimeout(() => {
+                        document.getElementById("edit-container").style.display = "none";
+                        document.getElementById("edit-container").style.opacity = 0;
 
+                      }, 1000);
+                      }).catch( (err) =>{
+                        document.getElementById("error-change-photo-on-channel").innerHTML = err.code;
+                      })
+                      console.log("update");
+                    });
+                  });
+                }
+                reader.onerror = function (e) {
+                  console.log("Failed file read: " + e.toString());
+                };
+                reader.readAsArrayBuffer(file);
+              }else{
+                document.getElementById("error-change-photo-on-channel").innerHTML = "Choose a photo!";
+              }
+            });
 
 
         //ukrywanie szefa kanału
@@ -1240,5 +1291,26 @@ function channelP() {
     error_message.style.color = "crimson";
     let numb = channelphotoVal = 0;
     return numb;
+  }
+}
+//zmiana zdj na kanale
+function channelPChange() {
+  let channel_photo = document.getElementById("input-change-photo-on-channel").value;
+  let error_message = document.getElementById("error-change-photo-on-channel");
+  let idxDot = channel_photo.lastIndexOf(".") + 1;
+  let extFile = channel_photo.substr(idxDot, channel_photo.length).toLowerCase();
+  if (extFile == "jpg" || extFile == "jpeg" || extFile == "png") {
+    //TO DO
+
+    error_message.innerHTML = "The picture has a good format.";
+    error_message.style.color = "green";
+    let numbChange = channelPhotoValChange = 1;
+    return numbChange;
+  } else {
+
+    error_message.innerHTML = "The picture has a bad format.";
+    error_message.style.color = "crimson";
+    let numbChange = channelPhotoValChange = 0;
+    return numbChange;
   }
 }

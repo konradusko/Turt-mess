@@ -888,7 +888,7 @@ button {
     display: flex;
 }
 
-.stting-main-top .channel-setting-img-container img {
+.stting-main-top .channel-setting-img-container .setting-channel-photo {
     width: 150px;
     height: 150px;
     margin: auto;
@@ -1122,10 +1122,22 @@ button {
 .wrap-buttons-edit-password{
     margin: 0 auto;
 }
-.change-password-name-or-img-in-channel-setting{
 
+/* edit photo*/
+.changePhotoFormTitle{
+    color:white;
+    margin:10px;
 }
-
+.wrap-buttons-edit-picture{
+    margin:10px auto;
+}
+.change-picture-error-span{
+    margin:10px;
+    display:block;
+}
+.color_white{
+    color:white;
+}
 /*edit channel */
 
 

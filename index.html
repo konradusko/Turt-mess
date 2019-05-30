@@ -194,7 +194,7 @@
                                     aria-hidden="true"></i> </button>
                         </div>
                         <div class="channel-setting-img-container">
-                            <img id="setting-picture" src="" alt="channel-photo">
+                            <img id="setting-picture" class="setting-channel-photo" src="" alt="channel-photo">
                         </div>
                         <div class="channel-setting-channel-name">
                             <span><b id="setting-channel-name"></b></span>
@@ -273,8 +273,21 @@
                         </div>
 
 
-                        <div id="edit-container"
-                            class="login-to-channel-form change-password-name-or-img-in-channel-setting">
+                        <div id="edit-container" class="login-to-channel-form change-password-name-or-img-in-channel-setting">
+                            <b class="changePhotoFormTitle">Change photo!</b>
+                            <div class="wrap-input input-file-wrap">
+                                    <label class="label-input color_white">Your Picture</label>
+                                    <input id="input-change-photo-on-channel" class="input input-file color_white" type="file" name="pic" accept=".jpg,.jpeg,.png"
+                                        onchange="channelPChange()">
+                                    <span class="focus-input"></span>
+                         </div>
+                         <span id="error-change-photo-on-channel" class="change-picture-error-span">Photo ma zly format </span>
+                         <div class="wrap-buttons buttons-New_channel wrap-buttons-edit-password wrap-buttons-edit-picture">
+                                <button id="change-picture-edit"
+                                    class="button_Sign-In button-edit-channel_accept"> Change</button>
+                                <button id="cancel-picture-edit"
+                                    class="button_Sign-Up button-edit-channel_cancel"> Cancel </button>
+                            </div>
 
                         </div>
                     </div>
