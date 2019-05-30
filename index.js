@@ -397,9 +397,9 @@ firebase.auth().onAuthStateChanged(function (user) {
         //testy
         console.log(passAndUniqId[4] + "bazadanych");
 
+       let whatWasChangeSwitch;
+       let emojiSwitch;
 
-        console.log("admin królu złoty :) ");
-        document.getElementById("edit_button_setting").style.display = "block";
 
         emojiEventListener.addEventListener("click", () => {
           if (userId === idFromDatabaseswitch) {
@@ -424,7 +424,7 @@ firebase.auth().onAuthStateChanged(function (user) {
                     emoji_container.style.opacity = 0;
                   }, 500);
                   emoji_container.style.display = "none";
-
+                    return whatWasChangeSwitch = 0 , emojiSwitch = emojiContent, bot_BartekGivesInformation();
                 })
               })
 
@@ -492,16 +492,9 @@ firebase.auth().onAuthStateChanged(function (user) {
               document.getElementById("old_password_input").value = "";
               document.getElementById("new_password_input").value = "";
               document.getElementById("repeat_new_password_input").value = "";
-              const today = new Date();
-              const time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-              const date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
-              firebase.database().ref().child("Channels/" + channeluniqIdSwitch  + '/messages').push({
-                Message: "The administrator changed the password.",
-                user: "botBartek",
-                time: time,
-                date: date
-              });
+              
               }, 1000);
+              return whatWasChangeSwitch = 1, bot_BartekGivesInformation();
             }).catch((error) =>{
                infoAboutChangePassword.innerHTML = error.code;
             })
@@ -521,6 +514,8 @@ firebase.auth().onAuthStateChanged(function (user) {
             buttonChangeImgCancel.addEventListener("click", () =>{
               document.getElementById("edit-container").style.display = "none";
               document.getElementById("edit-container").style.opacity = 0;
+              document.getElementById("error-change-photo-on-channel").innerHTML = "";
+              document.getElementById("input-change-photo-on-channel").value = "";
             });
             buttonChangeImg.addEventListener("click", () =>{
               if (channelPhotoValChange === 1) {
@@ -541,8 +536,10 @@ firebase.auth().onAuthStateChanged(function (user) {
                       setTimeout(() => {
                         document.getElementById("edit-container").style.display = "none";
                         document.getElementById("edit-container").style.opacity = 0;
-
+                        document.getElementById("error-change-photo-on-channel").innerHTML = "";
+                        document.getElementById("input-change-photo-on-channel").value = "";
                       }, 1000);
+                      return whatWasChangeSwitch = 2, bot_BartekGivesInformation();
                       }).catch( (err) =>{
                         document.getElementById("error-change-photo-on-channel").innerHTML = err.code;
                       })
@@ -563,6 +560,41 @@ firebase.auth().onAuthStateChanged(function (user) {
         //ukrywanie szefa kanału
         document.getElementById("boss-container").style.display = "none";
         document.getElementById("change-password-container").style.display = "flex"; // 
+        console.log("admin królu złoty :) ");
+        document.getElementById("edit_button_setting").style.display = "block";
+
+        //wysyłanie informacji o zmianie
+        function bot_BartekGivesInformation(){
+          let infoWhatWasChange =whatWasChangeSwitch;
+          let messages = "undefined";
+          // 0emoji, 1password,2picture
+          switch (infoWhatWasChange) {
+            case 0:
+           messages = "The administrator changed the emoji" + "  " + emojiSwitch +".";
+              break;
+            case 1:
+             messages = "The administrator changed the password.";
+              break;
+            case 2:
+            messages = "The administrator changed the channel image.";
+             break;
+            
+          }
+          const today = new Date();
+              const time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+              const date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+              firebase.database().ref().child("Channels/" + channeluniqIdSwitch  + '/messages').push({
+                Message: messages,
+                user: "botBartek",
+                time: time,
+                date: date
+              });
+              
+        };
+
+
+
+
       } else {
         document.getElementById("edit_button_setting").style.display = "none";
         document.getElementById("change-password-container").style.display = "none";
