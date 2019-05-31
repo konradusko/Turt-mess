@@ -609,7 +609,7 @@ firebase.auth().onAuthStateChanged(function (user) {
       document.getElementById("setting-channel-name").innerHTML = passAndUniqId[3];
       document.getElementById("setting-picture").src = passAndUniqId[2];
       document.getElementById("send-icon").innerHTML = chan_icon[0]; // wyswietlanie iconki(domyslnie kciuka)
-
+      document.getElementById("emoji_from_database").innerHTML = chan_icon[0];
 
       //szef kanalu
       const usersRef = firebase.database().ref('users/' + passAndUniqId[4]);
@@ -681,8 +681,20 @@ firebase.auth().onAuthStateChanged(function (user) {
         }
 
       })
-    }
+ //zmiana w czasie rzeczywistym danych  o kanale
+ console.log(channeluniqIdSwitch);
+          firebase.database().ref("Channels/").orderByChild("unique_id").equalTo(channeluniqIdSwitch).on("child_changed", function(snapshot){
 
+           console.log(snapshot.val());
+           let emojiChange = snapshot.child("icon").val();
+           
+           console.log(emojiChange);
+           document.getElementById("send-icon").innerHTML = emojiChange; // wyswietlanie iconki(domyslnie kciuka)
+           document.getElementById("emoji_from_database").innerHTML =emojiChange;
+          });
+
+    }
+   
     // pokazywanie uzytkownikow na kanale 
 
     let switchShowUserOnChannel = 1;
@@ -1028,16 +1040,16 @@ firebase.auth().onAuthStateChanged(function (user) {
       var messageRef = firebase.database().ref(pathChannel);
       //tu sie troche rozpierdala
       messageRef.on('child_added', function (snapshot) {
-        console.log(snapshot.val());
+    //    console.log(snapshot.val());
         let user = snapshot.child("user").val();
-        console.log(user);
+       // console.log(user);
         let message_value = snapshot.child("Message").val();
         let time = snapshot.child("time").val();
         let date = snapshot.child("date").val();
         firebase.database().ref("users/" + user).once("value", function (snapshot) {
           let photo_value = snapshot.child("photoURL").val();
           let nickName_value = snapshot.child("username").val();
-           console.log(snapshot.val())
+       //    console.log(snapshot.val())
           return userInfo_NickName = nickName_value, userInfo_photo = photo_value;
         })
         let createLi = document.createElement("li");
@@ -1335,7 +1347,7 @@ function channelPChange() {
     //TO DO
 
     error_message.innerHTML = "The picture has a good format.";
-    error_message.style.color = "green";
+    error_message.style.color = "white";
     let numbChange = channelPhotoValChange = 1;
     return numbChange;
   } else {
