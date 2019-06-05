@@ -17,7 +17,6 @@ let pathNumbersOfPost = "undefined";
 let pathEmoji = "undefined";
 
 
-
 //testy
 
 // logowanie
@@ -149,17 +148,9 @@ firebase.auth().onAuthStateChanged(function (user) {
 
           };
           reader.readAsArrayBuffer(file);
-
-
-        } else {
-
         }
-
-
         error_message.style.color = "green";
         error_message.innerHTML = "The channel was created."
-
-
         setTimeout(() => {
         createForm.style.opacity = 0;
           createForm.style.display = "none";
@@ -250,8 +241,9 @@ firebase.auth().onAuthStateChanged(function (user) {
           let rtnIndOne = indexOne = 0;
           let rtnIndTwo = indexTwo = 1;
           clickEvent();
+          
           // nr0 haslo, nr 1 unikalne id, nr 2 obrazek, nr 3 nazwa kanalu 4 channel boss 
-          return passAndUniqId.push(password_datbase, uniquieID, channels_img, channelsname, channel_boss), rtnIndOne, rtnIndTwo, chan_icon.push(channel_icon);
+          return  passAndUniqId.push(password_datbase, uniquieID, channels_img, channelsname, channel_boss), rtnIndOne, rtnIndTwo, chan_icon.push(channel_icon);
         }
          
 
@@ -265,12 +257,12 @@ firebase.auth().onAuthStateChanged(function (user) {
       let channel_img = snapshot.child("ChannelPhoto").val();
       let channels_id = snapshot.child("Channel_Id").val();
       let img_container = document.getElementById(channels_id).firstElementChild;
-      console.log(img_container);
-      console.log(channels_id);
-      console.log(channel_img);
+     // console.log(img_container);
+    //  console.log(channels_id);
+      //console.log(channel_img);
       let img_container2 = img_container.firstElementChild;
       img_container2.src = channel_img;
-     console.log(snapshot.val());
+     //console.log(snapshot.val());
 
 
 
@@ -310,7 +302,9 @@ firebase.auth().onAuthStateChanged(function (user) {
         setTimeout(() => {
           document.getElementById("lel").style.opacity = 1;
         }, 500);
-        return pathChannel = xd, pathUsers = channel_online_users, pathEmoji = channel_emoji, pathNumbersOfPost = channel_Number_Of_Post, innerChannelSetting(), snapMessages(), joinPrivateAndPubChan(), cancelForm();
+
+      
+        return  pathChannel = xd, pathUsers = channel_online_users, pathEmoji = channel_emoji, pathNumbersOfPost = channel_Number_Of_Post, innerChannelSetting(), snapMessages(), joinPrivateAndPubChan(), cancelForm();
       } else {
         joinError.innerHTML = "The password provided is wrong."
         joinError.style.color = "red";
@@ -356,6 +350,16 @@ firebase.auth().onAuthStateChanged(function (user) {
       }, 1000)
     })
 
+//wysiwetlanie emotek
+firebase.database().ref('Emoji/').on("child_added", function (snapshot) {
+  //  console.log(snapshot.val());
+  let create_li = document.createElement("li");
+  create_li.className = "li_emoji";
+  create_li.append(snapshot.val());
+  document.getElementById("emoji_list").append(create_li);
+})
+
+
     // channel setting
     // otwieranie ustawien kanalu
     const channelSetting = document.getElementById("channel-setting-join");
@@ -382,6 +386,7 @@ firebase.auth().onAuthStateChanged(function (user) {
       console.log('xd');
       const emojiEventListener = document.getElementById("change-emoji");
       if (userId === passAndUniqId[4]) {
+      /*
         //testy wyswietlanie emotek
         firebase.database().ref('Emoji/').on("child_added", function (snapshot) {
           //  console.log(snapshot.val());
@@ -390,6 +395,7 @@ firebase.auth().onAuthStateChanged(function (user) {
           create_li.append(snapshot.val());
           document.getElementById("emoji_list").append(create_li);
         })
+        */
         //testy
         console.log(passAndUniqId[4] + "bazadanych");
 
@@ -684,34 +690,14 @@ firebase.auth().onAuthStateChanged(function (user) {
 
        let emojiChange = snapshot.child("icon").val();
        let imgChange = snapshot.child("ChannelPhoto").val();
-       console.log(emojiChange);
+     //  console.log(emojiChange);
 document.getElementById("channel_photo").src = imgChange;
   document.getElementById("setting-picture").src = imgChange;
        document.getElementById("send-icon").innerHTML = emojiChange;      
        document.getElementById("emoji_from_database").innerHTML = emojiChange;
       });
-   
-      // return  channeluniqIdSwitch = passAndUniqId[1];
     }
-    //console.log(channeluniqIdSwitch);
-/*
-    firebase.database().ref("Channels/").on("child_changed", function (snapshot) {
-          let test = snapshot.val();
 
-
-console.log(test.icon);
-console.log(snapshot.key);
-
-
-      let emojiChange = snapshot.child("icon").val();
-      let imgChange = snapshot.child("ChannelPhoto").val();
-      //console.log(emojiChange);
-     // document.getElementById("channel_photo").src = imgChange;
-     // document.getElementById("setting-picture").src = imgChange;
-      //document.getElementById("send-icon").innerHTML = emojiChange; // wyswietlanie iconki(domyslnie kciuka)
-     // document.getElementById("emoji_from_database").innerHTML = emojiChange;
-    });
- */
     // pokazywanie uzytkownikow na kanale 
 
     let switchShowUserOnChannel = 1;
@@ -872,81 +858,12 @@ console.log(snapshot.key);
         createDivThree.append(createButton);
         createLi.append(createImg, createDiv, createDivThree);
         document.getElementById("usersOnlineId").append(createLi);
-        /*
-                const addFriendTarget = document.getElementById(userDatabaseId);
-                addFriendTarget.addEventListener("click", (event) => {
-                  let xdd = event.target;
-
-                  console.log(xdd)
-                })
-                */
+   
       }
-      //let clickInSide = document.querySelectorAll(".add_firend_button").contains(event.target);
-      //console.log(clickInSide);
-      //let referencjaDoEventTarget =  event.target.classList.contains("add_firend_button");
-
-
-      // console.log(xd);
+   
 
     })
-    // do poprawy
-    /*
-    usersRef.on("child_changed", function (snapshot) {
-      let userStatus = snapshot.child("status").val();
-      let userDatabaseId = snapshot.child("id").val();
-      console.log(userDatabaseId + userStatus);
-      let test = document.getElementById(userDatabaseId);
-      console.log(userDatabaseId)
-    })
-    // dodawanie do znajomych
-    addFriend()
-    function addFriend(){
-      console.log("dzieje sie to ?")
-    let testbutton = document.querySelectorAll(".add_firend_button");
-    for (i = 0; i < testbutton.length; i++) {
-      console.log("a to sie dzieje ?")
-      testbutton[i].addEventListener("click", function() {
-      alert("you clicked"); });
-    }
-    }    
-    let testbutton = document.querySelectorAll(".add_firend_button");
-    function testxd(){
-    console.log("we dzialaj")
-    for (i = 0; i < testbutton.length; i++) {
-      console.log("a to sie dzieje ?")
-      testbutton[i].addEventListener("click", function() {
-      alert("you clicked"); });
-    }
-    }
-    /////
-    for(var i = 0; i < testbutton.length; i++) {
-      console.log("xxxxxx")
-      testbutton[i].addEventListener("click", bindClick(i));
-    }
-    function bindClick(i) {
-    return function() {
-       console.log("you clicked region number " + i);
-    };
-    }
-    /*
-    window.addEventListener("click", function(event){
-      let referencjaDoEventTarget =  event.target.classList.contains("add_firend_button");
-      let xdd = event.target;
-     
-      if(referencjaDoEventTarget === true){
-        console.log( xdd)
-       // console.log(xd);
-      }else{
-        console.log("to chyba nie jest button add heheheheh")
-      }
-       
-      })
-      */
-    //test
-
-
-    // wysylanie public na wysylanie wiadomosci
-
+   
 
 
     //mechanika
@@ -1014,7 +931,7 @@ console.log(snapshot.key);
       document.getElementById("change-password-show-form").style.display = "none"; //
       document.getElementById("change-password-show-form").style.opacity = 0; // tu i wyzej zamyka form do zmiany hasla
       document.getElementById("btn-show-user-on-channel").style.display = "block"; // po powrocie pokazuje znow przycisk
-      return  pathChannel = "undefined", pathEmoji = "undefined", pathUsers = "undefined", pathNumbersOfPost = "undefined", switchShowUserOnChannel = 1, passAndUniqId = [], chan_icon = [], snapMessages();
+      return firebase.database().ref(pathChannel).off("child_added"),   pathChannel = "undefined", pathEmoji = "undefined", pathUsers = "undefined", pathNumbersOfPost = "undefined", switchShowUserOnChannel = 1, passAndUniqId = [], chan_icon = [];
     })
 
     // nowe
@@ -1050,125 +967,76 @@ console.log(snapshot.key);
     })
     // wyswietlanie wiadomosci kanalu
 
-  /*
-    var snapMessages = (function() {
-    console.log(executed);
-        return  function() {
-          if (!executed) {
-          
-             console.log(executed);
-                // do something
-                let messageRef = firebase.database().ref(pathChannel);
-         messageRef.on('child_added', function (snapshot) {
-          //    console.log(snapshot.val());
-          let userInfo_photo = "undefined";
-          let userInfo_NickName = "undefined";
-          let user = snapshot.child("user").val();
-          // console.log(user);
-          let message_value = snapshot.child("Message").val();
-          let time = snapshot.child("time").val();
-          let date = snapshot.child("date").val();
-          firebase.database().ref("users/" + user).once("value", function (snapshot) {
-            let photo_value = snapshot.child("photoURL").val();
-            let nickName_value = snapshot.child("username").val();
-            //    console.log(snapshot.val())
-            return userInfo_NickName = nickName_value, userInfo_photo = photo_value;
-          })
-          let createLi = document.createElement("li");
-          createLi.className = "Message-list";
-          let createSpan = document.createElement("span");
-          let createDiv = document.createElement("div");
-          let createImg = document.createElement("img");
-          let createThirdDiv = document.createElement("div");
-          let createB3 = document.createElement("b");
-          createThirdDiv.className = "date_hours"
-          createThirdDiv.append("Date: " + date + " " + "Time: " + time);
-          let createDivSecont = document.createElement("div");
-          createDivSecont.className = "li_div_message-text"
-          createDivSecont.innerHTML = message_value;
-          createDiv.className = "li_div";
-          createDiv.append(createImg, createDivSecont);
-          createB3.append(userInfo_NickName);
-          createSpan.append(createB3);
-          createImg.src = userInfo_photo;
-          createLi.append(createSpan, createDiv, createThirdDiv);
-          if (user === "botBartek") {
-            createB3.className = "botName";
-            createDivSecont.className = "li_div_message-text botMessage";
-          }
-          document.getElementById("list").append(createLi);
-          scrollBottomArrow();
-          //   console.log(snapshot.val());
-  
-          // let nickName_value = snapshot.child("Nickname").val();
-          //  let photo_value = snapshot.child("Photo").val();
-  
-          // console.log(photo_value);
-  
-  
-        });
-    console.log("xd")
- 
-            }
-            
-        };
-      
-    })();
-*/
-    function snapMessages() {
-      
-      let messageRef = firebase.database().ref(pathChannel);
-      //tu sie troche rozpierdala
-  
 
-        messageRef.on('child_added', function (snapshot) {
-          //    console.log(snapshot.val());
-          let userInfo_photo = "undefined";
-          let userInfo_NickName = "undefined";
-          let user = snapshot.child("user").val();
-          // console.log(user);
-          let message_value = snapshot.child("Message").val();
-          let time = snapshot.child("time").val();
-          let date = snapshot.child("date").val();
-          firebase.database().ref("users/" + user).once("value", function (snapshot) {
-            let photo_value = snapshot.child("photoURL").val();
-            let nickName_value = snapshot.child("username").val();
-            //    console.log(snapshot.val())
-            return userInfo_NickName = nickName_value, userInfo_photo = photo_value;
-          })
-          let createLi = document.createElement("li");
-          createLi.className = "Message-list";
-          let createSpan = document.createElement("span");
-          let createDiv = document.createElement("div");
-          let createImg = document.createElement("img");
-          let createThirdDiv = document.createElement("div");
-          let createB3 = document.createElement("b");
-          createThirdDiv.className = "date_hours"
-          createThirdDiv.append("Date: " + date + " " + "Time: " + time);
-          let createDivSecont = document.createElement("div");
-          createDivSecont.className = "li_div_message-text"
-          createDivSecont.innerHTML = message_value;
-          createDiv.className = "li_div";
-          createDiv.append(createImg, createDivSecont);
-          createB3.append(userInfo_NickName);
-          createSpan.append(createB3);
-          createImg.src = userInfo_photo;
-          createLi.append(createSpan, createDiv, createThirdDiv);
-          if (user === "botBartek") {
-            createB3.className = "botName";
-            createDivSecont.className = "li_div_message-text botMessage";
-          }
-          document.getElementById("list").append(createLi);
-          scrollBottomArrow();
-          //   console.log(snapshot.val());
-  
-          // let nickName_value = snapshot.child("Nickname").val();
-          //  let photo_value = snapshot.child("Photo").val();
-  
-          // console.log(photo_value);
-  
-  
-        });
+    function snapMessages() {
+      let messageRef = firebase.database().ref(pathChannel);
+    
+    
+      messageRef.on('child_added', function (snapshot) {
+        //    console.log(snapshot.val());
+        let userInfo_photo = "undefined";
+        let userInfo_NickName = "undefined";
+        let user = snapshot.child("user").val();
+        // console.log(user);
+        let message_value = snapshot.child("Message").val();
+        let time = snapshot.child("time").val();
+        let date = snapshot.child("date").val();
+        firebase.database().ref("users/" + user).once("value", function (snapshot) {
+          let photo_value = snapshot.child("photoURL").val();
+          let nickName_value = snapshot.child("username").val();
+          //    console.log(snapshot.val())
+          return userInfo_NickName = nickName_value, userInfo_photo = photo_value;
+        })
+        let createLi = document.createElement("li");
+        createLi.className = "Message-list";
+        let createSpan = document.createElement("span");
+        let createDiv = document.createElement("div");
+        let createImg = document.createElement("img");
+        let createThirdDiv = document.createElement("div");
+        let createB3 = document.createElement("b");
+        createThirdDiv.className = "date_hours"
+        createThirdDiv.append("Date: " + date + " " + "Time: " + time);
+        let createDivSecont = document.createElement("div");
+        createDivSecont.className = "li_div_message-text"
+        createDivSecont.innerHTML = message_value;
+        createDiv.className = "li_div";
+        createDiv.append(createImg, createDivSecont);
+        createB3.append(userInfo_NickName);
+        createSpan.append(createB3);
+        createImg.src = userInfo_photo;
+        createLi.append(createSpan, createDiv, createThirdDiv);
+        if (user === "botBartek") {
+          createB3.className = "botName";
+          createDivSecont.className = "li_div_message-text botMessage";
+        }
+        document.getElementById("list").append(createLi);
+        scrollBottomArrow();
+        //   console.log(snapshot.val());
+
+        // let nickName_value = snapshot.child("Nickname").val();
+        //  let photo_value = snapshot.child("Photo").val();
+
+        // console.log(photo_value);
+
+
+      });
+
+      
+    
+      //  let user = snapshot.child("user").val();
+       // console.log(user);
+     //   let message_value = snapshot.child("Message").val();
+      //  let time = snapshot.child("time").val();
+      //  let date = snapshot.child("date").val();
+       // firebase.database().ref("users/" + user).once("value", function (snapshot) {
+         // let photo_value = snapshot.child("photoURL").val();
+         // let nickName_value = snapshot.child("username").val();
+          //    console.log(snapshot.val())
+         // return userInfo_NickName = nickName_value, userInfo_photo = photo_value;
+       // })
+        
+    //  messageRefa.off("value");
+     
 
         
       
@@ -1265,7 +1133,6 @@ console.log(snapshot.key);
       let containerOfListUlHeight = containerUlList.offsetHeight; // wysokosc jednego okna
       if (listUlWithAllMessagesHeight - containerOfListUlHeight > scroll + containerOfListUlHeight) {
         arrScroll.style.display = "flex";
-        console.log("co tuu sie dziejejejej")
       } else if (listUlWithAllMessagesHeight === scroll + containerOfListUlHeight) {
         document.getElementById("newMessagesAlertId").style.display = "none";
       } else {
