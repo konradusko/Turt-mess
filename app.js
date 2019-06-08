@@ -1,28 +1,44 @@
 let register_form = document.getElementById("register_form");
 let login_form = document.getElementById("login_form");
-register_form.addEventListener("click", () =>{
-  document.getElementById("register_form_id").style.transform = ("translate", "translate3d(-" + 100 + "%,0,0)");
-  document.getElementById("login_form_id").style.transform = ("translate", "translate3d(-" + 100 + "%,0,0)");
-  document.getElementById("header").classList.add("header-register");
-  document.getElementById("header").classList.remove("header-login");
+let register_container = document.getElementById("register_form_id");
+let login_container = document.getElementById("login_form_id");
+let number_of_container;
+register_form.addEventListener("click", () => {
+
+  register_container.style.transform = ("translate", "translate3d(-" + 100 + "%,0,0)");
+  login_container.style.transform = ("translate", "translate3d(-" + 100 + "%,0,0)");
+  document.getElementById("login-container").style.width = 200 + "%";
+  register_container.style.display = "block";
+  document.getElementById("login_background").classList.add("login-background-register");
+  login_container.style.opacity = 0;
+  number_of_container = 1;
+  headerTime()
 });
-login_form.addEventListener("click", () =>{
-  document.getElementById("register_form_id").style.transform = ("translate", "translate3d(+" + 0 + "%,0,0)");
-  document.getElementById("login_form_id").style.transform = ("translate", "translate3d(+" + 0 + "%,0,0)");
-  document.getElementById("header").classList.remove("header-register");
-  document.getElementById("header").classList.add("header-login");
+login_form.addEventListener("click", () => {
+  register_container.style.transform = ("translate", "translate3d(+" + 0 + "%,0,0)");
+  login_container.style.transform = ("translate", "translate3d(+" + 0 + "%,0,0)");
+  register_container.style.opacity = 0;
+  number_of_container = 0;
+  headerTime();
+
 });
-// valid image
-function validateFileType(){
-  var fileName = document.getElementById("input-file").value;
-  var idxDot = fileName.lastIndexOf(".") + 1;
-  var extFile = fileName.substr(idxDot, fileName.length).toLowerCase();
-  if (extFile=="jpg" || extFile=="jpeg" || extFile=="png"){
-      //TO DO
-  }else{
-      document.getElementById("error-file").innerHTML = "The picture has a bad format."
-  }   
+
+function headerTime() {
+  if (number_of_container === 1) {
+    setTimeout(() => {
+      register_container.style.opacity = 1;
+    }, 1000);
+  } else if (number_of_container === 0) {
+    setTimeout(() => {
+      login_container.style.opacity = 1;
+      document.getElementById("login-container").style.width = 100 + "%";
+      register_container.style.display = "none";
+      document.getElementById("login_background").classList.remove("login-background-register");
+    }, 1000);
+  }
+
 }
+
 
 
 
@@ -38,14 +54,7 @@ test2Button.addEventListener("click", () =>{
 
  let messText = test1.value;
 
-  var database = firebase.database().ref().child("Messenger").push();
-  database.child("Messenger").set(messText);
-  database.on('child_added', snap =>{
-    
-  
-  let name = snap.child("Messenger").val();
-  document.getElementById("list").append(name + " " +"<br>");
-  });
+ 
 
   
   
