@@ -15,8 +15,11 @@ let pathChannel = "undefined";
 let pathUsers = "undefined";
 let pathNumbersOfPost = "undefined";
 let pathEmoji = "undefined";
-
-
+//media
+const mq = window.matchMedia("(min-width:800px)");
+if(mq){
+  console.log("xdddddddddd");
+}
 //testy
 
 // logowanie
@@ -912,10 +915,27 @@ firebase.auth().onAuthStateChanged(function (user) {
       return publicChannelNumber;
     }
 
+    //media
+    /*
+    window.addEventListener("resize", () =>{
+      if(mq){
+        document.getElementById("channel_id").style.display = "none";
+      }else{
+        document.getElementById("channel_id").style.display = "block";
+      }
+    })
+*/
     function joinPrivateAndPubChan() {
-      containerMessPage.style.width = 300 + "%";
-      channel_container.style.transform = ("translate", "translate3d(-" + 100 + "%,0,0)");
-      messenger.style.transform = ("translate", "translate3d(-" + 100 + "%,0,0)");
+      if(mq){
+      //  messenger.style.transform = ("translate", "translate3d(-" + 100 + "%,0,0)");
+        containerMessPage.style.width = 100 + "%";
+        user_profile_container.style.display = "none";
+      }else{
+        containerMessPage.style.width = 300 + "%";
+        channel_container.style.transform = ("translate", "translate3d(-" + 100 + "%,0,0)");
+        messenger.style.transform = ("translate", "translate3d(-" + 100 + "%,0,0)");
+ 
+      }
       user_profile_container.style.transform = ("translate", "translate3d(+" + 100 + "%,0,0)");
       messenger.style.width = 100 + "%";
       messenger.style.display = "flex";

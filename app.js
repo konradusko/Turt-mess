@@ -37,28 +37,4 @@ function headerTime() {
     }, 1000);
   }
 
-}
-
-
-
-
-/*
-// TEST
-let test1 = document.getElementById("teest");
-// to wyzej to tekst
-let test2Button = document.getElementById("but");
-
-
-
-test2Button.addEventListener("click", () =>{
-
- let messText = test1.value;
-
- 
-
-  
-  
-
-  window.alert("working");
-})
-*/
+};
