@@ -390,7 +390,7 @@ firebase.auth().onAuthStateChanged(function (user) {
     })
         //testy
         console.log(passAndUniqId[4] + "bazadanych");
-//ee
+
     
         let executed = false;
         const emoji_container = document.getElementById("choose-emoji");
@@ -570,7 +570,7 @@ firebase.auth().onAuthStateChanged(function (user) {
             document.getElementById("error-change-photo-on-channel").innerHTML = "Choose a photo!";
           }
         });
-///eee
+
 
         //ukrywanie szefa kanału
         document.getElementById("boss-container").style.display = "none";

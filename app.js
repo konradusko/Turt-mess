@@ -1,9 +1,9 @@
 let register_form = document.getElementById("register_form");
 let login_form = document.getElementById("login_form");
-let register_container =  document.getElementById("register_form_id");
+let register_container = document.getElementById("register_form_id");
 let login_container = document.getElementById("login_form_id");
 let number_of_container;
-register_form.addEventListener("click", () =>{
+register_form.addEventListener("click", () => {
 
   register_container.style.transform = ("translate", "translate3d(-" + 100 + "%,0,0)");
   login_container.style.transform = ("translate", "translate3d(-" + 100 + "%,0,0)");
@@ -11,10 +11,10 @@ register_form.addEventListener("click", () =>{
   register_container.style.display = "block";
   document.getElementById("login_background").classList.add("login-background-register");
   login_container.style.opacity = 0;
-  number_of_container=1;
+  number_of_container = 1;
   headerTime()
 });
-login_form.addEventListener("click", () =>{
+login_form.addEventListener("click", () => {
   register_container.style.transform = ("translate", "translate3d(+" + 0 + "%,0,0)");
   login_container.style.transform = ("translate", "translate3d(+" + 0 + "%,0,0)");
   register_container.style.opacity = 0;
@@ -22,12 +22,13 @@ login_form.addEventListener("click", () =>{
   headerTime();
 
 });
-function headerTime(){
-  if(number_of_container === 1){
+
+function headerTime() {
+  if (number_of_container === 1) {
     setTimeout(() => {
       register_container.style.opacity = 1;
     }, 1000);
-  }else if (number_of_container === 0){
+  } else if (number_of_container === 0) {
     setTimeout(() => {
       login_container.style.opacity = 1;
       document.getElementById("login-container").style.width = 100 + "%";
