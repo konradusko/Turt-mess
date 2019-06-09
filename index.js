@@ -723,6 +723,11 @@ firebase.auth().onAuthStateChanged(function (user) {
 
 
 
+ 
+
+
+
+
     // pokazywanie uzytkownikow na kanale 
 
     let switchShowUserOnChannel = 1;
@@ -842,18 +847,17 @@ firebase.auth().onAuthStateChanged(function (user) {
       });
     })
 
-
+    
     // wyswietlanie uzytkownikow na na glownej
     const usersRef = firebase.database().ref('users');
-    usersRef.on('child_added', function (snapshot) {
+  usersRef.on('child_added', function (snapshot) {
       let userImg = snapshot.child("photoURL").val();
       let userNickName = snapshot.child("username").val();
       let userStatus = snapshot.child("status").val();
       let userDatabaseId = snapshot.child("id").val();
       if (userArray[3] === userDatabaseId) {
-        console.log("i cyk dziala i nie wyswietla")
-
-      } else {
+      } else if(userDatabaseId === "bot") {
+      }else{
 
         let createLi = document.createElement("li");
         //createLi.id =userDatabaseId;
@@ -879,16 +883,90 @@ firebase.auth().onAuthStateChanged(function (user) {
         let createButton = document.createElement("button");
         createButton.id = userDatabaseId;
         createButton.className = "add_firend_button";
-        createButton.innerHTML = '<i class="fa fa-plus"></i>' + "Add friend";
+        createButton.innerHTML = '<i class="fa fa-commenting-o" aria-hidden="true"></i>' + "Priv";
         createDivThree.append(createButton);
         createLi.append(createImg, createDiv, createDivThree);
-        document.getElementById("usersOnlineId").append(createLi);
+        document.getElementById("usersOnlineId").append(createLi)
 
       }
 
 
     })
 
+
+
+ //wysylanie prywatnych wiadomosci
+ /*
+ function privateMessages(){
+   
+  let button_Priv = document.querySelectorAll(".button-container");
+  console.log(button_Priv.length);
+  for(let i = 0; i < button_Priv.length; i++){
+    button_Priv[i].addEventListener("click", () =>{
+console.log("działa");
+    })
+  }
+ }
+ */
+let arrayPrivateMessage = new Array;
+window.addEventListener("click", (e) =>{
+  arrayPrivateMessage = [];
+  let isClickInside = event.target.classList.contains("add_firend_button");
+  if(isClickInside){
+    let idUser = e.target.id;
+    console.log(idUser);
+  
+// dodawanie nowego
+
+    firebase.database().ref("users/").orderByChild("id").equalTo(idUser).once('value', function (snapshot) {
+       console.log(snapshot.val());
+       let key = Object.keys(snapshot.val())[0];
+       console.log(key);
+       let users = userId+key;
+
+       firebase.database().ref("usersPrivateMessages/"+ key + userId).once("value", function(snapshot){
+     //   console.log(snapshot.val())
+        if(snapshot.val() === null){
+          console.log("zero");
+          const notfound = false;
+          return arrayPrivateMessage.push(notfound), test();
+        }else if(snapshot.val() != null){
+          console.log("coś jest");
+         const userKey = key + userId;
+          return arrayPrivateMessage.push(userKey), test();
+        }
+  
+      })
+      firebase.database().ref("usersPrivateMessages/"+ userId + key).once("value", function(snapshot){
+       // console.log(snapshot.val());
+        if(snapshot.val() === null){
+          console.log("zero2");
+          const notfound = false;
+          return arrayPrivateMessage.push(notfound),  test();
+        }else if(snapshot.val() != null){
+          console.log("coś jest2");
+          const userKey = userId + key;
+          return arrayPrivateMessage.push(userKey), test();
+        }
+       
+      })
+
+       /*
+       firebase.database().ref('usersPrivateMessages/'+users ).set({
+       userOne: key,
+       userTwo: userId
+      })
+      */
+
+  }) 
+
+  }
+  console.log(isClickInside);
+})
+function test(){
+  console.log("zagdzniedzdasa1?");
+  console.log(arrayPrivateMessage);
+}
 
 
     //mechanika

@@ -404,7 +404,7 @@ button {
 .users-online {
     width: 90%;
     margin: 0 auto;
-    height: calc(100vh - 350px);
+    height: calc(100% - 350px);
     overflow: auto;
 }
 
@@ -513,12 +513,7 @@ button {
     margin: 0 auto;
 }
 
-.items-footer-container {
-    width: 90%;
-    background-color: red;
-    height: 100px;
-    margin: 0 auto;
-}
+
 
 /* create a new channel */
 .create-channel {
@@ -627,7 +622,11 @@ button {
     font-size: 15px;
     margin: 5px auto;
 }
-
+.new_channel{
+    width:70px;
+    height:40px;
+    margin-right:initial;
+}
 /* messenger */
 
 .messenger {
