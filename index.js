@@ -927,35 +927,34 @@ window.addEventListener("click", (e) =>{
        firebase.database().ref("usersPrivateMessages/"+ key + userId).once("value", function(snapshot){
      //   console.log(snapshot.val())
         if(snapshot.val() === null){
-          console.log("zero");
-          const notfound = false;
-          return arrayPrivateMessage.push(notfound), test();
+          //zero nie ma czegos takiego
+          firebase.database().ref("usersPrivateMessages/"+ userId + key).once("value", function(snapshot){
+            // console.log(snapshot.val());
+             if(snapshot.val() === null){
+               //znow nie ma, tym razem informuje nas o tym
+               console.log("zero2");
+               const notfound = false;
+               return arrayPrivateMessage.push(notfound, key),  test();
+             }else if(snapshot.val() != null){
+               // no i jest 
+               console.log("coś jest2");
+               const userKey = userId + key;
+               return arrayPrivateMessage.push(userKey), test();
+             }
+            
+           })
         }else if(snapshot.val() != null){
+          //jest elegancko podaje 
           console.log("coś jest");
          const userKey = key + userId;
           return arrayPrivateMessage.push(userKey), test();
         }
   
       })
-      firebase.database().ref("usersPrivateMessages/"+ userId + key).once("value", function(snapshot){
-       // console.log(snapshot.val());
-        if(snapshot.val() === null){
-          console.log("zero2");
-          const notfound = false;
-          return arrayPrivateMessage.push(notfound),  test();
-        }else if(snapshot.val() != null){
-          console.log("coś jest2");
-          const userKey = userId + key;
-          return arrayPrivateMessage.push(userKey), test();
-        }
-       
-      })
+     
 
        /*
-       firebase.database().ref('usersPrivateMessages/'+users ).set({
-       userOne: key,
-       userTwo: userId
-      })
+    
       */
 
   }) 
@@ -964,8 +963,19 @@ window.addEventListener("click", (e) =>{
   console.log(isClickInside);
 })
 function test(){
-  console.log("zagdzniedzdasa1?");
+  //false dodaje do bazy danych
+  // w przeciwnym razie pobiera wiadomosci z juz istniejacej
+  if(arrayPrivateMessage[0] === false){
   console.log(arrayPrivateMessage);
+  let users = userId + arrayPrivateMessage[1]
+  firebase.database().ref('usersPrivateMessages/'+ users  ).set({
+    userOne: arrayPrivateMessage[1],
+    userTwo: userId
+   })
+
+  }else if(arrayPrivateMessage[0] != false){
+    console.log(arrayPrivateMessage);
+  }
 }
 
 
