@@ -922,8 +922,6 @@ window.addEventListener("click", (e) =>{
        console.log(snapshot.val());
        let key = Object.keys(snapshot.val())[0];
        console.log(key);
-       let users = userId+key;
-
        firebase.database().ref("usersPrivateMessages/"+ key + userId).once("value", function(snapshot){
      //   console.log(snapshot.val())
         if(snapshot.val() === null){
@@ -934,12 +932,12 @@ window.addEventListener("click", (e) =>{
                //znow nie ma, tym razem informuje nas o tym
                console.log("zero2");
                const notfound = false;
-               return arrayPrivateMessage.push(notfound, key),  test();
+               return arrayPrivateMessage.push(notfound, key),  addingUsersPrivate();
              }else if(snapshot.val() != null){
                // no i jest 
                console.log("coś jest2");
                const userKey = userId + key;
-               return arrayPrivateMessage.push(userKey), test();
+               return arrayPrivateMessage.push(userKey),  joinPrivateAndPubChan(),snapPrivateMessages();
              }
             
            })
@@ -947,22 +945,16 @@ window.addEventListener("click", (e) =>{
           //jest elegancko podaje 
           console.log("coś jest");
          const userKey = key + userId;
-          return arrayPrivateMessage.push(userKey), test();
+          return arrayPrivateMessage.push(userKey),  joinPrivateAndPubChan(),snapPrivateMessages();
         }
   
       })
-     
-
-       /*
-    
-      */
-
   }) 
 
   }
   console.log(isClickInside);
 })
-function test(){
+function addingUsersPrivate(){
   //false dodaje do bazy danych
   // w przeciwnym razie pobiera wiadomosci z juz istniejacej
   if(arrayPrivateMessage[0] === false){
@@ -970,12 +962,48 @@ function test(){
   let users = userId + arrayPrivateMessage[1]
   firebase.database().ref('usersPrivateMessages/'+ users  ).set({
     userOne: arrayPrivateMessage[1],
-    userTwo: userId
+    userTwo: userId,
+    icon: "👍"
+   }).then( () =>{
+     console.log("added");
+     arrayPrivateMessage = [];
+   return arrayPrivateMessage.push(users),  joinPrivateAndPubChan(), snapPrivateMessages();
+   }).catch( (err) =>{
+     console.log(err);
    })
 
-  }else if(arrayPrivateMessage[0] != false){
-    console.log(arrayPrivateMessage);
   }
+}
+// prywatne wiadomosci 
+function snapPrivateMessages(){
+  chan_icon = [];
+  firebase.database().ref("usersPrivateMessages/" + arrayPrivateMessage[0]).once("value", function(snapshot){
+    console.log(snapshot.val());
+    let userOne = snapshot.child("userOne").val();
+    let userTwo = snapshot.child("userTwo").val();
+    let usersIcon = snapshot.child("icon").val();
+    document.getElementById("send-icon").innerHTML = usersIcon;
+    let whichUser;
+    if(userOne != userId){
+      whichUser = userOne;
+    }else if(userTwo != userId){
+        whichUser = userTwo;
+    }
+    firebase.database().ref("users/" + whichUser).once("value", function(snapshot){
+      console.log(snapshot.val());
+      let userImgPrivate = snapshot.child("photoURL").val();
+      let userNamePrivate = snapshot.child("username").val();
+      let userStatusPrivate = snapshot.child("status").val();
+      document.getElementById("channel_photo").src = userImgPrivate;
+      document.getElementById("channel_name").innerHTML = userNamePrivate;
+    })
+    console.log("czy xd ?");
+    setTimeout(() => {
+      document.getElementById("lel").style.opacity = 1;
+    }, 500);
+    return pathChannel = "usersPrivateMessages/" + arrayPrivateMessage[0] + '/messages' , chan_icon.push(usersIcon), snapMessages();
+  })
+      
 }
 
 
@@ -1004,11 +1032,7 @@ function test(){
     }
 
     function joinPrivateAndPubChan() {
-      if(mq){
-
-      }else{
-        
-      }
+ 
       containerMessPage.style.width = 300 + "%";
       channel_container.style.transform = ("translate", "translate3d(-" + 100 + "%,0,0)");
       messenger.style.transform = ("translate", "translate3d(-" + 100 + "%,0,0)");
@@ -1089,8 +1113,6 @@ function test(){
 
     function snapMessages() {
       let messageRef = firebase.database().ref(pathChannel);
-
-
       messageRef.on('child_added', function (snapshot) {
         //    console.log(snapshot.val());
         let userInfo_photo = "undefined";
@@ -1215,7 +1237,6 @@ function test(){
           numberSend: numberPost
         });
       })
-
     }
 
     window.addEventListener("keyup", clearMessagefield);
