@@ -246,6 +246,8 @@ button {
     /* min-height: 100vh;
     max-height: 100vh;
     */
+    display:none;
+    position:relative;
     overflow: hidden;
 }
 
@@ -518,6 +520,7 @@ button {
 /* create a new channel */
 .create-channel {
     width: 80%;
+    height:80%;
     max-width:400px;
     display: none;
     position: absolute;
@@ -528,6 +531,7 @@ button {
     background: #333333;
     z-index: 3;
     border-radius:5px;
+    overflow:auto;
     transition: 1s;
 }
 
@@ -666,7 +670,6 @@ button {
 }
 
 .channel-setting {
-    width: 100px;
     height: 100%;
     display: flex;
 
@@ -681,10 +684,17 @@ button {
     background-size: cover;
     background-repeat: no-repeat;
 }
-
-.channel-setting b {
+.channel_name_and_status{
+    padding-left:10px;
+    display:flex;
+    flex-direction: column;
+ margin:auto;
+}
+.channel_name_and_status span{
+    color:greenyellow;
+}
+.channel_name_and_status b{
     text-align: center;
-    margin: auto 5px;
 }
 
 .user_profile-Channel {

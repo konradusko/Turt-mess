@@ -15,9 +15,12 @@ let pathChannel = "undefined";
 let pathUsers = "undefined";
 let pathNumbersOfPost = "undefined";
 let pathEmoji = "undefined";
+//
+let switchPrivateOrchannel = "undefined";
+let amIOnChannel = "undefined";
 //media
 const mq = window.matchMedia("(min-width:800px)");
-if(mq){
+if (mq) {
   console.log("xdddddddddd");
 }
 //testy
@@ -307,7 +310,7 @@ firebase.auth().onAuthStateChanged(function (user) {
         }, 500);
 
 
-        return pathChannel = xd, pathUsers = channel_online_users, pathEmoji = channel_emoji, pathNumbersOfPost = channel_Number_Of_Post, innerChannelSetting(), snapMessages(), joinPrivateAndPubChan(), cancelForm();
+        return amIOnChannel = 1, switchPrivateOrchannel = 0, pathChannel = xd, pathUsers = channel_online_users, pathEmoji = channel_emoji, pathNumbersOfPost = channel_Number_Of_Post, innerChannelSetting(), snapMessages(), joinPrivateAndPubChan(), cancelForm();
       } else {
         joinError.innerHTML = "The password provided is wrong."
         joinError.style.color = "red";
@@ -353,18 +356,23 @@ firebase.auth().onAuthStateChanged(function (user) {
       }, 1000)
     })
 
-  
+
 
     // channel setting
     // otwieranie ustawien kanalu
     const channelSetting = document.getElementById("channel-setting-join");
     channelSetting.addEventListener("click", () => {
-      console.log("working")
-      const settingMain = document.getElementById("setting-main");
-      settingMain.style.display = "flex";
-      setTimeout(() => {
-        settingMain.style.opacity = 1;
-      }, 500)
+      if (switchPrivateOrchannel === 0) {
+        console.log("working")
+        const settingMain = document.getElementById("setting-main");
+        settingMain.style.display = "flex";
+        setTimeout(() => {
+          settingMain.style.opacity = 1;
+        }, 500)
+      } else if (switchPrivateOrchannel === 1) {
+
+      }
+
     })
     // wyswietlanie informacji w setting kanalu oraz sprawdzanie czy jestes adminkiem zlotym kanału
     let idFromDatabaseswitch; // id bossa 
@@ -375,6 +383,7 @@ firebase.auth().onAuthStateChanged(function (user) {
     const buttonShowUserOnChannel = document.getElementById("btn-show-user-on-channel"); // btn pokazuje uzytkownikow na kanale
     const userOnChannelContainer = document.getElementById("userOnChannel_container"); //lista uzytkownikow na kanale
     function innerChannelSetting() {
+
       console.log(passAndUniqId);
       // console.log(xd);
       idFromDatabaseswitch = passAndUniqId[4];
@@ -383,60 +392,60 @@ firebase.auth().onAuthStateChanged(function (user) {
       console.log('xd');
       const emojiEventListener = document.getElementById("change-emoji");
       if (userId === passAndUniqId[4]) {
-       //wysiwetlanie emotek
-    firebase.database().ref('Emoji/').on("child_added", function (snapshot) {
-      //  console.log(snapshot.val());
-      let create_li = document.createElement("li");
-      create_li.className = "li_emoji";
-      create_li.append(snapshot.val());
-      document.getElementById("emoji_list").append(create_li);
-    })
+        //wysiwetlanie emotek
+        firebase.database().ref('Emoji/').on("child_added", function (snapshot) {
+          //  console.log(snapshot.val());
+          let create_li = document.createElement("li");
+          create_li.className = "li_emoji";
+          create_li.append(snapshot.val());
+          document.getElementById("emoji_list").append(create_li);
+        })
         //testy
         console.log(passAndUniqId[4] + "bazadanych");
 
-    
+
         let executed = false;
         const emoji_container = document.getElementById("choose-emoji");
 
         emojiEventListener.addEventListener("click", () => {
           console.log("test ile razy wyswietli");
           if (userId === idFromDatabaseswitch) {
-       
-            let theAbilityToThangeTheEmoticon = (function() {
-          
-              return function() {
-                  if (!executed) {
-                      executed = true;
-                      // do something
-                      let emoji = document.querySelectorAll(".li_emoji");
-                      console.log(emoji.length);
-                      for (let i = 0; i < emoji.length; i++) {
-                        emoji[i].addEventListener("click", (event) => {
-                          let emojiTarget = event.target;
-                           console.log("test dwa ile razy");
-                          let emojiContent = emojiTarget.innerText;
-                          firebase.database().ref(pathEmoji).update({
-                            icon: emojiContent
-                          }).then(function () {
-                            setTimeout(() => {
-                              emoji_container.style.opacity = 0;
-                            }, 500);
-                            emoji_container.style.display = "none";
-                          
-                            return whatWasChangeSwitch = 0, emojiSwitch = emojiContent,  bot_BartekGivesInformation();
-                          })
-                        })
-              
-                      }
+
+            let theAbilityToThangeTheEmoticon = (function () {
+
+              return function () {
+                if (!executed) {
+                  executed = true;
+                  // do something
+                  let emoji = document.querySelectorAll(".li_emoji");
+                  console.log(emoji.length);
+                  for (let i = 0; i < emoji.length; i++) {
+                    emoji[i].addEventListener("click", (event) => {
+                      let emojiTarget = event.target;
+                      console.log("test dwa ile razy");
+                      let emojiContent = emojiTarget.innerText;
+                      firebase.database().ref(pathEmoji).update({
+                        icon: emojiContent
+                      }).then(function () {
+                        setTimeout(() => {
+                          emoji_container.style.opacity = 0;
+                        }, 500);
+                        emoji_container.style.display = "none";
+
+                        return whatWasChangeSwitch = 0, emojiSwitch = emojiContent, bot_BartekGivesInformation();
+                      })
+                    })
+
                   }
+                }
               };
-          })();
-         theAbilityToThangeTheEmoticon();
+            })();
+            theAbilityToThangeTheEmoticon();
 
 
 
-          
-          
+
+
             emoji_container.style.display = "flex";
             setTimeout(() => {
               emoji_container.style.opacity = 1;
@@ -456,8 +465,8 @@ firebase.auth().onAuthStateChanged(function (user) {
         })
         //...
 
-       
-        
+
+
         //....
         const editChannelForm = document.getElementById("change-password-show-form");
         document.getElementById("change-password-buton-id").addEventListener("click", () => {
@@ -581,9 +590,9 @@ firebase.auth().onAuthStateChanged(function (user) {
         console.log("admin królu złoty :) ");
         document.getElementById("edit_button_setting").style.display = "block";
 
-        
+
         ///wysyłanie informacji o zmianie
-        
+
         function bot_BartekGivesInformation() {
           let infoWhatWasChange = whatWasChangeSwitch;
           let messages = "undefined";
@@ -716,14 +725,14 @@ firebase.auth().onAuthStateChanged(function (user) {
       });
     }
 
- //wysyłanie informacji o zmianie
+    //wysyłanie informacji o zmianie
 
 
 
 
 
 
- 
+
 
 
 
@@ -847,17 +856,15 @@ firebase.auth().onAuthStateChanged(function (user) {
       });
     })
 
-    
+
     // wyswietlanie uzytkownikow na na glownej
     const usersRef = firebase.database().ref('users');
-  usersRef.on('child_added', function (snapshot) {
+    usersRef.on('child_added', function (snapshot) {
       let userImg = snapshot.child("photoURL").val();
       let userNickName = snapshot.child("username").val();
       let userStatus = snapshot.child("status").val();
       let userDatabaseId = snapshot.child("id").val();
-      if (userArray[3] === userDatabaseId) {
-      } else if(userDatabaseId === "bot") {
-      }else{
+      if (userArray[3] === userDatabaseId) {} else if (userDatabaseId === "bot") {} else {
 
         let createLi = document.createElement("li");
         //createLi.id =userDatabaseId;
@@ -895,8 +902,8 @@ firebase.auth().onAuthStateChanged(function (user) {
 
 
 
- //wysylanie prywatnych wiadomosci
- /*
+    //wysylanie prywatnych wiadomosci
+    /*
  function privateMessages(){
    
   let button_Priv = document.querySelectorAll(".button-container");
@@ -908,103 +915,132 @@ console.log("działa");
   }
  }
  */
-let arrayPrivateMessage = new Array;
-window.addEventListener("click", (e) =>{
-  arrayPrivateMessage = [];
-  let isClickInside = event.target.classList.contains("add_firend_button");
-  if(isClickInside){
-    let idUser = e.target.id;
-    console.log(idUser);
-  
-// dodawanie nowego
+    let arrayPrivateMessage = new Array;
+    window.addEventListener("click", (e) => {
+      arrayPrivateMessage = [];
+      let isClickInside = event.target.classList.contains("add_firend_button");
+      if (isClickInside) {
+        let idUser = e.target.id;
+        console.log(idUser);
 
-    firebase.database().ref("users/").orderByChild("id").equalTo(idUser).once('value', function (snapshot) {
-       console.log(snapshot.val());
-       let key = Object.keys(snapshot.val())[0];
-       console.log(key);
-       firebase.database().ref("usersPrivateMessages/"+ key + userId).once("value", function(snapshot){
-     //   console.log(snapshot.val())
-        if(snapshot.val() === null){
-          //zero nie ma czegos takiego
-          firebase.database().ref("usersPrivateMessages/"+ userId + key).once("value", function(snapshot){
-            // console.log(snapshot.val());
-             if(snapshot.val() === null){
-               //znow nie ma, tym razem informuje nas o tym
-               console.log("zero2");
-               const notfound = false;
-               return arrayPrivateMessage.push(notfound, key),  addingUsersPrivate();
-             }else if(snapshot.val() != null){
-               // no i jest 
-               console.log("coś jest2");
-               const userKey = userId + key;
-               return arrayPrivateMessage.push(userKey),  joinPrivateAndPubChan(),snapPrivateMessages();
-             }
-            
-           })
-        }else if(snapshot.val() != null){
-          //jest elegancko podaje 
-          console.log("coś jest");
-         const userKey = key + userId;
-          return arrayPrivateMessage.push(userKey),  joinPrivateAndPubChan(),snapPrivateMessages();
-        }
-  
-      })
-  }) 
+        // dodawanie nowego
 
-  }
-  console.log(isClickInside);
-})
-function addingUsersPrivate(){
-  //false dodaje do bazy danych
-  // w przeciwnym razie pobiera wiadomosci z juz istniejacej
-  if(arrayPrivateMessage[0] === false){
-  console.log(arrayPrivateMessage);
-  let users = userId + arrayPrivateMessage[1]
-  firebase.database().ref('usersPrivateMessages/'+ users  ).set({
-    userOne: arrayPrivateMessage[1],
-    userTwo: userId,
-    icon: "👍"
-   }).then( () =>{
-     console.log("added");
-     arrayPrivateMessage = [];
-   return arrayPrivateMessage.push(users),  joinPrivateAndPubChan(), snapPrivateMessages();
-   }).catch( (err) =>{
-     console.log(err);
-   })
+        firebase.database().ref("users/").orderByChild("id").equalTo(idUser).once('value', function (snapshot) {
+          console.log(snapshot.val());
+          let key = Object.keys(snapshot.val())[0];
+          console.log(key);
+          firebase.database().ref("usersPrivateMessages/" + key + userId).once("value", function (snapshot) {
+            //   console.log(snapshot.val())
+            if (snapshot.val() === null) {
+              //zero nie ma czegos takiego
+              firebase.database().ref("usersPrivateMessages/" + userId + key).once("value", function (snapshot) {
+                // console.log(snapshot.val());
+                if (snapshot.val() === null) {
+                  //znow nie ma, tym razem informuje nas o tym
+                  console.log("zero2");
+                  const notfound = false;
+                  return arrayPrivateMessage.push(notfound, key), addingUsersPrivate();
+                } else if (snapshot.val() != null) {
+                  // no i jest 
+                  console.log("coś jest2");
+                  const userKey = userId + key;
+                  return arrayPrivateMessage.push(userKey), snapPrivateMessages();
+                }
 
-  }
-}
-// prywatne wiadomosci 
-function snapPrivateMessages(){
-  chan_icon = [];
-  firebase.database().ref("usersPrivateMessages/" + arrayPrivateMessage[0]).once("value", function(snapshot){
-    console.log(snapshot.val());
-    let userOne = snapshot.child("userOne").val();
-    let userTwo = snapshot.child("userTwo").val();
-    let usersIcon = snapshot.child("icon").val();
-    document.getElementById("send-icon").innerHTML = usersIcon;
-    let whichUser;
-    if(userOne != userId){
-      whichUser = userOne;
-    }else if(userTwo != userId){
-        whichUser = userTwo;
-    }
-    firebase.database().ref("users/" + whichUser).once("value", function(snapshot){
-      console.log(snapshot.val());
-      let userImgPrivate = snapshot.child("photoURL").val();
-      let userNamePrivate = snapshot.child("username").val();
-      let userStatusPrivate = snapshot.child("status").val();
-      document.getElementById("channel_photo").src = userImgPrivate;
-      document.getElementById("channel_name").innerHTML = userNamePrivate;
+              })
+            } else if (snapshot.val() != null) {
+              //jest elegancko podaje 
+              console.log("coś jest");
+              const userKey = key + userId;
+              return arrayPrivateMessage.push(userKey), snapPrivateMessages();
+            }
+
+          })
+        })
+
+      }
+      console.log(isClickInside);
     })
-    console.log("czy xd ?");
-    setTimeout(() => {
-      document.getElementById("lel").style.opacity = 1;
-    }, 500);
-    return pathChannel = "usersPrivateMessages/" + arrayPrivateMessage[0] + '/messages' , chan_icon.push(usersIcon), snapMessages();
-  })
-      
-}
+
+    function addingUsersPrivate() {
+      //false dodaje do bazy danych
+      // w przeciwnym razie pobiera wiadomosci z juz istniejacej
+      if (arrayPrivateMessage[0] === false) {
+        console.log(arrayPrivateMessage);
+        let users = userId + arrayPrivateMessage[1]
+        firebase.database().ref('usersPrivateMessages/' + users).set({
+          userOne: arrayPrivateMessage[1],
+          userTwo: userId,
+          icon: "👍"
+        }).then(() => {
+          console.log("added");
+          arrayPrivateMessage = [];
+          return arrayPrivateMessage.push(users), snapPrivateMessages();
+        }).catch((err) => {
+          console.log(err);
+        })
+
+      }
+    }
+    // prywatne wiadomosci 
+    function snapPrivateMessages() {
+      chan_icon = [];
+      firebase.database().ref("usersPrivateMessages/" + arrayPrivateMessage[0]).once("value", function (snapshot) {
+        console.log(snapshot.val());
+        let userOne = snapshot.child("userOne").val();
+        let userTwo = snapshot.child("userTwo").val();
+        let usersIcon = snapshot.child("icon").val();
+        document.getElementById("send-icon").innerHTML = usersIcon;
+        let whichUser;
+        if (userOne != userId) {
+          whichUser = userOne;
+        } else if (userTwo != userId) {
+          whichUser = userTwo;
+        }
+        firebase.database().ref("users/" + whichUser).once("value", function (snapshot) {
+          console.log(snapshot.val());
+          let userImgPrivate = snapshot.child("photoURL").val();
+          let userNamePrivate = snapshot.child("username").val();
+          let userStatusPrivate = snapshot.child("status").val();
+          document.getElementById("channel_photo").src = userImgPrivate;
+          document.getElementById("channel_name").innerHTML = userNamePrivate;
+          document.getElementById("channel_status").innerHTML = userStatusPrivate;
+        })
+        console.log("czy xd ?");
+        setTimeout(() => {
+          document.getElementById("lel").style.opacity = 1;
+        }, 500);
+        if (amIOnChannel === 1) {
+          document.getElementById("list").innerHTML = "";
+          document.getElementById("channel_status").style.display = "block";
+          return amIOnChannel = 0,
+            firebase.database().ref(pathChannel).off("child_added"),
+            firebase.database().ref('Emoji/').off("child_added"),
+            pathChannel = "undefined",
+            pathEmoji = "undefined",
+            pathUsers = "undefined",
+            pathNumbersOfPost = "undefined",
+            switchShowUserOnChannel = 1,
+            passAndUniqId = [],
+            chan_icon = [],
+            switchPrivateOrchannel = 1,
+            pathChannel = "usersPrivateMessages/" + arrayPrivateMessage[0] + '/messages',
+            chan_icon.push(usersIcon),
+            snapMessages(),
+            setTimeout(() => {
+              document.getElementById("setting-main").style.display = "none";
+              document.getElementById('list').scrollIntoView({
+                block: 'end'
+              });
+            }, 500);
+
+
+        } else {
+          return switchPrivateOrchannel = 1, pathChannel = "usersPrivateMessages/" + arrayPrivateMessage[0] + '/messages', chan_icon.push(usersIcon), snapMessages(), joinPrivateAndPubChan();
+        }
+      })
+
+    }
 
 
     //mechanika
@@ -1032,7 +1068,11 @@ function snapPrivateMessages(){
     }
 
     function joinPrivateAndPubChan() {
- 
+      if (switchPrivateOrchannel === 0) {
+        document.getElementById("channel_status").style.display = "none";
+      } else if (switchPrivateOrchannel === 1) {
+        document.getElementById("channel_status").style.display = "block";
+      }
       containerMessPage.style.width = 300 + "%";
       channel_container.style.transform = ("translate", "translate3d(-" + 100 + "%,0,0)");
       messenger.style.transform = ("translate", "translate3d(-" + 100 + "%,0,0)");
@@ -1074,7 +1114,7 @@ function snapPrivateMessages(){
       document.getElementById("change-password-show-form").style.display = "none"; //
       document.getElementById("change-password-show-form").style.opacity = 0; // tu i wyzej zamyka form do zmiany hasla
       document.getElementById("btn-show-user-on-channel").style.display = "block"; // po powrocie pokazuje znow przycisk
-      return firebase.database().ref(pathChannel).off("child_added"),  firebase.database().ref('Emoji/').off("child_added"), pathChannel = "undefined", pathEmoji = "undefined", pathUsers = "undefined", pathNumbersOfPost = "undefined", switchShowUserOnChannel = 1, passAndUniqId = [], chan_icon = [];
+      return amIOnChannel = 0, firebase.database().ref(pathChannel).off("child_added"), firebase.database().ref('Emoji/').off("child_added"), pathChannel = "undefined", pathEmoji = "undefined", pathUsers = "undefined", pathNumbersOfPost = "undefined", switchShowUserOnChannel = 1, passAndUniqId = [], chan_icon = [];
     })
 
     // nowe
@@ -1151,7 +1191,10 @@ function snapPrivateMessages(){
           createDivSecont.className = "li_div_message-text botMessage";
         }
         document.getElementById("list").append(createLi);
-        scrollBottomArrow();
+        setTimeout(() => {
+          scrollBottomArrow();
+        }, 200);
+
         //   console.log(snapshot.val());
 
         // let nickName_value = snapshot.child("Nickname").val();
@@ -1177,10 +1220,6 @@ function snapPrivateMessages(){
       // })
 
       //  messageRefa.off("value");
-
-
-
-
     }
 
 
@@ -1294,8 +1333,8 @@ function snapPrivateMessages(){
         scrollbottom();
       } else if (containerOfListUlHeight < listUlWithAllMessagesHeight) {
         console.log("new message");
-        console.log(containerOfListUlHeight);
-        console.log(listUlWithAllMessagesHeight);
+        // console.log(containerOfListUlHeight);
+        //console.log(listUlWithAllMessagesHeight);
         document.getElementById("newMessagesAlertId").style.display = "flex";
       }
     }
