@@ -59,7 +59,7 @@ firebase.auth().onAuthStateChanged(function (user) {
           let blob = new Blob([evt.target.result], {
             type: "image/jpeg"
           });
-
+          console.log(blob)
           const storageRef = firebase.storage().ref("Usuarios/" + user.uid + "/avatar.jpg");
           console.warn(file);
 
