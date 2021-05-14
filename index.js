@@ -56,6 +56,7 @@ firebase.auth().onAuthStateChanged(function (user) {
         let file = document.getElementById("input-file").files[0];
         let reader = new FileReader();
         reader.onloadend = function (evt) {
+          console.log(evt.target.result)
           let blob = new Blob([evt.target.result], {
             type: "image/jpeg"
           });
